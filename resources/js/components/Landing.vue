@@ -1,0 +1,54 @@
+<template>
+    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+        <div class="row align-items-center g-lg-5 py-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <h1 class="display-4 fw-bold lh-1 mb-3">
+                    Customer Satisfaction Survey
+                </h1>
+                <p class="col-lg-10 fs-4">
+                    Hello, Dear Customer, we are now running a survey to
+                    determine how we can improve our service to you.
+                </p>
+            </div>
+
+            <div class="col-md-10 mx-auto col-lg-5">
+                <form class="p-4 p-md-5 border rounded-3 bg-light">
+                    <div class="form-floating mb-3">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Survey Code"
+                        />
+                        <label for="floatingInput">Survey Code</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input
+                            type="email"
+                            class="form-control"
+                            placeholder="Email Address"
+                        />
+                        <label for="floatingInput">Email Address</label>
+                    </div>
+
+                    <router-link
+                        to="/survey"
+                        class="w-100 btn btn-lg btn-primary"
+                    >
+                        Get Started
+                    </router-link>
+                    <hr class="my-4" />
+                    <small class="text-muted"></small>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "Landing",
+};
+</script>
+
+<style></style>
