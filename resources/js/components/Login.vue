@@ -47,7 +47,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="subit" class="btn btn-primary">Login</button>
+          <button type="submit" class="btn btn-primary">Login</button>
         </div>
       </div>
     </div>

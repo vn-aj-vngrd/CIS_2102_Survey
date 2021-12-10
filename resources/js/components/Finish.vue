@@ -28,10 +28,9 @@
         </div>
         <div class="modal-body">Thank you for answering the survey.</div>
         <div class="modal-footer">
-          <!-- <router-link to="/" @click="closeModal" class="btn btn-primary">
-            Return to Home
-          </router-link> -->
-          <router-link to="/" data-bs-dismiss="modal" >close</router-link>
+          <router-link to="/" class="btn btn-primary" @click="closeModal"
+            >Return to Home</router-link
+          >
         </div>
       </div>
     </div>
@@ -39,15 +38,15 @@
 </template>
 
 <script>
-import $ from "jquery-ui";
-
 export default {
   name: "Modal",
   props: {
     myclass: String,
   },
   methods: {
-    closeModal() {},
+    closeModal() {
+      $("#finish").modal("hide");
+    },
   },
 };
 </script>
