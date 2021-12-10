@@ -15,16 +15,11 @@ export default {
     Header,
     Carousel,
   },
-  data() {
-    return {
-      n: 0,
-    };
-  },
 };
 </script>
 
 <style scoped>
 .container {
-  width: 100rem;
+  width: 70rem;
 }
 </style>
