@@ -39,7 +39,7 @@
       </div>
 
       <div v-show="htype == 'admin'" class="col-md-3 text-end">
-        <Logout myclass="btn btn-outline-danger" />
+        <Logout myclass="btn btn-danger" />
       </div>
       <!-- End - Rightmost Heading -->
 

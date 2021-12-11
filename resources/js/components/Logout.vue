@@ -28,8 +28,8 @@
         </div>
         <div class="modal-body">Are you sure you want to logout?</div>
         <div class="modal-footer">
-          <router-link to="/" class="btn btn-danger" @click="closeModal"
-            >Log out</router-link
+          <router-link to="/" class="btn btn-outline-danger" @click="closeModal"
+            >Log Out</router-link
           >
         </div>
       </div>
