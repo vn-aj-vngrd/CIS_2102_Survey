@@ -3,22 +3,22 @@
     type="button"
     :class="myclass"
     data-bs-toggle="modal"
-    data-bs-target="#finish"
+    data-bs-target="#display"
   >
-    Finish
+    View Survey
   </button>
 
   <div
     class="modal fade text-start"
-    id="finish"
+    id="display"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><b>Survey</b></h5>
+          <h5 class="modal-title" id="exampleModalLabel"><b>View Survey</b></h5>
           <button
             type="button"
             class="btn-close"
@@ -26,10 +26,12 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">Thank you for answering the survey.</div>
+        <div class="modal-body">
+            <!-- Note: Content Here -->
+        </div>
         <div class="modal-footer">
-          <router-link to="/" class="btn btn-primary" @click="closeModal"
-            >Return to Home</router-link
+          <router-link to="/admin" @click="returnHome" class="btn btn-danger"
+            >Close</router-link
           >
         </div>
       </div>
@@ -39,13 +41,13 @@
 
 <script>
 export default {
-  name: "Finish",
+  name: "Display",
   props: {
     myclass: String,
   },
   methods: {
-    closeModal() {
-      $("#finish").modal("hide");
+    returnHome() {
+      $("#display").modal("hide");
     },
   },
 };

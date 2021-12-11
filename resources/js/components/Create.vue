@@ -3,14 +3,14 @@
     type="button"
     :class="myclass"
     data-bs-toggle="modal"
-    data-bs-target="#login"
+    data-bs-target="#create"
   >
-    Log in
+    Create Survey
   </button>
 
   <div
     class="modal fade text-start"
-    id="login"
+    id="create"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
@@ -18,7 +18,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><b>Log In</b></h5>
+          <h5 class="modal-title" id="exampleModalLabel"><b>Create Survey</b></h5>
           <button
             type="button"
             class="btn-close"
@@ -30,25 +30,18 @@
           <form>
             <div class="mb-3">
               <label for="recipient-name" class="col-form-label"
-                >Email Address</label
+                >Survey Name</label
               >
-              <input type="email" class="form-control" name="email" required />
+              <input type="text" class="form-control" name="surveyName" required />
             </div>
 
-            <div class="mb-3">
-              <label for="message-text" class="col-form-label">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                name="password"
-                required
-              />
-            </div>
+            <!-- Note: jquery to add more input fields or questions -->
+
           </form>
         </div>
         <div class="modal-footer">
-          <router-link to="/admin" @click="login" class="btn btn-primary"
-            >Login</router-link
+          <router-link to="/admin" @click="createSurvey" class="btn btn-primary"
+            >Create</router-link
           >
         </div>
       </div>
@@ -58,13 +51,13 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "Create",
   props: {
     myclass: String,
   },
   methods: {
-    login() {
-      $("#login").modal("hide");
+    createSurvey() {
+      $("#create").modal("hide");
     },
   },
 };

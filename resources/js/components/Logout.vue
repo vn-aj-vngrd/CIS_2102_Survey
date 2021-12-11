@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: "Modal",
+  name: "Logout",
   props: {
     myclass: String,
   },
