@@ -47,7 +47,9 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Login</button>
+          <router-link to="/admin" @click="login" class="btn btn-primary"
+            >Login</router-link
+          >
         </div>
       </div>
     </div>
@@ -60,6 +62,10 @@ export default {
   props: {
     myclass: String,
   },
-  methods: {},
+  methods: {
+    login() {
+      $("#login").modal("hide");
+    },
+  },
 };
 </script>

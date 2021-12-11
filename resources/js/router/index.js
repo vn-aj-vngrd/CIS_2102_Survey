@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Survey from '../views/Survey.vue'
+import Admin from '../views/Admin.vue'
+
 
 const routes = [
   {
@@ -12,7 +14,12 @@ const routes = [
     path: '/survey',
     name: 'Survey',
     component: Survey
-  }
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin
+  },
 ]
 
 const router = createRouter({

@@ -71,7 +71,9 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="subit" class="btn btn-success">Sign Up</button>
+          <router-link to="/admin" @click="signup" class="btn btn-success"
+            >Sign Up</router-link
+          >
         </div>
       </div>
     </div>
@@ -84,6 +86,10 @@ export default {
   props: {
     myclass: String,
   },
-  methods: {},
+  methods: {
+    signup() {
+      $("#signup").modal("hide");
+    },
+  },
 };
 </script>
