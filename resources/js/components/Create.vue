@@ -40,8 +40,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <router-link to="/admin" @click="createSurvey" class="btn btn-primary"
-            >Create</router-link
+          <a href="" @click="createSurvey" class="btn btn-primary"
+            >Create</a
           >
         </div>
       </div>

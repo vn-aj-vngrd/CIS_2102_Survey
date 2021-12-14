@@ -24,3 +24,4 @@ Route::get('/user/survey', function () {
 Route::get('/company/manage', function () {
     return view('company.manage');
 });
+

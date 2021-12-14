@@ -30,8 +30,8 @@
             <!-- Note: Content Here -->
         </div>
         <div class="modal-footer">
-          <router-link to="/admin" @click="returnHome" class="btn btn-danger"
-            >Close</router-link
+          <a to="/" @click="returnHome" class="btn btn-danger"
+            >Close</a
           >
         </div>
       </div>

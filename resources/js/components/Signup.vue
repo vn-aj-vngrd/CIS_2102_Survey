@@ -71,8 +71,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <router-link to="/admin" @click="signup" class="btn btn-success"
-            >Sign Up</router-link
+          <a href="" @click="signup" class="btn btn-success"
+            >Sign Up</a
           >
         </div>
       </div>

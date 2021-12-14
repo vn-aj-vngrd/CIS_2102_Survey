@@ -47,8 +47,8 @@
           </form>
         </div>
         <div class="modal-footer">
-          <router-link to="/admin" @click="login" class="btn btn-primary"
-            >Login</router-link
+          <a href="/" @click="login" class="btn btn-primary"
+            >Login</a
           >
         </div>
       </div>

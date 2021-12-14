@@ -28,8 +28,8 @@
         </div>
         <div class="modal-body">Thank you for answering the survey.</div>
         <div class="modal-footer">
-          <router-link to="/" class="btn btn-primary" @click="closeModal"
-            >Return to Home</router-link
+          <a href="/" class="btn btn-primary" @click="closeModal"
+            >Return to Home</a
           >
         </div>
       </div>

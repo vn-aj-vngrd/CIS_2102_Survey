@@ -27,9 +27,9 @@
             <label for="floatingInput">Email Address</label>
           </div>
 
-          <router-link to="/survey" class="w-100 btn btn-lg btn-primary">
+          <a href="" class="w-100 btn btn-lg btn-primary">
             Get Started
-          </router-link>
+          </a>
           <hr class="my-4" />
           <small class="text-muted"></small>
         </form>
