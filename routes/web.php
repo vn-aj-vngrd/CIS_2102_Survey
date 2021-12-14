@@ -21,7 +21,7 @@ Route::get('/user/survey', function () {
     return view('user.survey');
 });
 
-Route::get('/company/manage', function () {
-    return view('company.manage');
+Route::get('/admin/manage', function () {
+    return view('admin.manage');
 });
 
