@@ -24,4 +24,3 @@ Route::get('/user/survey', function () {
 Route::get('/admin/manage', function () {
     return view('admin.manage');
 });
-
