@@ -23247,12 +23247,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // import {createApp} from 'vue';
-// import App from './App.vue';
-// import router from './router'
-// createApp(App).use(router).mount('#app');
-
-
 
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
