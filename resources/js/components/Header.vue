@@ -20,9 +20,9 @@
         </li>
       </ul>
 
-      <ul v-show="htype == 'admin'" class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0" >
+      <ul v-show="htype == 'company'" class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0" >
         <li>
-          <a class="nav-link px-2 link-secondary">Admin</a>
+          <a class="nav-link px-2 link-secondary">Company Name</a>
         </li>
       </ul>
       <!-- End - Middle Heading -->
@@ -38,7 +38,7 @@
         <Finish myclass="btn btn-outline-primary" />
       </div>
 
-      <div v-show="htype == 'admin'" class="col-md-3 text-end">
+      <div v-show="htype == 'company'" class="col-md-3 text-end">
         <Logout myclass="btn btn-danger" />
       </div>
       <!-- End - Rightmost Heading -->

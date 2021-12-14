@@ -15,7 +15,7 @@
 <body>
 
     <div id="app">
-        <header-component htype="admin"></header-component>
+        <header-component htype="company"></header-component>
         <div class="container text-center">
             <create-component myClass="btn btn-success me-2"></create-component>
             <display-component myClass="btn btn-primary"></display-component>

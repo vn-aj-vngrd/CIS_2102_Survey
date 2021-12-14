@@ -22974,7 +22974,7 @@ var _hoisted_10 = {
 var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": "nav-link px-2 link-secondary"
-  }, "Admin")], -1
+  }, "Company Name")], -1
   /* HOISTED */
   );
 });
@@ -23004,7 +23004,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'survey']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_10, _hoisted_12, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'admin']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End - Middle Heading "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Start - Rightmost Heading "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Login, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'company']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End - Middle Heading "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Start - Rightmost Heading "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Login, {
     myclass: "btn btn-primary me-2"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Signup, {
     myclass: "btn btn-success"
@@ -23018,7 +23018,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     myclass: "btn btn-danger"
   })], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'admin']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End - Rightmost Heading ")])]);
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'company']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End - Rightmost Heading ")])]);
 }
 
 /***/ }),
