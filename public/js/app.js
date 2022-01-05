@@ -24441,9 +24441,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 /* harmony import */ var _meforma_vue_toaster__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @meforma/vue-toaster */ "./node_modules/@meforma/vue-toaster/src/index.js");
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // import { createApp } from 'vue'
-// import router from './router'
-// let app=createApp({})
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+
+
+
+
+(0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]).use(_router__WEBPACK_IMPORTED_MODULE_2__["default"]).use(_meforma_vue_toaster__WEBPACK_IMPORTED_MODULE_3__["default"]).mount("#app"); // let app=createApp({})
 // app.component('landing-component', require('./components/Landing.vue').default);
 // app.component('header-component', require('./components/Header.vue').default);
 // app.component('footer-component', require('./components/Footer.vue').default);
@@ -24453,13 +24457,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // import
 // app.component('homepage', require('./pages/HomePage.vue').default);
 // app.mount("#app")
 // app.use(router)
-
-
-
-
-
-
-(0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]).use(_router__WEBPACK_IMPORTED_MODULE_2__["default"]).use(_meforma_vue_toaster__WEBPACK_IMPORTED_MODULE_3__["default"]).mount("#app");
 
 /***/ }),
 
