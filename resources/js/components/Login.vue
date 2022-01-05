@@ -37,7 +37,7 @@
               name="email"
               v-model="formData.email"
             />
-            <p class="text-danger mt-2" v-text="errors.email"></p>
+            <p class="text-danger mt-2">{{ this.emailError }}</p>
           </div>
 
           <div class="mb-3">
@@ -48,11 +48,11 @@
               name="password"
               v-model="formData.password"
             />
-            <p class="text-danger mt-2" v-text="errors.password"></p>
-            <p class="text-danger mt-2" v-text="errors.error"></p>
+            <p class="text-danger mt-2">{{ this.passError }}</p>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer justify-content-between">
+          <p class="text-start text-danger">{{ this.credError }}</p>
           <button @click="login" class="btn btn-primary">Login</button>
         </div>
       </div>
@@ -74,11 +74,13 @@ export default {
         device_name: "browser",
       },
       errors: {},
+      emailError: "",
+      passError: "",
+      credError: "",
     };
   },
   methods: {
     login() {
-      console.log(this.formData);
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
           .post("api/login", this.formData)
@@ -95,6 +97,16 @@ export default {
           })
           .catch((errors) => {
             this.errors = errors.response.data.errors;
+            if (typeof this.errors.email === "undefined") this.emailError = "";
+            else this.emailError = this.errors.email[0];
+
+            if (typeof this.errors.password === "undefined")
+              this.passError = "";
+            else this.passError = this.errors.password[0];
+
+            if (typeof this.errors.credError === "undefined")
+              this.credError = "";
+            else this.credError = this.errors.credError[0];
           });
       });
     },

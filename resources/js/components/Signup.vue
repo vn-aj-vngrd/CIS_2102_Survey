@@ -37,7 +37,7 @@
                 v-model="formData.name"
                 required
               />
-              <p class="text-danger mt-2" v-text="errors.name"></p>
+              <p class="text-danger mt-2">{{ this.nameError }}</p>
             </div>
 
             <div class="mb-3">
@@ -49,7 +49,7 @@
                 v-model="formData.email"
                 required
               />
-              <p class="text-danger mt-2" v-text="errors.email"></p>
+              <p class="text-danger mt-2">{{ this.emailError }}</p>
             </div>
 
             <div class="mb-3">
@@ -61,7 +61,7 @@
                 v-model="formData.password"
                 required
               />
-              <p class="text-danger mt-2" v-text="errors.password"></p>
+              <p class="text-danger mt-2">{{ this.pass1Error }}</p>
             </div>
 
             <div class="mb-3">
@@ -75,7 +75,7 @@
                 v-model="formData.password_confirmation"
                 required
               />
-              <p class="text-danger mt-2" v-text="errors.password_confirmation"></p>
+              <p class="text-danger mt-2">{{ this.pass2Error }}</p>
             </div>
           </form>
         </div>
@@ -102,6 +102,10 @@ export default {
         password_confirmation: "",
       },
       errors: {},
+      nameError: "",
+      emailError: "",
+      pass1Error: "",
+      pass2Error: "",
     };
   },
   methods: {
@@ -124,7 +128,17 @@ export default {
         })
         .catch((errors) => {
           this.errors = errors.response.data.errors;
-          console.log(errors.response.data.errors);
+          if (typeof this.errors.name === "undefined") this.nameError = "";
+          else this.nameError = this.errors.name[0];
+
+          if (typeof this.errors.email === "undefined") this.emailError = "";
+          else this.emailError = this.errors.email[0];
+
+          if (typeof this.errors.password === "undefined") this.pass1Error = "";
+          else this.pass1Error = this.errors.password[0];
+
+          if (typeof this.errors.password === "undefined") this.pass2Error = "";
+          else this.pass2Error = this.errors.password[0];
         });
     },
   },

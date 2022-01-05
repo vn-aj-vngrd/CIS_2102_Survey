@@ -41,7 +41,7 @@ class UserController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'error' => ['The provided credentials are incorrect.'],
+                'credError' => ['The provided credentials are incorrect.'],
             ]);
         }
 
