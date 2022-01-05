@@ -37,7 +37,7 @@
                 v-model="formData.name"
                 required
               />
-              <p class="text-danger" v-text="errors.name"></p>
+              <p class="text-danger mt-2" v-text="errors.name"></p>
             </div>
 
             <div class="mb-3">
@@ -49,7 +49,7 @@
                 v-model="formData.email"
                 required
               />
-              <p class="text-danger" v-text="errors.email"></p>
+              <p class="text-danger mt-2" v-text="errors.email"></p>
             </div>
 
             <div class="mb-3">
@@ -61,7 +61,7 @@
                 v-model="formData.password"
                 required
               />
-              <p class="text-danger" v-text="errors.password"></p>
+              <p class="text-danger mt-2" v-text="errors.password"></p>
             </div>
 
             <div class="mb-3">
@@ -75,7 +75,7 @@
                 v-model="formData.password_confirmation"
                 required
               />
-              <p class="text-danger" v-text="errors.password_confirmation"></p>
+              <p class="text-danger mt-2" v-text="errors.password_confirmation"></p>
             </div>
           </form>
         </div>
@@ -130,3 +130,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+p {
+  font-size: 13px;
+}
+</style>
+

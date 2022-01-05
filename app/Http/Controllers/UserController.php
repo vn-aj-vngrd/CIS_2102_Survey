@@ -49,6 +49,7 @@ class UserController extends Controller
             "token" => $user->createToken($request->device_name)->plainTextToken,
             "name" => $user->name,
         );
+        
         return $ret;
     }
 

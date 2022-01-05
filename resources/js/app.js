@@ -1,11 +1,7 @@
 require("./bootstrap");
 
-import { createApp } from "vue";
-import App from "./App.vue";
-import Router from "./router";
-import Toaster from '@meforma/vue-toaster';
-createApp(App).use(Router).use(Toaster).mount("#app");
-
+// import { createApp } from 'vue'
+// import router from './router'
 // let app=createApp({})
 // app.component('landing-component', require('./components/Landing.vue').default);
 // app.component('header-component', require('./components/Header.vue').default);
@@ -16,3 +12,11 @@ createApp(App).use(Router).use(Toaster).mount("#app");
 // app.component('homepage', require('./pages/HomePage.vue').default);
 // app.mount("#app")
 // app.use(router)
+
+import { createApp } from "vue";
+import App from "./App.vue";
+import Router from "./router";
+import Toaster from '@meforma/vue-toaster';
+createApp(App).use(Router).use(Toaster).mount("#app");
+
+
