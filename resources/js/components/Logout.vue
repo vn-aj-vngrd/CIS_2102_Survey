@@ -54,7 +54,6 @@ export default {
         .post("api/logout")
         .then((response) => {
           localStorage.removeItem("token");
-          console.log("logout");
           this.$router.push("/");
           $("#logout").modal("hide");
         })

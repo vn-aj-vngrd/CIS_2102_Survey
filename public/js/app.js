@@ -23258,7 +23258,6 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post("api/logout").then(function (response) {
         localStorage.removeItem("token");
-        console.log("logout");
 
         _this.$router.push("/");
 
