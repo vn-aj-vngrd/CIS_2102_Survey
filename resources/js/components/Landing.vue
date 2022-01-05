@@ -27,9 +27,9 @@
             <label for="floatingInput">Email Address</label>
           </div>
 
-          <a href="" class="w-100 btn btn-lg btn-primary">
+          <router-link to="/customer" class="w-100 btn btn-lg btn-primary">
             Get Started
-          </a>
+          </router-link>
           <hr class="my-4" />
           <small class="text-muted"></small>
         </form>

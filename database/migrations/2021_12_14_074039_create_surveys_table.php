@@ -20,7 +20,7 @@ class CreateSurveysTable extends Migration
             $table->string('code');
             $table->datetime('dateCreated');
 
-            $table->foreign('createdBy')->references('accountID')->on('accounts')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('createdBy')->references('userID')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

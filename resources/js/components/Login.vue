@@ -27,29 +27,33 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label"
-                >Email Address</label
-              >
-              <input type="email" class="form-control" name="email" required />
-            </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label"
+              >Email Address</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              v-model="formData.email"
+            />
+            <p class="text-danger mt-2" v-text="errors.email"></p>
+          </div>
 
-            <div class="mb-3">
-              <label for="message-text" class="col-form-label">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                name="password"
-                required
-              />
-            </div>
-          </form>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              v-model="formData.password"
+            />
+            <p class="text-danger mt-2" v-text="errors.password"></p>
+            <p class="text-danger mt-2" v-text="errors.error"></p>
+          </div>
         </div>
         <div class="modal-footer">
-          <a href="/" @click="login" class="btn btn-primary"
-            >Login</a
-          >
+          <button @click="login" class="btn btn-primary">Login</button>
         </div>
       </div>
     </div>
@@ -62,10 +66,44 @@ export default {
   props: {
     myclass: String,
   },
+  data() {
+    return {
+      formData: {
+        email: "",
+        password: "",
+        device_name: "browser",
+      },
+      errors: {},
+    };
+  },
   methods: {
     login() {
-      $("#login").modal("hide");
+      console.log(this.formData);
+      axios.get("/sanctum/csrf-cookie").then((response) => {
+        axios
+          .post("api/login", this.formData)
+          .then((response) => {
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("pathname", response.data.name);
+            const name = response.data.name;
+            this.$router.push({
+              name: "company",
+              params: { pathname: name },
+              query: { companyName: name },
+            });
+            $("#login").modal("hide");
+          })
+          .catch((errors) => {
+            this.errors = errors.response.data.errors;
+          });
+      });
     },
   },
 };
 </script>
+
+<style scoped>
+p {
+  font-size: 13px;
+}
+</style>

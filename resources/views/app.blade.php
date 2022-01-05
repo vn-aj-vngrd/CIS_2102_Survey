@@ -14,11 +14,7 @@
 
 <body>
 
-    <div id="app">
-        <header-component htype="home"></header-component>
-        <landing-component></landing-component>
-        <footer-component></footer-component>
-    </div>
+    <div id="app"></div>
     
     <script src="{{mix('js/app.js')}}"></script>
 </body>

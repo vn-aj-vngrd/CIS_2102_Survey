@@ -29,51 +29,58 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label"
-                >Company Name</label
-              >
+              <label for="name" class="col-form-label">Company Name</label>
               <input
                 type="text"
                 class="form-control"
                 name="companyName"
+                v-model="formData.name"
                 required
               />
+              <p class="text-danger" v-text="errors.name"></p>
             </div>
 
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label"
-                >Email Address</label
-              >
-              <input type="email" class="form-control" name="email" required />
+              <label for="email" class="col-form-label">Email Address</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                v-model="formData.email"
+                required
+              />
+              <p class="text-danger" v-text="errors.email"></p>
             </div>
 
             <div class="mb-3">
-              <label for="message-text" class="col-form-label">Password</label>
+              <label for="password" class="col-form-label">Password</label>
               <input
                 type="password"
                 class="form-control"
                 name="password"
+                v-model="formData.password"
                 required
               />
+              <p class="text-danger" v-text="errors.password"></p>
             </div>
 
             <div class="mb-3">
-              <label for="message-text" class="col-form-label"
+              <label for="confirm-password" class="col-form-label"
                 >Confirm Password</label
               >
               <input
                 type="password"
                 class="form-control"
                 name="confirmPassword"
+                v-model="formData.password_confirmation"
                 required
               />
+              <p class="text-danger" v-text="errors.password_confirmation"></p>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <a href="" @click="signup" class="btn btn-success"
-            >Sign Up</a
-          >
+          <button @click="signup" class="btn btn-success">Sign Up</button>
         </div>
       </div>
     </div>
@@ -86,9 +93,39 @@ export default {
   props: {
     myclass: String,
   },
+  data() {
+    return {
+      formData: {
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+      },
+      errors: {},
+    };
+  },
   methods: {
     signup() {
-      $("#signup").modal("hide");
+      axios
+        .post("api/register", this.formData)
+        .then((response) => {
+          console.log(response.data);
+          this.formData.name =
+            this.formData.email =
+            this.formData.password =
+            this.formData.password_confirmation =
+              "";
+          this.errors = {};
+          $("#signup").modal("hide");
+          this.$toast.success(`Account Successfully Created`, {
+            position: "top",
+            queue: true,
+          });
+        })
+        .catch((errors) => {
+          this.errors = errors.response.data.errors;
+          console.log(errors.response.data.errors);
+        });
     },
   },
 };

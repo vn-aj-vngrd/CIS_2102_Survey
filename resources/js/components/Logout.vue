@@ -28,9 +28,9 @@
         </div>
         <div class="modal-body">Are you sure you want to logout?</div>
         <div class="modal-footer">
-          <a href="/" class="btn btn-outline-danger" @click="closeModal"
-            >Log Out</a
-          >
+          <button class="btn btn-outline-danger" @click="logout">
+            Log Out
+          </button>
         </div>
       </div>
     </div>
@@ -43,10 +43,28 @@ export default {
   props: {
     myclass: String,
   },
+  data() {
+    return {
+      token: localStorage.getItem("token"),
+    };
+  },
   methods: {
-    closeModal() {
-      $("#logout").modal("hide");
+    logout() {
+      axios
+        .post("api/logout")
+        .then((response) => {
+          localStorage.removeItem("token");
+          console.log("logout");
+          this.$router.push("/");
+          $("#logout").modal("hide");
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
     },
+  },
+  mounted() {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${this.token}`;
   },
 };
 </script>
