@@ -34,34 +34,39 @@
             <input
               type="text"
               class="form-control"
-              name="surveyName"
+              v-model="surveyName"
               required
             />
           </div>
           <label for="survey-questions" class="col-form-label"
             >Survey Questions</label
           >
-          <div class="row g-2 mb-2" v-for="(input, k) in inputs" :key="k">
+          <div class="row g-2 mb-2" v-for="(question, k) in questions" :key="k">
             <div class="col">
-              <input type="text" class="form-control" v-model="input.name" />
+              <input
+                type="text"
+                class="form-control"
+                v-model="question.text"
+              />
             </div>
             <div class="col-auto">
               <button
                 class="btn btn-success btn-sm me-2 mt-1"
                 @click="add(k)"
-                v-show="k == inputs.length - 1"
+                v-show="k == questions.length - 1"
               >
                 Add
               </button>
               <button
                 class="btn btn-danger btn-sm mt-1"
                 @click="remove(k)"
-                v-show="k || (!k && inputs.length > 1)"
+                v-show="k || (!k && questions.length > 1)"
               >
                 Remove
               </button>
             </div>
           </div>
+          
         </div>
         <div class="modal-footer">
           <button @click="create" class="btn btn-primary">Create</button>
@@ -79,22 +84,24 @@ export default {
   },
   data() {
     return {
-      inputs: [
+      surveyName: "",
+      questions: [
         {
-          name: "",
+          text: "",
         },
       ],
     };
   },
   methods: {
     add(index) {
-      this.inputs.push({ name: "" });
+      this.questions.push({ text: "" });
     },
     remove(index) {
-      this.inputs.splice(index, 1);
+      this.questions.splice(index, 1);
     },
     create() {
-      $("#create").modal("hide");
+      // $("#create").modal("hide");
+      console.log(this.questions);
     },
   },
 };
