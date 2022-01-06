@@ -16,7 +16,8 @@ class SurveyController extends Controller
      */
     public function index()
     {
-        //
+        $surveys = Survey::orderBy('surveyID', 'desc')->get();
+        return response()->json($surveys);
     }
 
     /**

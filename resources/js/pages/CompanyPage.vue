@@ -1,13 +1,6 @@
 <template>
   <Header htype="company" />
-
-  <div class="container">
-    <div class="row d-flex d-flex align-items-center">
-      <div class="col-auto mb-5 " v-for="index in 7" :key="index">
-        <Card />
-      </div>
-    </div>
-  </div>
+  <Card />
   <div class="container text-center">
     <Create myclass="btn btn-success me-2 mb-5" />
   </div>
