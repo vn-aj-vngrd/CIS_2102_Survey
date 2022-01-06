@@ -29,36 +29,39 @@
           ></button>
         </div>
         <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label"
-                >Survey Name</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                name="surveyName"
-                required
-              />
-            </div>
-
-            <!-- Note: jquery to add more input fields or questions -->
-            <div class="form-group" v-for="(input, k) in inputs" :key="k">
+          <div class="mb-3">
+            <label for="survey-name" class="col-form-label">Survey Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="surveyName"
+              required
+            />
+          </div>
+          <label for="survey-questions" class="col-form-label"
+            >Survey Questions</label
+          >
+          <div class="row g-2 mb-2" v-for="(input, k) in inputs" :key="k">
+            <div class="col">
               <input type="text" class="form-control" v-model="input.name" />
-              <span>
-                <i
-                  class="fas fa-minus-circle"
-                  @click="remove(k)"
-                  v-show="k || (!k && inputs.length > 1)"
-                ></i>
-                <i
-                  class="fas fa-plus-circle"
-                  @click="add(k)"
-                  v-show="k == inputs.length - 1"
-                ></i>
-              </span>
             </div>
-          </form>
+            <div class="col-auto">
+              <button
+                class="btn btn-success btn-sm me-2 mt-1"
+                @click="add(k)"
+                v-show="k == inputs.length - 1"
+              >
+                Add
+              </button>
+              <button
+                class="btn btn-danger btn-sm mt-1"
+                @click="remove(k)"
+                v-show="k || (!k && inputs.length > 1)"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button @click="create" class="btn btn-primary">Create</button>
@@ -74,7 +77,22 @@ export default {
   props: {
     myclass: String,
   },
+  data() {
+    return {
+      inputs: [
+        {
+          name: "",
+        },
+      ],
+    };
+  },
   methods: {
+    add(index) {
+      this.inputs.push({ name: "" });
+    },
+    remove(index) {
+      this.inputs.splice(index, 1);
+    },
     create() {
       $("#create").modal("hide");
     },
