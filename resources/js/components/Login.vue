@@ -86,6 +86,7 @@ export default {
           .post("api/login", this.formData)
           .then((response) => {
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("id", response.data.id);
             localStorage.setItem("pathname", response.data.name);
             const name = response.data.name;
             this.$router.push({

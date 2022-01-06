@@ -15,10 +15,10 @@ class CreateSurveysTable extends Migration
     {
         Schema::create('surveys', function (Blueprint $table) {
             $table->increments('surveyID');
+            $table->text('code');
             $table->integer('createdBy')->unsigned();
             $table->string('name');
-            $table->string('code');
-            $table->datetime('dateCreated');
+            $table->timestamps();
 
             $table->foreign('createdBy')->references('userID')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });

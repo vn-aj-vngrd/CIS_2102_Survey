@@ -47,6 +47,7 @@ class UserController extends Controller
 
         $ret = array(
             "token" => $user->createToken($request->device_name)->plainTextToken,
+            "id" => $user->userID,
             "name" => $user->name,
         );
         
