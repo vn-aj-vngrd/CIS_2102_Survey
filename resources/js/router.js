@@ -7,7 +7,7 @@ import CompanyPage from "./pages/CompanyPage.vue";
 const routes = [
     {
         path: "/",
-        name: "HomePage",
+        name: "home",
         component: HomePage,
         meta: { guest: true },
     },

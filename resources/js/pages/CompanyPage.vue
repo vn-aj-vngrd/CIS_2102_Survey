@@ -1,5 +1,5 @@
 <template>
-  <Header htype="company" :companyName=$route.query.companyName />
+  <Header htype="company" />
   <div class="container text-center">
     <Create myclass="btn btn-success me-2" />
     <Display myclass="btn btn-primary" />

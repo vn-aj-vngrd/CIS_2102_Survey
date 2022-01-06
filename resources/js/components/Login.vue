@@ -91,7 +91,6 @@ export default {
             this.$router.push({
               name: "company",
               params: { pathname: name },
-              query: { companyName: name },
             });
             $("#login").modal("hide");
           })

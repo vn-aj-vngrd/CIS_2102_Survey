@@ -23033,7 +23033,7 @@ __webpack_require__.r(__webpack_exports__);
     myclass: String
   },
   methods: {
-    createSurvey: function createSurvey() {
+    create: function create() {
       $("#create").modal("hide");
     }
   }
@@ -23136,8 +23136,15 @@ __webpack_require__.r(__webpack_exports__);
     Logout: _Logout_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: {
-    htype: String,
-    companyName: String
+    htype: String
+  },
+  data: function data() {
+    return {
+      name: String
+    };
+  },
+  mounted: function mounted() {
+    this.name = localStorage.getItem("pathname");
   }
 });
 
@@ -23211,9 +23218,6 @@ __webpack_require__.r(__webpack_exports__);
             name: "company",
             params: {
               pathname: name
-            },
-            query: {
-              companyName: name
             }
           });
 
@@ -23258,6 +23262,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post("api/logout").then(function (response) {
         localStorage.removeItem("token");
+        localStorage.removeItem("pathname");
 
         _this.$router.push("/");
 
@@ -23545,9 +23550,42 @@ var _hoisted_3 = {
   "class": "modal-content"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"modal-header\"><h5 class=\"modal-title\" id=\"exampleModalLabel\"><b>Create Survey</b></h5><button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button></div><div class=\"modal-body\"><form><div class=\"mb-3\"><label for=\"recipient-name\" class=\"col-form-label\">Survey Name</label><input type=\"text\" class=\"form-control\" name=\"surveyName\" required></div><!-- Note: jquery to add more input fields or questions --></form></div>", 2);
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "modal-header"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
+  "class": "modal-title",
+  id: "exampleModalLabel"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Create Survey")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "button",
+  "class": "btn-close",
+  "data-bs-dismiss": "modal",
+  "aria-label": "Close"
+})], -1
+/* HOISTED */
+);
 
-var _hoisted_6 = {
+var _hoisted_5 = {
+  "class": "modal-body"
+};
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "mb-3"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "recipient-name",
+  "class": "col-form-label"
+}, "Survey Name"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "text",
+  "class": "form-control",
+  name: "surveyName",
+  required: ""
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_7 = ["onUpdate:modelValue"];
+var _hoisted_8 = ["onClick"];
+var _hoisted_9 = ["onClick"];
+var _hoisted_10 = {
   "class": "modal-footer"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -23558,10 +23596,38 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-bs-target": "#create"
   }, " Create Survey ", 2
   /* CLASS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    href: "",
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Note: jquery to add more input fields or questions "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.inputs, function (input, k) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      "class": "form-group",
+      key: k
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      type: "text",
+      "class": "form-control",
+      "onUpdate:modelValue": function onUpdateModelValue($event) {
+        return input.name = $event;
+      }
+    }, null, 8
+    /* PROPS */
+    , _hoisted_7), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, input.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+      "class": "fas fa-minus-circle",
+      onClick: function onClick($event) {
+        return _ctx.remove(k);
+      }
+    }, null, 8
+    /* PROPS */
+    , _hoisted_8), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, k || !k && _ctx.inputs.length > 1]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+      "class": "fas fa-plus-circle",
+      onClick: function onClick($event) {
+        return _ctx.add(k);
+      }
+    }, null, 8
+    /* PROPS */
+    , _hoisted_9), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, k == _ctx.inputs.length - 1]])])]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
-      return $options.createSurvey && $options.createSurvey.apply($options, arguments);
+      return $options.create && $options.create.apply($options, arguments);
     }),
     "class": "btn btn-primary"
   }, "Create")])])])])], 64
@@ -23847,7 +23913,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'home']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_7, _hoisted_9, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'survey']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.companyName), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'survey']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.name), 1
   /* TEXT */
   )])], 512
   /* NEED_PATCH */
@@ -24372,11 +24438,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Footer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Footer");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Header, {
-    htype: "company",
-    companyName: _ctx.$route.query.companyName
-  }, null, 8
-  /* PROPS */
-  , ["companyName"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Create, {
+    htype: "company"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Create, {
     myclass: "btn btn-success me-2"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Display, {
     myclass: "btn btn-primary"
@@ -24539,7 +24602,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: "/",
-  name: "HomePage",
+  name: "home",
   component: _pages_HomePage_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
   meta: {
     guest: true
