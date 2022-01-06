@@ -1,5 +1,5 @@
 <template>
-  <div class="card" style="width: 19.1rem">
+  <div class="card shadow-sm" style="width: 19.1rem">
     <div class="card-body">
       <h5 class="card-title">Survey Name</h5>
       <h6 class="card-subtitle mb-2 text-muted">Date Created</h6>
