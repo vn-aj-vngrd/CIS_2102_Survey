@@ -5,7 +5,7 @@
     data-bs-toggle="modal"
     :data-bs-target="`#${modal}`"
   >
-    Delete
+    Delete Survey
   </button>
 
   <div

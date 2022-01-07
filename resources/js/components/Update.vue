@@ -5,7 +5,7 @@
     data-bs-toggle="modal"
     data-bs-target="#update"
   >
-    Update
+    Update Questions
   </button>
 
   <div
