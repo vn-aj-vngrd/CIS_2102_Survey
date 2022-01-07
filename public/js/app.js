@@ -23683,10 +23683,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateSurvey: function updateSurvey() {
+      var _this2 = this;
+
       console.log(this.formData);
       axios.post("update", this.formData).then(function (response) {
-        console.log("record created!"); // this.$router.push("/");
-        // this.$toaster.success("Employee updated successfully.");
+        // console.log(response);
+        $("#update").modal("hide");
+
+        _this2.$toast.success("Survey Successfully Update", {
+          position: "top",
+          queue: true
+        });
       })["catch"](function (error) {
         console.log(error);
       });
@@ -25139,7 +25146,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8
     /* PROPS */
     , _hoisted_7), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-      type: "text",
+      type: "hidden",
       "class": "form-control",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return question.questionID = $event;

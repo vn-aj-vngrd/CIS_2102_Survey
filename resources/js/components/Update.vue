@@ -39,7 +39,7 @@
             >
             <input type="text" class="form-control" v-model="question.text" />
             <input
-              type="text"
+              type="hidden"
               class="form-control"
               v-model="question.questionID"
             />
@@ -88,9 +88,12 @@ export default {
       axios
         .post("update", this.formData)
         .then((response) => {
-          console.log("record created!");
-          // this.$router.push("/");
-          // this.$toaster.success("Employee updated successfully.");
+          // console.log(response);
+          $("#update").modal("hide");
+          this.$toast.success(`Survey Successfully Update`, {
+            position: "top",
+            queue: true,
+          });
         })
         .catch((error) => {
           console.log(error);
