@@ -20,7 +20,7 @@
         <h3 class="display-5 fw-bold lh-1 mb-3">
           {{ $route.query.name }}
         </h3>
-        <h6 class="text-muted border-top pt-4 border-bottom pb-4">
+        <h6 class="text-muted border-top pt-3 border-bottom pb-3">
           Date Created: {{ $filters.formatDate($route.query.created_at) }}
           <br />
           Date Updated: {{ $filters.formatDate($route.query.updated_at) }}

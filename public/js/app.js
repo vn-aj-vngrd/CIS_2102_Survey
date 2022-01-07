@@ -25014,7 +25014,7 @@ var _hoisted_7 = {
   "class": "display-5 fw-bold lh-1 mb-3"
 };
 var _hoisted_8 = {
-  "class": "text-muted border-top pt-4 border-bottom pb-4"
+  "class": "text-muted border-top pt-3 border-bottom pb-3"
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
