@@ -41,6 +41,12 @@
       </div>
     </div>
   </div>
+  <div class="container text-center">
+    <button @click="$router.go(-1)" class="btn btn-secondary btn-sm">
+      Go Back
+    </button>
+    <p class="text-muted pt-2">Click button to go back to main page.</p>
+  </div>
 </template>
 
 <script>

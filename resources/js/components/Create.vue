@@ -115,6 +115,7 @@ export default {
           this.formData.name = "";
           this.formData.questions.length = 1;
           this.formData.questions[0].text = "";
+          $("#create").modal("hide");
           this.$router.go(0);
         })
         .catch((error) => {

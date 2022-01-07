@@ -13,7 +13,7 @@
             </p>
             <div class="mt-3">
               <Delete
-                myclass="btn btn-danger btn-sm float-end"
+                myclass="btn btn-outline-danger btn-sm float-end"
                 :surveyID="survey.surveyID"
                 :modal="`modal${survey.surveyID}`"
                 :routeNum="parseInt(0)"
@@ -29,7 +29,7 @@
                     updated_at: survey.updated_at,
                   },
                 }"
-                class="btn btn-success btn-sm me-2 float-end"
+                class="btn btn-outline-success btn-sm me-2 float-end"
                 >View More</router-link
               >
             </div>

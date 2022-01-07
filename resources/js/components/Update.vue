@@ -57,12 +57,12 @@ export default {
   },
   methods: {
     getQuestions() {
-      console.log(this.surveyID);
+      // console.log(this.surveyID);
       axios
         .get("getQuestions/" + this.surveyID)
         .then((response) => {
           this.questions = response.data;
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch((errors) => {
           console.log(errors);

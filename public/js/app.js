@@ -23281,6 +23281,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.formData.name = "";
         _this.formData.questions.length = 1;
         _this.formData.questions[0].text = "";
+        $("#create").modal("hide");
 
         _this.$router.go(0);
       })["catch"](function (error) {
@@ -23672,10 +23673,9 @@ __webpack_require__.r(__webpack_exports__);
     getQuestions: function getQuestions() {
       var _this = this;
 
-      console.log(this.surveyID);
+      // console.log(this.surveyID);
       axios.get("getQuestions/" + this.surveyID).then(function (response) {
-        _this.questions = response.data;
-        console.log(response.data);
+        _this.questions = response.data; // console.log(response.data);
       })["catch"](function (errors) {
         console.log(errors);
       });
@@ -23886,7 +23886,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, " Date Created: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate(survey.created_at)), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Delete, {
-      myclass: "btn btn-danger btn-sm float-end",
+      myclass: "btn btn-outline-danger btn-sm float-end",
       surveyID: survey.surveyID,
       modal: "modal".concat(survey.surveyID),
       routeNum: parseInt(0)
@@ -23905,7 +23905,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           updated_at: survey.updated_at
         }
       },
-      "class": "btn btn-success btn-sm me-2 float-end"
+      "class": "btn btn-outline-success btn-sm me-2 float-end"
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
         return [_hoisted_9];
@@ -24993,6 +24993,16 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_10 = {
   "class": "d-grid gap-2 d-md-flex justify-content-md-start mt-4"
 };
+var _hoisted_11 = {
+  "class": "container text-center"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-muted pt-2"
+}, "Click button to go back to main page.", -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Vue3_chart_js = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Vue3-chart-js");
 
@@ -25000,7 +25010,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Delete = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Delete");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Vue3_chart_js, (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Vue3_chart_js, (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
     "class": ""
   }, _objectSpread({}, $setup.pieChart)), null, 16
   /* FULL_PROPS */
@@ -25022,7 +25032,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     routeNum: parseInt(-1)
   }, null, 8
   /* PROPS */
-  , ["surveyID", "modal", "routeNum"])])])])]);
+  , ["surveyID", "modal", "routeNum"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return _ctx.$router.go(-1);
+    }),
+    "class": "btn btn-secondary btn-sm"
+  }, " Go Back "), _hoisted_12])], 64
+  /* STABLE_FRAGMENT */
+  );
 }
 
 /***/ }),
