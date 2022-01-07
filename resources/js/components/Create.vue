@@ -115,11 +115,9 @@ export default {
           this.formData.name = "";
           this.formData.questions.length = 1;
           this.formData.questions[0].text = "";
-          $("#create").modal("hide");
-          this.$toast.success(`Survey Successfully Created`, {
-            position: "top",
-            queue: true,
-          });
+          // this.$forceUpdate();
+          this.$router.go();
+          // $("#create").modal("hide");
         })
         .catch((error) => {
           console.log(error);

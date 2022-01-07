@@ -2,7 +2,7 @@
   <Header htype="company" />
   <Card />
   <div class="container text-center">
-    <Create myclass="btn btn-success me-2 mb-5" />
+    <Create myclass="btn btn-primary me-2 mb-5" />
   </div>
   <Footer />
 </template>

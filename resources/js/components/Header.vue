@@ -11,8 +11,8 @@
         border-bottom
       "
     >
-      <a
-        href="/"
+      <router-link
+        to="/"
         class="
           d-flex
           align-items-center
@@ -24,7 +24,7 @@
         <!-- Logo Here -->
         <!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Logo"><use xlink:href="#logo"/></svg> -->
         <b>Survey</b>
-      </a>
+      </router-link>
 
       <!-- Start - Middle Heading -->
       <ul
