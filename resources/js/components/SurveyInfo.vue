@@ -27,14 +27,12 @@
         </h6>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
-          <button
-            type="button"
-            class="btn btn-outline-primary btn-lg px-4 me-md-2"
-          >
-            Update
-          </button>
+          <Update
+            myclass="btn btn-outline-primary btn-sm px-4 me-md-2"
+            :surveyID="parseInt($route.query.surveyID)"
+          />
           <Delete
-            myclass="btn btn-outline-danger btn-lg px-4"
+            myclass="btn btn-outline-danger btn-sm btn-lg px-4"
             :surveyID="parseInt($route.query.surveyID)"
             :modal="`modal${$route.query.surveyID}`"
             :routeNum="parseInt(-1)"
@@ -47,6 +45,7 @@
 
 <script>
 import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
+import Update from "./Update.vue";
 import Delete from "./Delete.vue";
 
 export default {
@@ -54,6 +53,7 @@ export default {
   components: {
     Vue3ChartJs,
     Delete,
+    Update,
   },
   setup() {
     const pieChart = {
@@ -86,3 +86,4 @@ export default {
   },
 };
 </script>
+
