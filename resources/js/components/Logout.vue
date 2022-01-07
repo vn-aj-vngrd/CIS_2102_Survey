@@ -28,7 +28,7 @@
         </div>
         <div class="modal-body">Are you sure you want to logout?</div>
         <div class="modal-footer">
-          <button class="btn btn-outline-danger" @click="logout">
+          <button class="btn btn-danger" @click="logout">
             Log Out
           </button>
         </div>
