@@ -42,6 +42,10 @@ function loggedIn() {
 }
 
 router.beforeEach((to, from, next) => {
+    let modalBackground = document.querySelector(".modal-backdrop");
+    if (modalBackground) {
+        modalBackground.remove();
+    }
     if (to.matched.some((record) => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.

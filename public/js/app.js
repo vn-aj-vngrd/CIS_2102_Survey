@@ -25387,6 +25387,12 @@ function loggedIn() {
 }
 
 router.beforeEach(function (to, from, next) {
+  var modalBackground = document.querySelector(".modal-backdrop");
+
+  if (modalBackground) {
+    modalBackground.remove();
+  }
+
   if (to.matched.some(function (record) {
     return record.meta.requiresAuth;
   })) {
