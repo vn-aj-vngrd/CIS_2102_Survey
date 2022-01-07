@@ -22,7 +22,13 @@
         "
       >
         <!-- Logo Here -->
-        <!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Logo"><use xlink:href="#logo"/></svg> -->
+        <img
+          src="../../css/img/logo.png"
+          alt="logo"
+          width="30"
+          height="24"
+          class="me-3"
+        />
         <b>Survey</b>
       </router-link>
 
