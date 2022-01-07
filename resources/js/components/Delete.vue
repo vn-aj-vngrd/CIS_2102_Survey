@@ -28,7 +28,6 @@
         </div>
         <div class="modal-body">
           Are you sure you want to delete the survey?
-          {{ this.routeNum }}
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" @click="deleteSurvey">Confirm</button>

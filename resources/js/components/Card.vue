@@ -1,38 +1,46 @@
 <template>
   <div class="container">
     <div class="row d-flex d-flex align-items-center">
-      <div class="col-auto mb-5" v-for="survey in surveys" :key="survey">
-        <div class="card shadow-sm" style="width: 19.1rem">
+      <div class="col-auto mt-3" v-for="survey in surveys" :key="survey">
+        <div class="card shadow-sm">
           <div class="card-body">
-            <h5 class="card-title"><b>Title: </b>{{ survey.name }}</h5>
-            <p class="card-subtitle mb-3 text-muted border-bottom pb-2">
-              <b>Date Created:</b> {{ $filters.formatDate(survey.created_at) }}
+            <h4 class="card-title pb-2"><b>Title: </b>{{ survey.name }}</h4>
+            <p class="card-subtitle text-muted border-top pt-2">
+              Date Created: {{ $filters.formatDate(survey.created_at) }}
             </p>
-            <Delete
-              myclass="btn btn-danger btn-sm float-end"
-              :surveyID="survey.surveyID"
-              :modal="`modal${survey.surveyID}`"
-              :routeNum="parseInt(0)"
-            />
-            <router-link
-              :to="{
-                name: 'survey',
-                params: { pathname: survey.name },
-                query: {
-                  surveyID: survey.surveyID,
-                  name: survey.name,
-                  created_at: survey.created_at,
-                  updated_at: survey.updated_at,
-                },
-              }"
-              class="btn btn-success btn-sm me-2 float-end"
-              >View More</router-link
-            >
+            <p class="card-subtitle mb-3 text-muted border-bottom pb-2">
+              Date Created: {{ $filters.formatDate(survey.created_at) }}
+            </p>
+            <div class="mt-3">
+              <Delete
+                myclass="btn btn-danger btn-sm float-end"
+                :surveyID="survey.surveyID"
+                :modal="`modal${survey.surveyID}`"
+                :routeNum="parseInt(0)"
+              />
+              <router-link
+                :to="{
+                  name: 'survey',
+                  params: { pathname: survey.name },
+                  query: {
+                    surveyID: survey.surveyID,
+                    name: survey.name,
+                    created_at: survey.created_at,
+                    updated_at: survey.updated_at,
+                  },
+                }"
+                class="btn btn-success btn-sm me-2 float-end"
+                >View More</router-link
+              >
+            </div>
           </div>
         </div>
       </div>
-      <h6 class="text-danger text-center mb-4 mt-2" v-if="surveys.length == 0">
-        You currently have no created surveys.
+      <h6
+        class="text-danger text-center mb-4 mt-5 fw-bold"
+        v-if="surveys.length == 0"
+      >
+        Currently have no created surveys.
       </h6>
     </div>
   </div>
@@ -72,6 +80,10 @@ export default {
 
 <style scoped>
 p {
-  font-size: 13px;
+  font-size: 14px;
+}
+.card {
+  width: 19.1rem;
+  height: 11rem;
 }
 </style>
