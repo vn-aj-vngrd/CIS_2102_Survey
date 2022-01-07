@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import HomePage from "./pages/HomePage.vue";
 import CustomerPage from "./pages/CustomerPage.vue";
 import CompanyPage from "./pages/CompanyPage.vue";
+import SurveyPage from "./pages/SurveyPage.vue";
 
 const routes = [
     {
@@ -21,6 +22,12 @@ const routes = [
         path: "/company/:pathname",
         name: "company",
         component: CompanyPage,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: "/company/survey/:pathname",
+        name: "survey",
+        component: SurveyPage,
         meta: { requiresAuth: true },
     },
 ];
@@ -47,10 +54,10 @@ router.beforeEach((to, from, next) => {
         }
     } else if (to.matched.some((record) => record.meta.guest)) {
         if (loggedIn()) {
-          const name = localStorage.getItem("pathname");
+            const name = localStorage.getItem("pathname");
             next({
                 name: "company",
-                params: { pathname: name},
+                params: { pathname: name },
             });
         } else {
             next();

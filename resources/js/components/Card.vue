@@ -8,8 +8,15 @@
             <p class="card-subtitle mb-3 text-muted border-bottom pb-2">
               <b>Date Created:</b> {{ $filters.formatDate(survey.created_at) }}
             </p>
-            <a class="btn btn-danger btn-sm float-end">Delete</a>
-            <a class="btn btn-success btn-sm me-2 float-end">View More</a>
+            <button class="btn btn-danger btn-sm float-end">Delete</button>
+            <router-link
+              :to="{
+                name: 'survey',
+                params: { pathname: survey.name },
+              }"
+              class="btn btn-success btn-sm me-2 float-end"
+              >View More</router-link
+            >
           </div>
         </div>
       </div>
@@ -21,7 +28,6 @@
 </template>
 
 <script>
-
 export default {
   name: "Card",
   data() {
