@@ -13,6 +13,11 @@
               :to="{
                 name: 'survey',
                 params: { pathname: survey.name },
+                query: {
+                  name: survey.name,
+                  created_at: survey.created_at,
+                  updated_at: survey.updated_at,
+                },
               }"
               class="btn btn-success btn-sm me-2 float-end"
               >View More</router-link
