@@ -51,6 +51,13 @@ class SurveyController extends Controller
         return response()->json($survey);
     }
 
+    public function delete($id)
+    {
+        $survey = Survey::find($id);
+        $survey->delete();
+        return response()->json("Record Successfuly Deleted.");
+    }
+
     /**
      * Store a newly created resource in storage.
      *

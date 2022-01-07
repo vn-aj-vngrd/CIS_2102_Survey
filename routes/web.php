@@ -20,7 +20,7 @@ use App\Http\Controllers\SurveyController;
 
 Route::post('create', [SurveyController::class, 'create']);
 Route::get('index', [SurveyController::class, 'index']);
-
+Route::post('delete/{id}', [SurveyController::class, 'delete']);
 
 Route::get('{any}', function () {
     return view('app');

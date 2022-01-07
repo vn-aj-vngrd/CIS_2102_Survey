@@ -1,7 +1,16 @@
 <template>
   <div class="container col-xxl-8 px-4 py-5">
-    <div class="row flex-lg-row-reverse align-items-center justify-content-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6 ">
+    <div
+      class="
+        row
+        flex-lg-row-reverse
+        align-items-center
+        justify-content-center
+        g-5
+        py-5
+      "
+    >
+      <div class="col-10 col-sm-8 col-lg-6">
         <div class="container">
           <h6 class="text-center">Legend</h6>
           <Vue3-chart-js class="" v-bind="{ ...pieChart }" />
@@ -24,9 +33,7 @@
           >
             Update
           </button>
-          <button type="button" class="btn btn-outline-danger btn-lg px-4">
-            Delete
-          </button>
+          <!-- <Delete myclass="btn btn-outline-danger btn-lg px-4" /> -->
         </div>
       </div>
     </div>
@@ -35,10 +42,13 @@
 
 <script>
 import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
+import Delete from "./Delete.vue";
+
 export default {
   name: "SurveyInfo",
   components: {
     Vue3ChartJs,
+    Delete,
   },
   setup() {
     const pieChart = {
@@ -65,7 +75,6 @@ export default {
         ],
       },
     };
-
     return {
       pieChart,
     };

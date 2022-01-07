@@ -8,12 +8,17 @@
             <p class="card-subtitle mb-3 text-muted border-bottom pb-2">
               <b>Date Created:</b> {{ $filters.formatDate(survey.created_at) }}
             </p>
-            <button class="btn btn-danger btn-sm float-end">Delete</button>
+            <Delete
+              myclass="btn btn-danger btn-sm float-end"
+              :surveyID="survey.surveyID"
+              :modal="`modal${survey.surveyID}`"
+            />
             <router-link
               :to="{
                 name: 'survey',
                 params: { pathname: survey.name },
                 query: {
+                  id: survey.surveyID,
                   name: survey.name,
                   created_at: survey.created_at,
                   updated_at: survey.updated_at,
@@ -33,8 +38,13 @@
 </template>
 
 <script>
+import Delete from "./Delete.vue";
+
 export default {
   name: "Card",
+  components: {
+    Delete,
+  },
   data() {
     return {
       surveys: {},
