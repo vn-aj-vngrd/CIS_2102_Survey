@@ -28,6 +28,7 @@
         </div>
         <div class="modal-body">
           Are you sure you want to delete the survey?
+          {{ this.routeNum }}
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" @click="deleteSurvey">Confirm</button>
@@ -47,18 +48,19 @@ export default {
     myclass: String,
     surveyID: Number,
     modal: String,
+    routeNum: Number,
   },
   data() {
     return {};
   },
   methods: {
     deleteSurvey() {
-      console.log(this.surveyID);
       axios
         .post("delete/" + this.surveyID)
         .then((response) => {
-        //   console.log(response);
-          this.$router.go();
+          $(`#${this.modal}`).modal("hide");
+          if (this.routeNum == -1) this.$router.go(-1);
+          else if (this.routeNum == 0) this.$router.go(0);
         })
         .catch((errors) => {
           console.log(errors);

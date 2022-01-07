@@ -23309,7 +23309,8 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     myclass: String,
     surveyID: Number,
-    modal: String
+    modal: String,
+    routeNum: Number
   },
   data: function data() {
     return {};
@@ -23318,10 +23319,9 @@ __webpack_require__.r(__webpack_exports__);
     deleteSurvey: function deleteSurvey() {
       var _this = this;
 
-      console.log(this.surveyID);
       axios.post("delete/" + this.surveyID).then(function (response) {
-        //   console.log(response);
-        _this.$router.go();
+        $("#".concat(_this.modal)).modal("hide");
+        if (_this.routeNum == -1) _this.$router.go(-1);else if (_this.routeNum == 0) _this.$router.go(0);
       })["catch"](function (errors) {
         console.log(errors);
       });
@@ -23851,17 +23851,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Delete, {
       myclass: "btn btn-danger btn-sm float-end",
       surveyID: survey.surveyID,
-      modal: "modal".concat(survey.surveyID)
+      modal: "modal".concat(survey.surveyID),
+      routeNum: parseInt(0)
     }, null, 8
     /* PROPS */
-    , ["surveyID", "modal"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    , ["surveyID", "modal", "routeNum"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
         name: 'survey',
         params: {
           pathname: survey.name
         },
         query: {
-          id: survey.surveyID,
+          surveyID: survey.surveyID,
           name: survey.name,
           created_at: survey.created_at,
           updated_at: survey.updated_at
@@ -24141,12 +24142,9 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_6 = {
   "class": "modal-body"
-}, " Are you sure you want to delete the survey? ", -1
-/* HOISTED */
-);
-
+};
 var _hoisted_7 = {
   "class": "modal-footer"
 };
@@ -24173,7 +24171,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     tabindex: "-1",
     "aria-labelledby": "exampleModalLabel",
     "aria-hidden": "true"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, " Are you sure you want to delete the survey? " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.routeNum), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-primary",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.deleteSurvey && $options.deleteSurvey.apply($options, arguments);
@@ -24952,17 +24952,21 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_10 = {
   "class": "d-grid gap-2 d-md-flex justify-content-md-start mt-4"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
   "class": "btn btn-outline-primary btn-lg px-4 me-md-2"
-}, " Update "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Delete myclass=\"btn btn-outline-danger btn-lg px-4\" /> ")], -1
+}, " Update ", -1
 /* HOISTED */
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Vue3_chart_js = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Vue3-chart-js");
+
+  var _component_Delete = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Delete");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Vue3_chart_js, (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
     "class": ""
@@ -24974,7 +24978,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Updated: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate(_ctx.$route.query.updated_at)), 1
   /* TEXT */
-  )]), _hoisted_10])])]);
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Delete, {
+    myclass: "btn btn-outline-danger btn-lg px-4",
+    surveyID: parseInt(_ctx.$route.query.surveyID),
+    modal: "modal".concat(_ctx.$route.query.surveyID),
+    routeNum: parseInt(-1)
+  }, null, 8
+  /* PROPS */
+  , ["surveyID", "modal", "routeNum"])])])])]);
 }
 
 /***/ }),

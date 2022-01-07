@@ -12,13 +12,14 @@
               myclass="btn btn-danger btn-sm float-end"
               :surveyID="survey.surveyID"
               :modal="`modal${survey.surveyID}`"
+              :routeNum="parseInt(0)"
             />
             <router-link
               :to="{
                 name: 'survey',
                 params: { pathname: survey.name },
                 query: {
-                  id: survey.surveyID,
+                  surveyID: survey.surveyID,
                   name: survey.name,
                   created_at: survey.created_at,
                   updated_at: survey.updated_at,

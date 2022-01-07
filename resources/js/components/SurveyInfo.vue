@@ -33,7 +33,12 @@
           >
             Update
           </button>
-          <!-- <Delete myclass="btn btn-outline-danger btn-lg px-4" /> -->
+          <Delete
+            myclass="btn btn-outline-danger btn-lg px-4"
+            :surveyID="parseInt($route.query.surveyID)"
+            :modal="`modal${$route.query.surveyID}`"
+            :routeNum="parseInt(-1)"
+          />
         </div>
       </div>
     </div>
