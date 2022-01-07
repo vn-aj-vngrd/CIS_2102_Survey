@@ -23690,7 +23690,7 @@ __webpack_require__.r(__webpack_exports__);
         // console.log(response);
         $("#update").modal("hide");
 
-        _this2.$toast.success("Survey Successfully Update", {
+        _this2.$toast.success("Survey Successfully Updated", {
           position: "top",
           queue: true
         });

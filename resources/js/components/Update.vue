@@ -90,7 +90,7 @@ export default {
         .then((response) => {
           // console.log(response);
           $("#update").modal("hide");
-          this.$toast.success(`Survey Successfully Update`, {
+          this.$toast.success(`Survey Successfully Updated`, {
             position: "top",
             queue: true,
           });
