@@ -9,22 +9,12 @@ use App\Helpers\Generator;
 
 class SurveyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $surveys = Survey::orderBy('surveyID', 'desc')->get();
         return response()->json($surveys);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         $request->validate([
@@ -51,11 +41,22 @@ class SurveyController extends Controller
         return response()->json($survey);
     }
 
+    public function update(Request $request)
+    {
+        foreach ($request->questions as $val) {
+            $question = Question::findOrFail($val['questionID']);
+            $question->text = $val['text'];
+            $question->save();
+        }
+
+        return response()->json("Survey Successfuly Updated.");
+    }
+
     public function delete($id)
     {
         $survey = Survey::find($id);
         $survey->delete();
-        return response()->json("Record Successfuly Deleted.");
+        return response()->json("Survey Successfuly Deleted.");
     }
 
     public function getQuestions($id)

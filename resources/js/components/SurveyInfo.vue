@@ -41,7 +41,7 @@
       </div>
     </div>
   </div>
-  <div class="container text-center">
+  <div class="container text-center pb-5">
     <button @click="$router.go(-1)" class="btn btn-secondary btn-sm">
       Go Back
     </button>

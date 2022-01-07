@@ -23666,7 +23666,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      questions: []
+      formData: {
+        questions: []
+      }
     };
   },
   methods: {
@@ -23675,12 +23677,20 @@ __webpack_require__.r(__webpack_exports__);
 
       // console.log(this.surveyID);
       axios.get("getQuestions/" + this.surveyID).then(function (response) {
-        _this.questions = response.data; // console.log(response.data);
+        _this.formData.questions = response.data; // console.log(response.data);
       })["catch"](function (errors) {
         console.log(errors);
       });
     },
-    updateSurvey: function updateSurvey() {}
+    updateSurvey: function updateSurvey() {
+      console.log(this.formData);
+      axios.post("update", this.formData).then(function (response) {
+        console.log("record created!"); // this.$router.push("/");
+        // this.$toaster.success("Employee updated successfully.");
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   },
   mounted: function mounted() {
     this.getQuestions();
@@ -24994,7 +25004,7 @@ var _hoisted_10 = {
   "class": "d-grid gap-2 d-md-flex justify-content-md-start mt-4"
 };
 var _hoisted_11 = {
-  "class": "container text-center"
+  "class": "container text-center pb-5"
 };
 
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
@@ -25089,15 +25099,16 @@ var _hoisted_5 = {
   "class": "modal-body"
 };
 var _hoisted_6 = {
-  "for": "recipient-name",
+  "for": "question",
   "class": "col-form-label"
 };
-var _hoisted_7 = ["value"];
-var _hoisted_8 = {
+var _hoisted_7 = ["onUpdate:modelValue"];
+var _hoisted_8 = ["onUpdate:modelValue"];
+var _hoisted_9 = {
   "class": "modal-footer"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
   "class": "btn btn-danger",
   "data-bs-dismiss": "modal"
@@ -25113,27 +25124,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-bs-target": "#update"
   }, " Update Questions ", 2
   /* CLASS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.questions, function (question, index) {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.formData.questions, function (question, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "mb-3",
       key: question
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_6, "Question " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index + 1), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "text",
       "class": "form-control",
-      value: question.text
+      "onUpdate:modelValue": function onUpdateModelValue($event) {
+        return question.text = $event;
+      }
     }, null, 8
     /* PROPS */
-    , _hoisted_7)]);
+    , _hoisted_7), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      type: "text",
+      "class": "form-control",
+      "onUpdate:modelValue": function onUpdateModelValue($event) {
+        return question.questionID = $event;
+      }
+    }, null, 8
+    /* PROPS */
+    , _hoisted_8), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.questionID]])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-primary",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.updateSurvey && $options.updateSurvey.apply($options, arguments);
     })
-  }, "Update"), _hoisted_9])])])])], 64
+  }, "Update"), _hoisted_10])])])])], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -25168,7 +25189,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Header, {
     htype: "company"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Card), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Create, {
-    myclass: "btn btn-primary me-2 mt-5"
+    myclass: "btn btn-primary me-2 mt-5 mb-5"
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Footer)], 64
   /* STABLE_FRAGMENT */
   );

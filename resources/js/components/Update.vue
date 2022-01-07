@@ -18,7 +18,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><b>Survey Questions</b></h5>
+          <h5 class="modal-title" id="exampleModalLabel">
+            <b>Survey Questions</b>
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -27,9 +29,20 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div class="mb-3" v-for="(question, index) in questions" :key="question">
-            <label for="recipient-name" class="col-form-label">Question {{ index+1 }}</label>
-            <input type="text" class="form-control" :value="question.text" />
+          <div
+            class="mb-3"
+            v-for="(question, index) in formData.questions"
+            :key="question"
+          >
+            <label for="question" class="col-form-label"
+              >Question {{ index + 1 }}</label
+            >
+            <input type="text" class="form-control" v-model="question.text" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="question.questionID"
+            />
           </div>
         </div>
         <div class="modal-footer">
@@ -52,7 +65,9 @@ export default {
   },
   data() {
     return {
-      questions: [],
+      formData: {
+        questions: [],
+      },
     };
   },
   methods: {
@@ -61,14 +76,26 @@ export default {
       axios
         .get("getQuestions/" + this.surveyID)
         .then((response) => {
-          this.questions = response.data;
+          this.formData.questions = response.data;
           // console.log(response.data);
         })
         .catch((errors) => {
           console.log(errors);
         });
     },
-    updateSurvey() {},
+    updateSurvey() {
+      console.log(this.formData);
+      axios
+        .post("update", this.formData)
+        .then((response) => {
+          console.log("record created!");
+          // this.$router.push("/");
+          // this.$toaster.success("Employee updated successfully.");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   mounted() {
     this.getQuestions();
