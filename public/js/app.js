@@ -23280,7 +23280,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("create", this.formData).then(function (response) {
         _this.formData.name = "";
         _this.formData.questions.length = 1;
-        _this.formData.questions[0].text = ""; // this.$forceUpdate();
+        _this.formData.questions[0].text = "";
 
         _this.$router.go(); // $("#create").modal("hide");
 
