@@ -23282,8 +23282,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.formData.questions.length = 1;
         _this.formData.questions[0].text = "";
 
-        _this.$router.go(); // $("#create").modal("hide");
-
+        _this.$router.go(0);
       })["catch"](function (error) {
         console.log(error);
       });
