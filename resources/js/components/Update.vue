@@ -8,7 +8,8 @@
     Update Questions
   </button>
 
-  <div
+  <form
+    @submit="updateSurvey"
     class="modal fade text-start"
     id="update"
     tabindex="-1"
@@ -37,7 +38,12 @@
             <label for="question" class="col-form-label"
               >Question {{ index + 1 }}</label
             >
-            <input type="text" class="form-control" v-model="question.text" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="question.text"
+              required
+            />
             <input
               type="hidden"
               class="form-control"
@@ -46,14 +52,14 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" @click="updateSurvey">Update</button>
+          <button class="btn btn-primary">Update</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
             Cancel
           </button>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
