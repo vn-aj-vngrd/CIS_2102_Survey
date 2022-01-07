@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage.vue";
 import CustomerPage from "./pages/CustomerPage.vue";
 import CompanyPage from "./pages/CompanyPage.vue";
 import SurveyPage from "./pages/SurveyPage.vue";
+import PageNotFound from "./pages/PageNotFound.vue";
+
 
 const routes = [
     {
@@ -30,6 +32,7 @@ const routes = [
         component: SurveyPage,
         meta: { requiresAuth: true },
     },
+    { path: "/:NotFound(.*)*", component: PageNotFound },
 ];
 
 const router = createRouter({

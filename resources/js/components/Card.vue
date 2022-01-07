@@ -36,12 +36,17 @@
           </div>
         </div>
       </div>
-      <h6
-        class="text-danger text-center mb-4 mt-5 fw-bold"
-        v-if="surveys.length == 0"
-      >
-        Currently have no created surveys.
-      </h6>
+
+      <div class="container empty border-bottom pb-4" v-if="surveys.length == 0">
+        <div class="row justify-content-center">
+          <div class="col-md-12 text-center">
+            <span class="display-6 text-danger d-block">Empty</span>
+            <div class="mt-2">
+              You have no survey created at the moment.
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -85,5 +90,9 @@ p {
 .card {
   width: 19.1rem;
   height: 11rem;
+}
+.empty {
+  font-size: 16px;
+  margin-top: 140px;
 }
 </style>

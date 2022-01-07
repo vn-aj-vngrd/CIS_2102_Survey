@@ -54,7 +54,7 @@ class SurveyController extends Controller
 
     public function delete($id)
     {
-        $survey = Survey::find($id);
+        $survey = Survey::findOrFail($id);
         $survey->delete();
         return response()->json("Survey Successfuly Deleted.");
     }
