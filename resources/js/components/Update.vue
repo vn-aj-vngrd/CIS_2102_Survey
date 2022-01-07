@@ -27,8 +27,8 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div class="mb-3" v-for="question in questions" :key="question">
-            <label for="recipient-name" class="col-form-label">Question</label>
+          <div class="mb-3" v-for="(question, index) in questions" :key="question">
+            <label for="recipient-name" class="col-form-label">Question {{ index+1 }}</label>
             <input type="text" class="form-control" :value="question.text" />
           </div>
         </div>
