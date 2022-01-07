@@ -24198,7 +24198,7 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "modal-body"
-}, "Are you sure you want to logout?", -1
+}, "Are you sure you want to delete the survey?", -1
 /* HOISTED */
 );
 
