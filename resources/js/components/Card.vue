@@ -4,7 +4,7 @@
       <div class="col-auto mt-3" v-for="survey in surveys" :key="survey">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h4 class="card-title pb-2"><b>Title: </b>{{ survey.name }}</h4>
+            <h4 class="card-title pb-2 fw-bold">{{ survey.name }}</h4>
             <p class="card-subtitle text-muted border-top pt-2">
               Date Created: {{ $filters.formatDate(survey.created_at) }}
             </p>
