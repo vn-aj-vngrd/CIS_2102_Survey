@@ -75,7 +75,7 @@ class SurveyController extends Controller
 
     public function getSurveyInfo($id)
     {
-        $survey = Survey::firstWhere('surveyID', $id)->get();
+        $survey = Survey::where('surveyID', $id)->get();
         return response()->json($survey);
     }
 

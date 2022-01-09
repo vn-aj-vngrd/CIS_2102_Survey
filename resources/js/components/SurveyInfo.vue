@@ -78,11 +78,12 @@ export default {
   },
   methods: {
     getSurveyInfo() {
+      // console.log(this.$route.query.surveyID)
       axios
         .get("getSurveyInfo/" + this.$route.query.surveyID)
         .then((response) => {
           this.survey = response.data[0];
-          // console.log(this.survey);
+          console.log(this.survey);
         })
         .catch((errors) => {
           console.log(errors);

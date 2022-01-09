@@ -23809,8 +23809,10 @@ __webpack_require__.r(__webpack_exports__);
     getSurveyInfo: function getSurveyInfo() {
       var _this = this;
 
+      // console.log(this.$route.query.surveyID)
       axios.get("getSurveyInfo/" + this.$route.query.surveyID).then(function (response) {
-        _this.survey = response.data[0]; // console.log(this.survey);
+        _this.survey = response.data[0];
+        console.log(_this.survey);
       })["catch"](function (errors) {
         console.log(errors);
       });
@@ -24124,7 +24126,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Search Title..."
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.filteredList, function (survey) {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.surveys, function (survey) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "col-auto mt-4",
       key: survey
