@@ -113,25 +113,8 @@ export default {
           console.log(errors);
         });
     },
-    updateSurvey() {
-      // console.log(this.formData);
-      axios
-        .post("update", this.formData)
-        .then((response) => {
-          // console.log(response);
-          $("#update").modal("hide");
-          this.$toast.success(`Survey Successfully Updated`, {
-            position: "top",
-            queue: true,
-          });
-          this.$router.go(0);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
   },
-  created() {
+  mounted() {
     this.formData.id = this.surveyID;
     this.getSurveyName();
     this.getQuestions();

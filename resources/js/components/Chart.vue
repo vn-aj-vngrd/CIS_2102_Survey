@@ -66,7 +66,7 @@ export default {
       responses: Number,
     };
   },
-  mounted() {
+  created() {
     if (this.present === "summary") {
       axios
         .get("getData/" + this.surveyID)

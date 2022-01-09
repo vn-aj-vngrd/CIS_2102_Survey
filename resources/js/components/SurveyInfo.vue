@@ -1,5 +1,5 @@
 <template>
-  <div class="container col-xxl-8 px-4 py-5">
+  <div class="container col-xxl-8 px-4">
     <div
       class="
         row
@@ -12,7 +12,10 @@
     >
       <div class="col-10 col-sm-8 col-lg-6">
         <div class="container">
-          <Chart :surveyID="parseInt($route.query.surveyID)" present="summary"/>
+          <Chart
+            :surveyID="parseInt($route.query.surveyID)"
+            present="summary"
+          />
         </div>
       </div>
       <div class="col-lg-6">

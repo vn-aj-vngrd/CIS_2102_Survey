@@ -23304,7 +23304,7 @@ __webpack_require__.r(__webpack_exports__);
       responses: Number
     };
   },
-  mounted: function mounted() {
+  created: function created() {
     var _this = this;
 
     if (this.present === "summary") {
@@ -23815,7 +23815,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {
+  created: function created() {
     this.formData.id = this.surveyID;
     this.getSurveyName();
     this.getQuestions();
@@ -25192,7 +25192,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "container col-xxl-8 px-4 py-5"
+  "class": "container col-xxl-8 px-4"
 };
 var _hoisted_2 = {
   "class": "row flex-lg-row-reverse align-items-center justify-content-center g-5 py-5"
