@@ -1,8 +1,8 @@
 <template>
   <Header htype="company" />
-  <Card />
-  <div class="container text-center">
-    <Create myclass="btn btn-sm btn-primary mt-5" />
+  <Card class="pb-4"/>
+  <div class="container text-center border-top pt-4">
+    <Create myclass="btn btn-sm btn-primary" />
     <p class="text-muted mt-2 pb-5">Click button to create a survey.</p>
   </div>
   <Footer />

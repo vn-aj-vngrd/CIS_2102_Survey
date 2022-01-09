@@ -1,7 +1,17 @@
 <template>
   <div class="container">
+    <div class="d-flex justify-content-center">
+      <div class="d-flex form-group">
+        <input
+          type="text"
+          class="form-control"
+          v-model="search"
+          placeholder="Search Title..."
+        />
+      </div>
+    </div>
     <div class="row d-flex d-flex align-items-center">
-      <div class="col-auto mt-3" v-for="survey in surveys" :key="survey">
+      <div class="col-auto mt-3" v-for="survey in filteredList" :key="survey">
         <div class="card shadow-sm">
           <div class="card-body">
             <h4 class="card-title pb-2 fw-bold">{{ survey.name }}</h4>
@@ -34,15 +44,9 @@
         </div>
       </div>
 
-      <div
-        class="container empty border-bottom pb-4"
-        v-if="surveys.length == 0"
-      >
-        <div class="row justify-content-center">
-          <div class="col-md-12 text-center">
-            <span class="display-6 text-danger d-block">Empty</span>
-            <div class="mt-2">You have no survey created at the moment.</div>
-          </div>
+      <div class="container empty" v-if="surveys.length == 0">
+        <div class="mt-3 text-center text-danger">
+          You have no created survey at the moment.
         </div>
       </div>
     </div>
@@ -59,7 +63,8 @@ export default {
   },
   data() {
     return {
-      surveys: {},
+      surveys: [],
+      search: "",
     };
   },
   methods: {
@@ -75,6 +80,13 @@ export default {
         });
     },
   },
+  computed: {
+    filteredList() {
+      return this.surveys.filter((val) => {
+        return val.name.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
+  },
   mounted() {
     this.getSurveys();
   },
@@ -88,9 +100,5 @@ p {
 .card {
   width: 19.1rem;
   height: 11rem;
-}
-.empty {
-  font-size: 16px;
-  margin-top: 140px;
 }
 </style>
