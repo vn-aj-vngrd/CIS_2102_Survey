@@ -23270,27 +23270,25 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Vue3ChartJs: _j_t_mcc_vue3_chartjs__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  setup: function setup(props) {
-    var pieChart = {
-      id: "pieChart",
-      type: "pie",
-      data: {
+  data: function data() {
+    return {
+      dataChart: {
         labels: ["Very Unsatisfied", "Unsatisified", "Neutral", "Satisfited", "Very Satisfited"],
         datasets: [{
           backgroundColor: ["#DD1B16", "#E46651", "#00D8FF", "#41B883", "#008000"],
-          data: []
+          data: [1, 2, 3, 4, 5]
         }]
       }
     };
-
-    var beforeRenderLogic = function beforeRenderLogic(event) {
-      console.log(props.surveyID);
-    };
-
-    return {
-      pieChart: pieChart,
-      beforeRenderLogic: beforeRenderLogic
-    };
+  },
+  methods: {
+    getData: function getData() {
+      console.log("getData");
+      this.dataChart.datasets[0].backgroundColor[0] = "blue";
+    }
+  },
+  mounted: function mounted() {
+    this.getData();
   }
 });
 
@@ -24174,13 +24172,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Vue3ChartJs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Vue3ChartJs");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Vue3ChartJs, {
-    id: $setup.pieChart.id,
-    type: $setup.pieChart.type,
-    data: $setup.pieChart.data,
-    onBeforeRender: $setup.beforeRenderLogic
+    id: "pieChart",
+    type: "pie",
+    data: $data.dataChart,
+    ref: "chartRef"
   }, null, 8
   /* PROPS */
-  , ["id", "type", "data", "onBeforeRender"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
+  , ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.dataChart) + " ", 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
   /* TEXT */
   )], 64
   /* STABLE_FRAGMENT */
@@ -24518,22 +24518,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "footer"
+  "class": "footer bg-white"
 };
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
-  "class": "text-muted"
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
+  "class": "text-muted border-top border-2 pt-2"
 }, "© 2021. Survey", -1
 /* HOISTED */
 );
 
-var _hoisted_4 = [_hoisted_2, _hoisted_3];
+var _hoisted_3 = [_hoisted_2];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("footer", _hoisted_1, _hoisted_4);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("footer", _hoisted_1, _hoisted_3);
 }
 
 /***/ }),
@@ -44217,7 +44213,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.footer {\r\n    position: fixed;\r\n    left: 0;\r\n    bottom: 0;\r\n    width: 100%;\r\n    text-align: center;\n}\nhr {\r\n    margin-bottom: 5px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.footer {\r\n    position: fixed;\r\n    left: 0;\r\n    bottom: 0;\r\n    width: 100%;\r\n    text-align: center;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

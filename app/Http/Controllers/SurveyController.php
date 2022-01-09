@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Survey;
 use App\Models\Question;
+use App\Models\Response;
 use Illuminate\Http\Request;
 use App\Helpers\Generator;
+use Illuminate\Support\Facades\DB;
 
 class SurveyController extends Controller
 {
@@ -76,8 +78,22 @@ class SurveyController extends Controller
         return response()->json($survey);
     }
 
-    public function getData($id)
+    public function getDataSummary($id)
     {
+        $data = DB::table('responses')
+            ->select('responses.rating', 'responses.responseID')
+            ->join('response_sets', 'responses.responseSetID', '=', 'responses.responseSetID')
+            ->where('response_sets.surveyID', $id)
+            ->groupBy('responses.rating', 'responses.responseID')
+            ->orderBy('responses.responseID')
+            ->get();
 
+        $count = Question::where('surveyID', $id)->count();
+
+        $ret = array(
+            "data" => $data,
+            "count" => $count,
+        );
+        return response()->json($ret);
     }
 }

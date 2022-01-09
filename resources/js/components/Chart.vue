@@ -1,11 +1,7 @@
 <template>
   <h6 class="text-center mt-2 text-muted">Legend</h6>
-  <Vue3ChartJs
-    :id="pieChart.id"
-    :type="pieChart.type"
-    :data="pieChart.data"
-    @before-render="beforeRenderLogic"
-  />
+  <Vue3ChartJs id="pieChart" type="pie" :data="dataChart" ref="chartRef" />
+  {{ dataChart }}
   <h6 class="text-center mt-3 fw-bold">{{ title }}</h6>
 </template>
 
@@ -22,11 +18,9 @@ export default {
   components: {
     Vue3ChartJs,
   },
-  setup(props) {
-    const pieChart = {
-      id: "pieChart",
-      type: "pie",
-      data: {
+  data() {
+    return {
+      dataChart: {
         labels: [
           "Very Unsatisfied",
           "Unsatisified",
@@ -43,20 +37,20 @@ export default {
               "#41B883",
               "#008000",
             ],
-            data: [],
+            data: [1, 2, 3, 4, 5],
           },
         ],
       },
     };
-
-    const beforeRenderLogic = (event) => {
-      console.log(props.surveyID);
-    };
-
-    return {
-      pieChart,
-      beforeRenderLogic,
-    };
+  },
+  methods: {
+    getData() {
+      console.log("getData");
+      this.dataChart.datasets[0].backgroundColor[0] = "blue";
+    },
+  },
+  mounted() {
+    this.getData();
   },
 };
 </script>

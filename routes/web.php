@@ -22,6 +22,7 @@ Route::post('create', [SurveyController::class, 'create']);
 Route::get('index', [SurveyController::class, 'index']);
 Route::get('getQuestions/{id}', [SurveyController::class, 'getQuestions']);
 Route::get('getSurveyInfo/{id}', [SurveyController::class, 'getSurveyInfo']);
+Route::get('getDataSummary/{id}', [SurveyController::class, 'getDataSummary']);
 Route::post('delete/{id}', [SurveyController::class, 'delete']);
 Route::post('update', [SurveyController::class, 'update']);
 

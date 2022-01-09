@@ -1,7 +1,6 @@
 <template>
-    <footer class="footer">
-        <hr />
-        <h6 class="text-muted">© 2021. Survey</h6>
+    <footer class="footer bg-white">
+        <h6 class="text-muted border-top border-2 pt-2">© 2021. Survey</h6>
     </footer>
 </template>
 
@@ -18,8 +17,5 @@ export default {
     bottom: 0;
     width: 100%;
     text-align: center;
-}
-hr {
-    margin-bottom: 5px;
 }
 </style>

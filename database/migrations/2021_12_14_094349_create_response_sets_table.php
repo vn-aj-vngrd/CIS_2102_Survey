@@ -16,8 +16,10 @@ class CreateResponseSetsTable extends Migration
         Schema::create('response_sets', function (Blueprint $table) {
             $table->increments('responseSetID');
             $table->string('emailAddress');
-            $table->integer('surveyID');
-            $table->datetime('dateSubmitted');
+            $table->integer('surveyID')->unsigned();
+            $table->timestamps();
+
+            $table->foreign('surveyID')->references('surveyID')->on('surveys')->onUpdate('cascade')->onDelete('cascade');
         });
         
     }
