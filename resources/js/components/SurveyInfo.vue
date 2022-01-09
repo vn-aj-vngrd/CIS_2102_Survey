@@ -94,24 +94,15 @@ export default {
   },
   data() {
     return {
-      survey: {
-        id: Number,
-        name: "",
-        created_at: "",
-        updated_at: "",
-      },
+      survey: {},
     };
   },
   methods: {
     getSurveyInfo() {
-      // console.log(this.$route.query.surveyID);
-      this.survey.id = this.$route.query.surveyID;
       axios
-        .get("getSurveyInfo/" + this.survey.id)
+        .get("getSurveyInfo/" + this.$route.query.surveyID)
         .then((response) => {
-          this.survey.name = response.data[0].name;
-          this.survey.created_at = response.data[0].created_at;
-          this.survey.updated_at = response.data[0].updated_at;
+          this.survey = response.data[0];
           // console.log(this.survey);
         })
         .catch((errors) => {

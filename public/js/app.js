@@ -23665,24 +23665,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      survey: {
-        id: Number,
-        name: "",
-        created_at: "",
-        updated_at: ""
-      }
+      survey: {}
     };
   },
   methods: {
     getSurveyInfo: function getSurveyInfo() {
       var _this = this;
 
-      // console.log(this.$route.query.surveyID);
-      this.survey.id = this.$route.query.surveyID;
-      axios.get("getSurveyInfo/" + this.survey.id).then(function (response) {
-        _this.survey.name = response.data[0].name;
-        _this.survey.created_at = response.data[0].created_at;
-        _this.survey.updated_at = response.data[0].updated_at; // console.log(this.survey);
+      axios.get("getSurveyInfo/" + this.$route.query.surveyID).then(function (response) {
+        _this.survey = response.data[0]; // console.log(this.survey);
       })["catch"](function (errors) {
         console.log(errors);
       });
