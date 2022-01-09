@@ -23262,29 +23262,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Chart",
+  props: {
+    title: String,
+    surveyID: Number,
+    present: String
+  },
   components: {
     Vue3ChartJs: _j_t_mcc_vue3_chartjs__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  setup: function setup() {
+  setup: function setup(props) {
     var pieChart = {
+      id: "pieChart",
       type: "pie",
       data: {
         labels: ["Very Unsatisfied", "Unsatisified", "Neutral", "Satisfited", "Very Satisfited"],
         datasets: [{
           backgroundColor: ["#DD1B16", "#E46651", "#00D8FF", "#41B883", "#008000"],
-          data: [40, 20, 80, 10, 2]
+          data: []
         }]
       }
     };
-    return {
-      pieChart: pieChart
+
+    var beforeRenderLogic = function beforeRenderLogic(event) {
+      console.log(props.surveyID);
     };
-  },
-  data: function data() {
-    return {};
-  },
-  methods: {},
-  mounted: function mounted() {}
+
+    return {
+      pieChart: pieChart,
+      beforeRenderLogic: beforeRenderLogic
+    };
+  }
 });
 
 /***/ }),
@@ -23993,7 +24000,7 @@ var _hoisted_12 = {
 
 var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "mt-3 text-center text-danger"
+    "class": "mt-4 text-center text-danger"
   }, " You have no created survey at the moment. ", -1
   /* HOISTED */
   );
@@ -24016,7 +24023,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.filteredList, function (survey) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      "class": "col-auto mt-3",
+      "class": "col-auto mt-4",
       key: survey
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(survey.name), 1
     /* TEXT */
@@ -24152,27 +24159,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* binding */ render)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
-  "class": "text-center"
+  "class": "text-center mt-2 text-muted"
 }, "Legend", -1
 /* HOISTED */
 );
 
+var _hoisted_2 = {
+  "class": "text-center mt-3 fw-bold"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_Vue3_chart_js = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Vue3-chart-js");
+  var _component_Vue3ChartJs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Vue3ChartJs");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Vue3_chart_js, (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
-    "class": ""
-  }, _objectSpread({}, $setup.pieChart)), null, 16
-  /* FULL_PROPS */
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Vue3ChartJs, {
+    id: $setup.pieChart.id,
+    type: $setup.pieChart.type,
+    data: $setup.pieChart.data,
+    onBeforeRender: $setup.beforeRenderLogic
+  }, null, 8
+  /* PROPS */
+  , ["id", "type", "data", "onBeforeRender"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
+  /* TEXT */
   )], 64
   /* STABLE_FRAGMENT */
   );
@@ -25198,7 +25207,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Delete = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Delete");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.survey.name), 1
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart, {
+    title: "Summary of Results",
+    surveyID: parseInt(_ctx.$route.query.surveyID),
+    present: "summary"
+  }, null, 8
+  /* PROPS */
+  , ["surveyID"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.survey.name), 1
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Created: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate($data.survey.created_at)) + " ", 1
   /* TEXT */

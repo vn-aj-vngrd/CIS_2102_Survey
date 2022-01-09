@@ -15,11 +15,11 @@ class CreateResponsesTable extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->increments('responseID');
-            $table->integer('response_setID')->unsigned();
+            $table->integer('responseSetID')->unsigned();
             $table->integer('questionID')->unsigned();
             $table->integer('rating');
 
-            $table->foreign('response_setID')->references('response_setID')->on('response_sets')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('responseSetID')->references('responseSetID')->on('response_sets')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('questionID')->references('questionID')->on('questions')->onUpdate('cascade')->onDelete('cascade');
         });
     }

@@ -14,7 +14,7 @@ class CreateResponseSetsTable extends Migration
     public function up()
     {
         Schema::create('response_sets', function (Blueprint $table) {
-            $table->increments('response_setID');
+            $table->increments('responseSetID');
             $table->string('emailAddress');
             $table->integer('surveyID');
             $table->datetime('dateSubmitted');

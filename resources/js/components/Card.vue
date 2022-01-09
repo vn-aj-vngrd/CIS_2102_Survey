@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="row d-flex d-flex align-items-center">
-      <div class="col-auto mt-3" v-for="survey in filteredList" :key="survey">
+      <div class="col-auto mt-4" v-for="survey in filteredList" :key="survey">
         <div class="card shadow-sm">
           <div class="card-body">
             <h4 class="card-title pb-2 fw-bold">{{ survey.name }}</h4>
@@ -45,7 +45,7 @@
       </div>
 
       <div class="container empty" v-if="surveys.length == 0">
-        <div class="mt-3 text-center text-danger">
+        <div class="mt-4 text-center text-danger">
           You have no created survey at the moment.
         </div>
       </div>

@@ -1,6 +1,12 @@
 <template>
-  <h6 class="text-center">Legend</h6>
-  <Vue3-chart-js class="" v-bind="{ ...pieChart }" />
+  <h6 class="text-center mt-2 text-muted">Legend</h6>
+  <Vue3ChartJs
+    :id="pieChart.id"
+    :type="pieChart.type"
+    :data="pieChart.data"
+    @before-render="beforeRenderLogic"
+  />
+  <h6 class="text-center mt-3 fw-bold">{{ title }}</h6>
 </template>
 
 <script>
@@ -8,11 +14,17 @@ import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
 
 export default {
   name: "Chart",
+  props: {
+    title: String,
+    surveyID: Number,
+    present: String,
+  },
   components: {
     Vue3ChartJs,
   },
-  setup() {
+  setup(props) {
     const pieChart = {
+      id: "pieChart",
       type: "pie",
       data: {
         labels: [
@@ -31,20 +43,21 @@ export default {
               "#41B883",
               "#008000",
             ],
-            data: [40, 20, 80, 10, 2],
+            data: [],
           },
         ],
       },
     };
+
+    const beforeRenderLogic = (event) => {
+      console.log(props.surveyID);
+    };
+
     return {
       pieChart,
+      beforeRenderLogic,
     };
   },
-  data() {
-    return {};
-  },
-  methods: {},
-  mounted() {},
 };
 </script>
 
