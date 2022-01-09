@@ -12,7 +12,7 @@
     >
       <div class="col-10 col-sm-8 col-lg-6">
         <div class="container">
-          <Chart title="Summary of Results" :surveyID="parseInt($route.query.surveyID)" present="summary"/>
+          <Chart :surveyID="parseInt($route.query.surveyID)" present="summary"/>
         </div>
       </div>
       <div class="col-lg-6">

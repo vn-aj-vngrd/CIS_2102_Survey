@@ -1,7 +1,7 @@
 <template>
   <h6 class="text-center mt-2 text-muted">Legend</h6>
   <Vue3ChartJs v-bind="{ ...pieChart }" ref="chartRef" />
-  <h6 class="text-center mt-3 fw-bold">{{ title }}</h6>
+  <h6 class="text-center mt-3 fw-bold text-muted">Total Responses: {{ this.responses }}</h6>
 </template>
 
 <script>
@@ -11,14 +11,13 @@ import { ref } from "vue";
 export default {
   name: "Chart",
   props: {
-    title: String,
     surveyID: Number,
     present: String,
   },
   components: {
     Vue3ChartJs,
   },
-  setup(props) {
+  setup() {
     const chartRef = ref(null);
     const pieChart = {
       type: "pie",
@@ -39,8 +38,7 @@ export default {
       },
     };
 
-    const intializeChart = (data) => {
-      console.log(data);
+    const initializeChart = (data) => {
       pieChart.data.datasets = [
         {
           backgroundColor: [
@@ -59,29 +57,32 @@ export default {
     return {
       pieChart,
       chartRef,
-      intializeChart,
+      initializeChart,
     };
   },
   data() {
     return {
       data: [0, 0, 0, 0, 0],
+      responses: Number,
     };
   },
   mounted() {
-    axios
-      .get("getDataSummary/" + this.surveyID)
-      .then((response) => {
-        let res = response.data;
-        console.log(res);
-        let data = [0, 0, 0, 0, 0];
-        for (let i = 0; i < res.data.length; i++) {
-          data[res.data[i].rating - 1]++;
-        }
-        this.intializeChart(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (this.present === "summary") {
+      axios
+        .get("getData/" + this.surveyID)
+        .then((response) => {
+          let res = response.data;
+          this.responses = res.data.length / res.count;
+          let data = [0, 0, 0, 0, 0];
+          for (let i = 0; i < res.data.length; i++) {
+            data[res.data[i].rating - 1]++;
+          }
+          this.initializeChart(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
 };
 </script>

@@ -78,7 +78,7 @@ class SurveyController extends Controller
         return response()->json($survey);
     }
 
-    public function getDataSummary($id)
+    public function getData($id)
     {
         $data = DB::table('responses')
             ->select('responses.rating', 'responses.responseID')
