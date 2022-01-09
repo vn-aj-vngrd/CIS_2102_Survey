@@ -34,13 +34,14 @@
         </div>
       </div>
 
-      <div class="container empty border-bottom pb-4" v-if="surveys.length == 0">
+      <div
+        class="container empty border-bottom pb-4"
+        v-if="surveys.length == 0"
+      >
         <div class="row justify-content-center">
           <div class="col-md-12 text-center">
             <span class="display-6 text-danger d-block">Empty</span>
-            <div class="mt-2">
-              You have no survey created at the moment.
-            </div>
+            <div class="mt-2">You have no survey created at the moment.</div>
           </div>
         </div>
       </div>

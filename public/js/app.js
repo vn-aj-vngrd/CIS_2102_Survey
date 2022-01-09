@@ -23966,7 +23966,7 @@ var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
     "class": "display-6 text-danger d-block"
   }, "Empty"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "mt-2"
-  }, " You have no survey created at the moment. ")])], -1
+  }, "You have no survey created at the moment.")])], -1
   /* HOISTED */
   );
 });
