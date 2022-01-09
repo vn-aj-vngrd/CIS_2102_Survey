@@ -12,8 +12,7 @@
     >
       <div class="col-10 col-sm-8 col-lg-6">
         <div class="container">
-          <h6 class="text-center">Legend</h6>
-          <Vue3-chart-js class="" v-bind="{ ...pieChart }" />
+          <Chart />
         </div>
       </div>
       <div class="col-lg-6">
@@ -52,45 +51,16 @@
 </template>
 
 <script>
-import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
+import Chart from "./Chart.vue";
 import Update from "./Update.vue";
 import Delete from "./Delete.vue";
 
 export default {
   name: "SurveyInfo",
   components: {
-    Vue3ChartJs,
+    Chart,
     Delete,
     Update,
-  },
-  setup() {
-    const pieChart = {
-      type: "pie",
-      data: {
-        labels: [
-          "Very Unsatisfied",
-          "Unsatisified",
-          "Neutral",
-          "Satisfited",
-          "Very Satisfited",
-        ],
-        datasets: [
-          {
-            backgroundColor: [
-              "#DD1B16",
-              "#E46651",
-              "#00D8FF",
-              "#41B883",
-              "#008000",
-            ],
-            data: [40, 20, 80, 10, 2],
-          },
-        ],
-      },
-    };
-    return {
-      pieChart,
-    };
   },
   data() {
     return {

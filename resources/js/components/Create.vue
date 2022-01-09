@@ -56,20 +56,20 @@
               />
             </div>
             <div class="col-auto">
-              <button
+              <span
                 class="btn btn-success btn-sm me-2 mt-1"
                 @click="add(k)"
                 v-show="k == formData.questions.length - 1"
               >
                 Add
-              </button>
-              <button
+              </span>
+              <span
                 class="btn btn-danger btn-sm mt-1"
                 @click="remove(k)"
                 v-show="k || (!k && formData.questions.length > 1)"
               >
                 Remove
-              </button>
+              </span>
             </div>
           </div>
         </div>

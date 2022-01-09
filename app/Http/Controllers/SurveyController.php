@@ -45,6 +45,7 @@ class SurveyController extends Controller
     {
         $survey = Survey::findOrFail($request->id);
         $survey->name = $request->name;
+        $survey->touch();
         $survey->save();
 
         foreach ($request->questions as $val) {
