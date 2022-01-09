@@ -31,6 +31,10 @@
         </h6>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+          <Response
+            myclass="btn btn-outline-success btn-sm px-4 me-md-2"
+            :surveyID="parseInt($route.query.surveyID)"
+          />
           <Update
             myclass="btn btn-outline-primary btn-sm px-4 me-md-2"
             :surveyID="parseInt($route.query.surveyID)"
@@ -55,6 +59,7 @@
 
 <script>
 import Chart from "./Chart.vue";
+import Response from "./Response.vue";
 import Update from "./Update.vue";
 import Delete from "./Delete.vue";
 
@@ -62,6 +67,7 @@ export default {
   name: "SurveyInfo",
   components: {
     Chart,
+    Response,
     Delete,
     Update,
   },

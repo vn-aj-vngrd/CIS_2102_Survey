@@ -3,15 +3,14 @@
     type="button"
     :class="myclass"
     data-bs-toggle="modal"
-    data-bs-target="#update"
+    data-bs-target="#response"
   >
-    Update Survey
+    View Responses
   </button>
 
-  <form
-    @submit="updateSurvey"
+  <div
     class="modal fade text-start"
-    id="update"
+    id="response"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
@@ -20,7 +19,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            <b>Survey Questions</b>
+            <b>View Responses</b>
           </h5>
           <button
             type="button"
@@ -30,18 +29,6 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div class="mb-3">
-            <label for="survey-title" class="col-form-label"
-              >Survey Title</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              v-model="formData.name"
-              required
-            />
-          </div>
-
           <div
             class="mb-3"
             v-for="(question, index) in formData.questions"
@@ -54,6 +41,7 @@
               type="text"
               class="form-control"
               v-model="question.text"
+              disabled
               required
             />
             <input
@@ -61,22 +49,27 @@
               class="form-control"
               v-model="question.questionID"
             />
+            <Chart :surveyID="surveyID" present="summary" />
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary">Update</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-            Cancel
+            Close
           </button>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
+import Chart from "./Chart.vue";
+
 export default {
-  name: "Update",
+  name: "Response",
+  components: {
+    Chart,
+  },
   props: {
     myclass: String,
     surveyID: Number,
@@ -91,17 +84,6 @@ export default {
     };
   },
   methods: {
-    getSurveyName() {
-      axios
-        .get("getSurveyInfo/" + this.surveyID)
-        .then((response) => {
-          this.formData.name = response.data[0].name;
-          // console.log(this.survey);
-        })
-        .catch((errors) => {
-          console.log(errors);
-        });
-    },
     getQuestions() {
       axios
         .get("getQuestions/" + this.surveyID)
@@ -114,9 +96,8 @@ export default {
         });
     },
   },
-  mounted() {
+  created() {
     this.formData.id = this.surveyID;
-    this.getSurveyName();
     this.getQuestions();
   },
 };

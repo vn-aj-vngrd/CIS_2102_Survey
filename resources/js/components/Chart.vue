@@ -1,7 +1,9 @@
 <template>
   <h6 class="text-center mt-2 text-muted">Legend</h6>
   <Vue3ChartJs v-bind="{ ...pieChart }" ref="chartRef" />
-  <h6 class="text-center mt-3 fw-bold text-muted">Total Responses: {{ this.responses }}</h6>
+  <h6 class="text-center mt-3 text-muted">
+    Total Responses: {{ this.responses }} | Total Ratings: {{ this.ratings }}
+  </h6>
 </template>
 
 <script>
@@ -63,26 +65,33 @@ export default {
   data() {
     return {
       data: [0, 0, 0, 0, 0],
-      responses: Number,
+      responses: 0,
+      ratings: 0,
     };
   },
-  created() {
-    if (this.present === "summary") {
+  methods: {
+    getData() {
       axios
         .get("getData/" + this.surveyID)
         .then((response) => {
           let res = response.data;
           this.responses = res.data.length / res.count;
-          let data = [0, 0, 0, 0, 0];
-          for (let i = 0; i < res.data.length; i++) {
-            data[res.data[i].rating - 1]++;
+          this.ratings = res.data.length;
+          if (this.present === "summary") {
+            let data = [0, 0, 0, 0, 0];
+            for (let i = 0; i < res.data.length; i++) {
+              data[res.data[i].rating - 1]++;
+            }
+            this.initializeChart(data);
           }
-          this.initializeChart(data);
         })
         .catch((error) => {
           console.log(error);
         });
-    }
+    },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>
