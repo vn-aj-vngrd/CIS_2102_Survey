@@ -54,14 +54,14 @@ class SurveyController extends Controller
             $question->save();
         }
 
-        return response()->json("Survey Successfuly Updated.");
+        return response()->json("Survey Successfully Updated.");
     }
 
     public function delete($id)
     {
         $survey = Survey::findOrFail($id);
         $survey->delete();
-        return response()->json("Survey Successfuly Deleted.");
+        return response()->json("Survey Successfully Deleted.");
     }
 
     public function getQuestions($id)
