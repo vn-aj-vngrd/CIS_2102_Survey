@@ -15,6 +15,7 @@ export default {
   props: {
     surveyID: Number,
     present: String,
+    counter: Number,
   },
   components: {
     Vue3ChartJs,
@@ -74,12 +75,23 @@ export default {
       axios
         .get("getData/" + this.surveyID)
         .then((response) => {
+          let data = [0, 0, 0, 0, 0];
           let res = response.data;
-          this.responses = res.data.length / res.count;
-          this.ratings = res.data.length;
-          if (this.present === "summary") {
-            let data = [0, 0, 0, 0, 0];
+
+          this.responses = res.customerCount;
+
+          if (this.present === "all") {
+            this.ratings = res.data.length;
             for (let i = 0; i < res.data.length; i++) {
+              data[res.data[i].rating - 1]++;
+            }
+            this.initializeChart(data);
+          } else if (this.present === "single") {
+            // console.log("counter = " + this.counter);
+            this.ratings = res.customerCount;
+            let trav = res.questionCount;
+            // console.log("trav = " + trav);
+            for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
               data[res.data[i].rating - 1]++;
             }
             this.initializeChart(data);

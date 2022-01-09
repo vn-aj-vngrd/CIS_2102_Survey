@@ -49,7 +49,7 @@
               class="form-control"
               v-model="question.questionID"
             />
-            <Chart :surveyID="surveyID" present="summary" />
+            <Chart :surveyID="surveyID" present="single" :counter="index" />
           </div>
         </div>
         <div class="modal-footer">

@@ -14,7 +14,7 @@
         <div class="container">
           <Chart
             :surveyID="parseInt($route.query.surveyID)"
-            present="summary"
+            present="all"
           />
         </div>
       </div>

@@ -23266,7 +23266,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "Chart",
   props: {
     surveyID: Number,
-    present: String
+    present: String,
+    counter: Number
   },
   components: {
     Vue3ChartJs: _j_t_mcc_vue3_chartjs__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -23310,15 +23311,25 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("getData/" + this.surveyID).then(function (response) {
+        var data = [0, 0, 0, 0, 0];
         var res = response.data;
-        _this.responses = res.data.length / res.count;
-        _this.ratings = res.data.length;
+        _this.responses = res.customerCount;
 
-        if (_this.present === "summary") {
-          var data = [0, 0, 0, 0, 0];
+        if (_this.present === "all") {
+          _this.ratings = res.data.length;
 
           for (var i = 0; i < res.data.length; i++) {
             data[res.data[i].rating - 1]++;
+          }
+
+          _this.initializeChart(data);
+        } else if (_this.present === "single") {
+          // console.log("counter = " + this.counter);
+          _this.ratings = res.customerCount;
+          var trav = res.questionCount; // console.log("trav = " + trav);
+
+          for (var _i = _this.counter, j = 0; j < res.customerCount; _i += trav, j++) {
+            data[res.data[_i].rating - 1]++;
           }
 
           _this.initializeChart(data);
@@ -25159,10 +25170,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* PROPS */
     , _hoisted_8), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.questionID]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart, {
       surveyID: $props.surveyID,
-      present: "summary"
+      present: "single",
+      counter: index
     }, null, 8
     /* PROPS */
-    , ["surveyID"])]);
+    , ["surveyID", "counter"])]);
   }), 128
   /* KEYED_FRAGMENT */
   ))]), _hoisted_9])])])], 64
@@ -25421,7 +25433,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart, {
     surveyID: parseInt(_ctx.$route.query.surveyID),
-    present: "summary"
+    present: "all"
   }, null, 8
   /* PROPS */
   , ["surveyID"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.survey.name), 1

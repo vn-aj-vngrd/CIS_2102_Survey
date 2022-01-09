@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Survey;
 use App\Models\Question;
 use App\Models\Response;
+use App\Models\Response_set;
 use Illuminate\Http\Request;
 use App\Helpers\Generator;
 use Illuminate\Support\Facades\DB;
@@ -88,11 +89,13 @@ class SurveyController extends Controller
             ->orderBy('responses.responseID')
             ->get();
 
-        $count = Question::where('surveyID', $id)->count();
+        $questionCount = Question::where('surveyID', $id)->count();
+        $customerCount = Response_set::where('surveyID', $id)->count();
 
         $ret = array(
             "data" => $data,
-            "count" => $count,
+            "questionCount" => $questionCount,
+            "customerCount" => $customerCount,
         );
         return response()->json($ret);
     }
