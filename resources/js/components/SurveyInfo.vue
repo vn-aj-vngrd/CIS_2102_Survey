@@ -12,11 +12,7 @@
     >
       <div class="col-10 col-sm-8 col-lg-6">
         <div class="container">
-          <Chart
-            title="Summary of Results"
-            :surveyID="parseInt($route.query.surveyID)"
-            present="summary"
-          />
+          <Chart title="Summary of Results" :surveyID="parseInt($route.query.surveyID)" present="summary"/>
         </div>
       </div>
       <div class="col-lg-6">
@@ -84,7 +80,7 @@ export default {
         });
     },
   },
-  mounted() {
+  created() {
     this.getSurveyInfo();
   },
 };

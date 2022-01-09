@@ -23190,7 +23190,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {
+  created: function created() {
     this.getSurveys();
   }
 });
@@ -23259,6 +23259,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _j_t_mcc_vue3_chartjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @j-t-mcc/vue3-chartjs */ "./node_modules/@j-t-mcc/vue3-chartjs/dist/vue3-chartjs.es.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Chart",
@@ -23270,25 +23272,55 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Vue3ChartJs: _j_t_mcc_vue3_chartjs__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  data: function data() {
-    return {
-      dataChart: {
-        labels: ["Very Unsatisfied", "Unsatisified", "Neutral", "Satisfited", "Very Satisfited"],
+  setup: function setup(props) {
+    var chartRef = (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(null);
+    var pieChart = {
+      type: "pie",
+      data: {
+        labels: ["Very Satisfied", "Satisfied", "Neutral", "Unsatisified", "Very Unsatisfied"],
         datasets: [{
-          backgroundColor: ["#DD1B16", "#E46651", "#00D8FF", "#41B883", "#008000"],
-          data: [1, 2, 3, 4, 5]
+          backgroundColor: [],
+          data: [0, 0, 0, 0, 0]
         }]
       }
     };
+
+    var intializeChart = function intializeChart(data) {
+      console.log(data);
+      pieChart.data.datasets = [{
+        backgroundColor: ["#008000", "#41B883", "#00D8FF", "#E46651", "#DD1B16"],
+        data: [data[0], data[1], data[2], data[3], data[4]]
+      }];
+      chartRef.value.update(750);
+    };
+
+    return {
+      pieChart: pieChart,
+      chartRef: chartRef,
+      intializeChart: intializeChart
+    };
   },
-  methods: {
-    getData: function getData() {
-      console.log("getData");
-      this.dataChart.datasets[0].backgroundColor[0] = "blue";
-    }
+  data: function data() {
+    return {
+      data: [0, 0, 0, 0, 0]
+    };
   },
   mounted: function mounted() {
-    this.getData();
+    var _this = this;
+
+    axios.get("getDataSummary/" + this.surveyID).then(function (response) {
+      var res = response.data;
+      console.log(res);
+      var data = [0, 0, 0, 0, 0];
+
+      for (var i = 0; i < res.data.length; i++) {
+        data[res.data[i].rating - 1]++;
+      }
+
+      _this.intializeChart(data);
+    })["catch"](function (error) {
+      console.log(error);
+    });
   }
 });
 
@@ -23711,7 +23743,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {
+  created: function created() {
     this.getSurveyInfo();
   }
 });
@@ -24157,6 +24189,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* binding */ render)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
@@ -24171,15 +24209,10 @@ var _hoisted_2 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Vue3ChartJs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Vue3ChartJs");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Vue3ChartJs, {
-    id: "pieChart",
-    type: "pie",
-    data: $data.dataChart,
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Vue3ChartJs, (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)(_objectSpread({}, $setup.pieChart), {
     ref: "chartRef"
-  }, null, 8
-  /* PROPS */
-  , ["data"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.dataChart) + " ", 1
-  /* TEXT */
+  }), null, 16
+  /* FULL_PROPS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
   /* TEXT */
   )], 64
