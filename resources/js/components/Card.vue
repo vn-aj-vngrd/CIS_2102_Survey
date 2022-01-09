@@ -9,7 +9,7 @@
               Date Created: {{ $filters.formatDate(survey.created_at) }}
             </p>
             <p class="card-subtitle mb-3 text-muted border-bottom pb-2">
-              Date Created: {{ $filters.formatDate(survey.created_at) }}
+              Date Updated: {{ $filters.formatDate(survey.updated_at) }}
             </p>
             <div class="mt-3">
               <Delete
@@ -24,9 +24,6 @@
                   params: { pathname: survey.name },
                   query: {
                     surveyID: survey.surveyID,
-                    name: survey.name,
-                    created_at: survey.created_at,
-                    updated_at: survey.updated_at,
                   },
                 }"
                 class="btn btn-outline-success btn-sm me-2 float-end"

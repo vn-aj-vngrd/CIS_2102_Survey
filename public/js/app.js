@@ -23284,6 +23284,11 @@ __webpack_require__.r(__webpack_exports__);
         $("#create").modal("hide");
 
         _this.$router.go(0);
+
+        _this.$toast.success("Survey Successfully Created", {
+          position: "top",
+          queue: true
+        });
       })["catch"](function (error) {
         console.log(error);
       });
@@ -23322,6 +23327,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("delete/" + this.surveyID).then(function (response) {
         $("#".concat(_this.modal)).modal("hide");
         if (_this.routeNum == -1) _this.$router.go(-1);else if (_this.routeNum == 0) _this.$router.go(0);
+
+        _this.$toast.success("Survey Successfully Deleted", {
+          position: "top",
+          queue: true
+        });
       })["catch"](function (errors) {
         console.log(errors);
       });
@@ -23642,6 +23652,34 @@ __webpack_require__.r(__webpack_exports__);
     return {
       pieChart: pieChart
     };
+  },
+  data: function data() {
+    return {
+      survey: {
+        id: Number,
+        name: "",
+        created_at: "",
+        updated_at: ""
+      }
+    };
+  },
+  methods: {
+    getSurveyInfo: function getSurveyInfo() {
+      var _this = this;
+
+      // console.log(this.$route.query.surveyID);
+      this.survey.id = this.$route.query.surveyID;
+      axios.get("getSurveyInfo/" + this.survey.id).then(function (response) {
+        _this.survey.name = response.data[0].name;
+        _this.survey.created_at = response.data[0].created_at;
+        _this.survey.updated_at = response.data[0].updated_at; // console.log(this.survey);
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getSurveyInfo();
   }
 });
 
@@ -23667,39 +23705,53 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       formData: {
+        id: Number,
+        name: String,
         questions: []
       }
     };
   },
   methods: {
-    getQuestions: function getQuestions() {
+    getSurveyName: function getSurveyName() {
       var _this = this;
 
-      // console.log(this.surveyID);
+      axios.get("getSurveyInfo/" + this.surveyID).then(function (response) {
+        _this.formData.name = response.data[0].name; // console.log(this.survey);
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
+    },
+    getQuestions: function getQuestions() {
+      var _this2 = this;
+
       axios.get("getQuestions/" + this.surveyID).then(function (response) {
-        _this.formData.questions = response.data; // console.log(response.data);
+        _this2.formData.questions = response.data; // console.log(response.data);
       })["catch"](function (errors) {
         console.log(errors);
       });
     },
     updateSurvey: function updateSurvey() {
-      var _this2 = this;
+      var _this3 = this;
 
-      console.log(this.formData);
+      // console.log(this.formData);
       axios.post("update", this.formData).then(function (response) {
         // console.log(response);
         $("#update").modal("hide");
 
-        _this2.$toast.success("Survey Successfully Updated", {
+        _this3.$toast.success("Survey Successfully Updated", {
           position: "top",
           queue: true
         });
+
+        _this3.$router.go(0);
       })["catch"](function (error) {
         console.log(error);
       });
     }
   },
   mounted: function mounted() {
+    this.formData.id = this.surveyID;
+    this.getSurveyName();
     this.getQuestions();
   }
 });
@@ -23933,7 +23985,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, " Date Created: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate(survey.created_at)), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, " Date Created: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate(survey.created_at)), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, " Date Updated: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate(survey.updated_at)), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Delete, {
       myclass: "btn btn-outline-danger btn-sm float-end",
@@ -23949,10 +24001,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           pathname: survey.name
         },
         query: {
-          surveyID: survey.surveyID,
-          name: survey.name,
-          created_at: survey.created_at,
-          updated_at: survey.updated_at
+          surveyID: survey.surveyID
         }
       },
       "class": "btn btn-outline-success btn-sm me-2 float-end"
@@ -25089,11 +25138,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": ""
   }, _objectSpread({}, $setup.pieChart)), null, 16
   /* FULL_PROPS */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$route.query.name), 1
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.survey.name), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Created: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate(_ctx.$route.query.created_at)) + " ", 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Created: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate($data.survey.created_at)) + " ", 1
   /* TEXT */
-  ), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Updated: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate(_ctx.$route.query.updated_at)), 1
+  ), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Updated: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate($data.survey.updated_at)), 1
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Update, {
     myclass: "btn btn-outline-primary btn-sm px-4 me-md-2",
@@ -25157,13 +25206,24 @@ var _hoisted_4 = {
   "class": "modal-body"
 };
 var _hoisted_5 = {
+  "class": "mb-3"
+};
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "survey-title",
+  "class": "col-form-label"
+}, "Survey Title", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = {
   "for": "question",
   "class": "col-form-label"
 };
-var _hoisted_6 = ["onUpdate:modelValue"];
-var _hoisted_7 = ["onUpdate:modelValue"];
+var _hoisted_8 = ["onUpdate:modelValue"];
+var _hoisted_9 = ["onUpdate:modelValue"];
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "modal-footer"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "btn btn-primary"
@@ -25181,10 +25241,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($props.myclass),
     "data-bs-toggle": "modal",
     "data-bs-target": "#update"
-  }, " Update Questions ", 2
+  }, " Update Survey ", 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[0] || (_cache[0] = function () {
+    onSubmit: _cache[1] || (_cache[1] = function () {
       return $options.updateSurvey && $options.updateSurvey.apply($options, arguments);
     }),
     "class": "modal fade text-start",
@@ -25192,11 +25252,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     tabindex: "-1",
     "aria-labelledby": "exampleModalLabel",
     "aria-hidden": "true"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.formData.questions, function (question, index) {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.formData.name = $event;
+    }),
+    required: ""
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.name]])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.formData.questions, function (question, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "mb-3",
       key: question
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_5, "Question " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index + 1), 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_7, "Question " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index + 1), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "text",
@@ -25207,7 +25276,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       required: ""
     }, null, 8
     /* PROPS */
-    , _hoisted_6), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    , _hoisted_8), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.text]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "hidden",
       "class": "form-control",
       "onUpdate:modelValue": function onUpdateModelValue($event) {
@@ -25215,10 +25284,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, null, 8
     /* PROPS */
-    , _hoisted_7), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.questionID]])]);
+    , _hoisted_9), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.questionID]])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), _hoisted_8])])], 32
+  ))]), _hoisted_10])])], 32
   /* HYDRATE_EVENTS */
   )], 64
   /* STABLE_FRAGMENT */
@@ -25455,7 +25524,7 @@ app.mount("#app");
 app.config.globalProperties.$filters = {
   formatDate: function formatDate(value) {
     if (value) {
-      return moment__WEBPACK_IMPORTED_MODULE_3___default()(String(value)).format("MM/DD/YYYY");
+      return moment__WEBPACK_IMPORTED_MODULE_3___default()(String(value)).format("MM/DD/YYYY, h:mm:ss a");
     }
   }
 };

@@ -60,6 +60,10 @@ export default {
           $(`#${this.modal}`).modal("hide");
           if (this.routeNum == -1) this.$router.go(-1);
           else if (this.routeNum == 0) this.$router.go(0);
+          this.$toast.success(`Survey Successfully Deleted`, {
+            position: "top",
+            queue: true,
+          });
         })
         .catch((errors) => {
           console.log(errors);

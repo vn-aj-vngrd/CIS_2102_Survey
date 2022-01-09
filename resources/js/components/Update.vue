@@ -5,7 +5,7 @@
     data-bs-toggle="modal"
     data-bs-target="#update"
   >
-    Update Questions
+    Update Survey
   </button>
 
   <form
@@ -30,6 +30,18 @@
           ></button>
         </div>
         <div class="modal-body">
+          <div class="mb-3">
+            <label for="survey-title" class="col-form-label"
+              >Survey Title</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              v-model="formData.name"
+              required
+            />
+          </div>
+
           <div
             class="mb-3"
             v-for="(question, index) in formData.questions"
@@ -72,13 +84,25 @@ export default {
   data() {
     return {
       formData: {
+        id: Number,
+        name: String,
         questions: [],
       },
     };
   },
   methods: {
+    getSurveyName() {
+      axios
+        .get("getSurveyInfo/" + this.surveyID)
+        .then((response) => {
+          this.formData.name = response.data[0].name;
+          // console.log(this.survey);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    },
     getQuestions() {
-      // console.log(this.surveyID);
       axios
         .get("getQuestions/" + this.surveyID)
         .then((response) => {
@@ -90,7 +114,7 @@ export default {
         });
     },
     updateSurvey() {
-      console.log(this.formData);
+      // console.log(this.formData);
       axios
         .post("update", this.formData)
         .then((response) => {
@@ -100,6 +124,7 @@ export default {
             position: "top",
             queue: true,
           });
+          this.$router.go(0);
         })
         .catch((error) => {
           console.log(error);
@@ -107,6 +132,8 @@ export default {
     },
   },
   mounted() {
+    this.formData.id = this.surveyID;
+    this.getSurveyName();
     this.getQuestions();
   },
 };

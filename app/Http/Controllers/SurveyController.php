@@ -43,6 +43,10 @@ class SurveyController extends Controller
 
     public function update(Request $request)
     {
+        $survey = Survey::findOrFail($request->id);
+        $survey->name = $request->name;
+        $survey->save();
+
         foreach ($request->questions as $val) {
             $question = Question::findOrFail($val['questionID']);
             $question->text = $val['text'];
@@ -63,5 +67,11 @@ class SurveyController extends Controller
     {
         $questions = Question::where('surveyID', $id)->orderBy('questionID', 'asc')->get();
         return response()->json($questions);
+    }
+
+    public function getSurveyInfo($id)
+    {
+        $survey = Survey::firstWhere('surveyID', $id)->get();
+        return response()->json($survey);
     }
 }

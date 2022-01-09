@@ -13,7 +13,7 @@ app.mount("#app");
 app.config.globalProperties.$filters = {
     formatDate(value) {
         if (value) {
-            return moment(String(value)).format("MM/DD/YYYY");
+            return moment(String(value)).format("MM/DD/YYYY, h:mm:ss a");
         }
     },
 };

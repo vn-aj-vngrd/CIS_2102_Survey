@@ -18,12 +18,14 @@
       </div>
       <div class="col-lg-6">
         <h3 class="display-5 fw-bold lh-1 mb-3">
-          {{ $route.query.name }}
+          {{ survey.name }}
         </h3>
         <h6 class="text-muted border-top pt-3 border-bottom pb-3">
-          Date Created: {{ $filters.formatDate($route.query.created_at) }}
+          Date Created:
+          {{ $filters.formatDate(survey.created_at) }}
           <br />
-          Date Updated: {{ $filters.formatDate($route.query.updated_at) }}
+          Date Updated:
+          {{ $filters.formatDate(survey.updated_at) }}
         </h6>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
@@ -89,6 +91,36 @@ export default {
     return {
       pieChart,
     };
+  },
+  data() {
+    return {
+      survey: {
+        id: Number,
+        name: "",
+        created_at: "",
+        updated_at: "",
+      },
+    };
+  },
+  methods: {
+    getSurveyInfo() {
+      // console.log(this.$route.query.surveyID);
+      this.survey.id = this.$route.query.surveyID;
+      axios
+        .get("getSurveyInfo/" + this.survey.id)
+        .then((response) => {
+          this.survey.name = response.data[0].name;
+          this.survey.created_at = response.data[0].created_at;
+          this.survey.updated_at = response.data[0].updated_at;
+          // console.log(this.survey);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    },
+  },
+  mounted() {
+    this.getSurveyInfo();
   },
 };
 </script>
