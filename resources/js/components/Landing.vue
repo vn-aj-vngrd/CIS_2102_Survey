@@ -2,12 +2,10 @@
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-lg-5 py-5">
       <div class="col-lg-7 text-center text-lg-start">
-        <h1 class="display-4 fw-bold lh-1 mb-3">
-          Survey
-        </h1>
+        <h1 class="display-4 fw-bold lh-1 mb-3">Survey</h1>
         <p class="col-lg-10 fs-4">
           Hello, Dear Customer, we are now running a survey to determine how we
-          can improve our service to you. 
+          can improve our service to you.
         </p>
       </div>
 
@@ -86,8 +84,9 @@ export default {
           .post("api/registerRespondent", this.formData)
           .then((response) => {
             // console.log(response);
-            localStorage.setItem("survey-token", response.data.token);
-            localStorage.setItem("survey-id", response.data.id);
+            localStorage.setItem("surveyToken", response.data.token);
+            localStorage.setItem("responseSetID", response.data.responseSetID);
+            localStorage.setItem("surveyID", response.data.surveyID);
             this.$router.push({
               name: "customer",
             });

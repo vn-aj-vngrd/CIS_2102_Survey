@@ -48,8 +48,9 @@ class ResponseController extends Controller
                 $respondent->save();
 
                 $ret = array(
-                    "token" => $respondent->createToken($request->device_name)->plainTextToken,
-                    "id" => $respondent->responseSetID,
+                    "token"         => $respondent->createToken($request->device_name)->plainTextToken,
+                    "responseSetID" => $respondent->responseSetID,
+                    "surveyID"      => $survey->surveyID,
                 );
             }
         }
