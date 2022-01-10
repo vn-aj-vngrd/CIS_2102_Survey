@@ -12,10 +12,7 @@
     >
       <div class="col-10 col-sm-8 col-lg-6">
         <div class="container">
-          <Chart
-            :surveyID="parseInt($route.query.surveyID)"
-            present="all"
-          />
+          <Chart :surveyID="parseInt($route.query.surveyID)" present="all" />
         </div>
       </div>
       <div class="col-lg-6">
@@ -23,6 +20,8 @@
           {{ survey.name }}
         </h3>
         <h6 class="text-muted border-top pt-3 border-bottom pb-3">
+          Survey Code: {{ survey.code }}
+          <br />
           Date Created:
           {{ $filters.formatDate(survey.created_at) }}
           <br />
