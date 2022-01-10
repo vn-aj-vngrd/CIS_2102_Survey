@@ -1,8 +1,18 @@
 <template>
-  <Carousel class="shadow bg-body rounded border border-muted">
-    <Slide v-for="(question, index) in questions" :key="index">
+  <!-- {{ questions }}
+  <br />
+  {{ formData.ratings }}
+  <br />
+  {{ formData.questions }} -->
+
+  <Carousel class="my-carousel shadow bg-body rounded border border-muted">
+    <Slide
+      class="my-carousel"
+      v-for="(question, index) in questions"
+      :key="index"
+    >
       <div class="carousel__item">
-        <div class="title-container">{{ surveyName }}</div>
+        <div class="title-container fw-bold text-muted">{{ surveyName }}</div>
         <span class="text-muted"> Question {{ index + 1 }} <b>| </b></span>
         <b>{{ question.text }}</b>
 
@@ -17,28 +27,38 @@
           "
         >
           <div class="col">
-            <span class="emoji emoji--hearteyes"
-              ><p class="text-muted">Very Satisfied</p></span
+            <span class="emoji emoji--hearteyes" @click="rate(5, index)"
+              ><p :class="formData.ratings[index] == 5 ? selected : ''">
+                Very Satisfied
+              </p></span
             >
           </div>
           <div class="col">
-            <span class="emoji emoji--happy"
-              ><p class="text-muted">Satisfied</p></span
+            <span class="emoji emoji--happy" @click="rate(4, index)"
+              ><p :class="formData.ratings[index] == 4 ? selected : ''">
+                Satisfied
+              </p></span
             >
           </div>
           <div class="col">
-            <span class="emoji emoji--neutral"
-              ><p class="text-muted">Neutral</p></span
+            <span class="emoji emoji--neutral" @click="rate(3, index)"
+              ><p :class="formData.ratings[index] == 3 ? selected : ''">
+                Neutral
+              </p></span
             >
           </div>
           <div class="col">
-            <span class="emoji emoji--frowning"
-              ><p class="text-muted">Unsatisfied</p></span
+            <span class="emoji emoji--frowning" @click="rate(2, index)"
+              ><p :class="formData.ratings[index] == 2 ? selected : ''">
+                Unsatisfied
+              </p></span
             >
           </div>
           <div class="col">
-            <span class="emoji emoji--disappointed"
-              ><p class="text-muted">Very Unsatisfied</p></span
+            <span class="emoji emoji--disappointed" @click="rate(1, index)"
+              ><p :class="formData.ratings[index] == 1 ? selected : ''">
+                Very Unsatisfied
+              </p></span
             >
           </div>
         </div>
@@ -49,6 +69,52 @@
       <Navigation />
     </template>
   </Carousel>
+
+  <div class="d-flex justify-content-center mt-5">
+    <button
+      type="button"
+      :class="
+        count < formData.questions.length
+          ? 'btn btn-success disabled'
+          : 'btn btn-success'
+      "
+      data-bs-toggle="modal"
+      data-bs-target="#finish"
+    >
+      Finish Survey
+    </button>
+  </div>
+
+  <div
+    class="modal fade text-start"
+    id="finish"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><b>Survey</b></h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to submit the survey?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button @click="submitSurvey" class="btn btn-primary">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -89,10 +155,13 @@ export default {
   data() {
     return {
       formData: {
-        responses: [],
+        ratings: [],
+        questions: [],
       },
+      count: 0,
       questions: [],
       surveyName: "",
+      selected: "text-primary fw-bold",
     };
   },
   methods: {
@@ -101,7 +170,29 @@ export default {
         .get("getQuestions/" + localStorage.getItem("surveyID"))
         .then((response) => {
           this.questions = response.data;
+          for (let i = 0; i < this.questions.length; i++) {
+            this.formData.ratings.push(0);
+            this.formData.questions.push(this.questions[i].questionID);
+          }
           // console.log(response.data);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    },
+    rate(rating, index) {
+      // console.log(rating);
+      // console.log(index);
+
+      this.formData.ratings[index] = rating;
+      this.count++;
+    },
+    submitSurvey() {
+      console.log(this.formData);
+      axios
+        .post("submitSurvey", this.formData)
+        .then((response) => {
+          console.log(response);
         })
         .catch((errors) => {
           console.log(errors);
@@ -113,18 +204,28 @@ export default {
     // console.log(localStorage.getItem("responseSetID"));
     this.surveyName = localStorage.getItem("surveyName");
     this.getQuestions();
+    // this.selected = "text-muted";
   },
 };
 </script>
 
 <style scoped>
+.modal.in .modal-dialog {
+  -webkit-transform: none;
+  -ms-transform: none; 
+  transform: none;
+}
 .title-container {
-  margin-bottom: 11rem;
+  margin-bottom: 9rem;
+  font-size: 16px;
 }
 
+.my-carousel {
+  background: white;
+}
 .carousel__item {
   min-height: 300px;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   width: 90%;
   background-color: white;
   color: black;
@@ -142,7 +243,7 @@ export default {
 
 .emoji-container {
   margin-top: 9rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   padding-top: 10px;
   max-width: 100%;
 }
@@ -150,12 +251,18 @@ export default {
 .emoji {
   font-size: 1.3rem;
   transform: scale(0.5);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   transition: text-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.emoji p {
+p {
   font-size: 14px;
+  color: #777;
+}
+
+.emoji-selected {
+  color: #0d6efd;
+  font-weight: bold;
 }
 
 .emoji:hover {

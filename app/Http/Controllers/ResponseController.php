@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class ResponseController extends Controller
 {
-    public function getQuestions()
-    {
-        //
-    }
-
     public function registerRespondent(Request $request)
     {
         $request->validate([
@@ -61,5 +56,11 @@ class ResponseController extends Controller
         }
 
         return response()->json($ret);
+    }
+
+    public function submitSurvey(Request $request)
+    {
+        
+        return response()->json("Survey Successfully Submitted");
     }
 }

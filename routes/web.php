@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\ResponseController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,8 @@ Route::get('getSurveyInfo/{id}', [SurveyController::class, 'getSurveyInfo']);
 Route::get('getData/{id}', [SurveyController::class, 'getData']);
 Route::post('delete/{id}', [SurveyController::class, 'delete']);
 Route::post('update', [SurveyController::class, 'update']);
+
+Route::post('submitSurvey', [ResponseController::class, 'submitSurvey']);
 
 Route::get('{any}', function () {
     return view('app');

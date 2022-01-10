@@ -67,9 +67,7 @@
         <Signup myclass="btn btn-success" />
       </div>
 
-      <div v-show="htype == 'survey'" class="col-md-3 text-end">
-        <Finish myclass="btn btn-outline-primary" />
-      </div>
+      <div v-show="htype == 'survey'" class="col-md-3 text-end invisible"></div>
 
       <div v-show="htype == 'company'" class="col-md-3 text-end">
         <Logout myclass="btn btn-danger" />
@@ -82,7 +80,6 @@
 <script>
 import Login from "./Login.vue";
 import Signup from "./Signup.vue";
-import Finish from "./Finish.vue";
 import Logout from "./Logout.vue";
 
 export default {
@@ -90,7 +87,6 @@ export default {
   components: {
     Login,
     Signup,
-    Finish,
     Logout,
   },
   props: {

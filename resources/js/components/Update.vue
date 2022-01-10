@@ -64,10 +64,10 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary">Update</button>
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
             Cancel
           </button>
+          <button class="btn btn-primary">Update</button>
         </div>
       </div>
     </div>
