@@ -2,7 +2,7 @@
   <h6 class="text-center mt-2 text-muted">Legend</h6>
   <Vue3ChartJs v-bind="{ ...pieChart }" ref="chartRef" />
   <h6 class="text-center mt-3 text-muted">
-    Total Responses: {{ this.responses }} | Total Ratings: {{ this.ratings }}
+    Total Respondents: {{ this.respondents }} | Total Ratings: {{ this.ratings }}
   </h6>
 </template>
 
@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       data: [0, 0, 0, 0, 0],
-      responses: 0,
+      respondents: 0,
       ratings: 0,
     };
   },
@@ -78,7 +78,7 @@ export default {
           let data = [0, 0, 0, 0, 0];
           let res = response.data;
 
-          this.responses = res.customerCount;
+          this.respondents = res.customerCount;
 
           if (this.present === "all") {
             this.ratings = res.data.length;
@@ -90,18 +90,19 @@ export default {
             this.ratings = res.customerCount;
 
             // much faster but not fail-safe
-            // let trav = res.questionCount;
-            // console.log("trav = " + trav);
-            // for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
-            //   data[res.data[i].rating - 1]++;
-            // }
+            let trav = res.questionCount;
+            console.log("trav = " + trav);
+            for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
+              data[res.data[i].rating - 1]++;
+            }
 
             // accurate when some data is not found and fail-safe
-            for (let i = 0; i < res.data.length; i++) {
-              if (res.data[i].questionID == this.counter + 1) {
-                data[res.data[i].rating - 1]++;
-              }
-            }
+            // for (let i = 0, trav = this.counter + 1; i < res.data.length; i++) {
+            //   if (i == trav) {
+            //     data[res.data[i].rating - 1]++;
+            //     trav += trav;
+            //   }
+            // }
             this.initializeChart(data);
           }
         })

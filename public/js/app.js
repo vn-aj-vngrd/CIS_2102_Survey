@@ -23302,7 +23302,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       data: [0, 0, 0, 0, 0],
-      responses: 0,
+      respondents: 0,
       ratings: 0
     };
   },
@@ -23313,7 +23313,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("getData/" + this.surveyID).then(function (response) {
         var data = [0, 0, 0, 0, 0];
         var res = response.data;
-        _this.responses = res.customerCount;
+        _this.respondents = res.customerCount;
 
         if (_this.present === "all") {
           _this.ratings = res.data.length;
@@ -23325,18 +23325,20 @@ __webpack_require__.r(__webpack_exports__);
           _this.initializeChart(data);
         } else if (_this.present === "single") {
           _this.ratings = res.customerCount; // much faster but not fail-safe
-          // let trav = res.questionCount;
-          // console.log("trav = " + trav);
-          // for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
-          //   data[res.data[i].rating - 1]++;
-          // }
-          // accurate when some data is not found and fail-safe
 
-          for (var _i = 0; _i < res.data.length; _i++) {
-            if (res.data[_i].questionID == _this.counter + 1) {
-              data[res.data[_i].rating - 1]++;
-            }
-          }
+          var trav = res.questionCount;
+          console.log("trav = " + trav);
+
+          for (var _i = _this.counter, j = 0; j < res.customerCount; _i += trav, j++) {
+            data[res.data[_i].rating - 1]++;
+          } // accurate when some data is not found and fail-safe
+          // for (let i = 0, trav = this.counter + 1; i < res.data.length; i++) {
+          //   if (i == trav) {
+          //     data[res.data[i].rating - 1]++;
+          //     trav += trav;
+          //   }
+          // }
+
 
           _this.initializeChart(data);
         }
@@ -23817,8 +23819,7 @@ __webpack_require__.r(__webpack_exports__);
 
       // console.log(this.$route.query.surveyID)
       axios.get("getSurveyInfo/" + this.$route.query.surveyID).then(function (response) {
-        _this.survey = response.data[0];
-        console.log(_this.survey);
+        _this.survey = response.data[0]; // console.log(this.survey);
       })["catch"](function (errors) {
         console.log(errors);
       });
@@ -24310,7 +24311,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ref: "chartRef"
   }), null, 16
   /* FULL_PROPS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_2, " Total Responses: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.responses) + " | Total Ratings: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.ratings), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_2, " Total Respondents: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.respondents) + " | Total Ratings: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.ratings), 1
   /* TEXT */
   )], 64
   /* STABLE_FRAGMENT */

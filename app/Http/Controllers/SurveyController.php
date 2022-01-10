@@ -83,8 +83,8 @@ class SurveyController extends Controller
     {
         $data = DB::table('responses')
             ->select('responses.rating', 'responses.responseID', 'responses.questionID')
-            ->join('response_sets', 'responses.responseSetID', '=', 'responses.responseSetID')
-            ->where('response_sets.surveyID', $id)
+            ->join('response_sets', 'responses.responseSetID', '=', 'response_sets.responseSetID')
+            ->where('response_sets.surveyID', '=', $id)
             ->groupBy('responses.rating', 'responses.responseID', 'responses.questionID')
             ->orderBy('responses.responseID')
             ->get();
