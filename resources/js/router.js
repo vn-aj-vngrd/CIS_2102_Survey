@@ -18,7 +18,7 @@ const routes = [
         path: "/customer",
         name: "customer",
         component: CustomerPage,
-        meta: { requiresAuth: true },
+        meta: { guest: true },
     },
     {
         path: "/company/:pathname",

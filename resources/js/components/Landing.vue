@@ -14,22 +14,31 @@
       <div class="col-md-10 mx-auto col-lg-5">
         <form class="p-4 p-md-5 border rounded-3 bg-light">
           <div class="form-floating mb-3">
-            <input type="text" class="form-control" placeholder="Survey Code" />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Survey Code"
+              v-model="formData.surveyCode"
+            />
             <label for="floatingInput">Survey Code</label>
           </div>
+          <p class="text-start text-danger">{{ errors.surveyCode }}</p>
 
           <div class="form-floating mb-3">
             <input
-              type="email"
+              type="text"
               class="form-control"
               placeholder="Email Address"
+              v-model="formData.email"
             />
             <label for="floatingInput">Email Address</label>
           </div>
+          <p class="text-start text-danger">{{ errors.email }}</p>
+          <p class="text-start text-danger">{{ errors.validation }}</p>
 
-          <router-link to="/customer" class="w-100 btn btn-lg btn-primary">
+          <button @click="validateAccess" class="w-100 btn btn-lg btn-primary">
             Get Started
-          </router-link>
+          </button>
           <hr class="my-4" />
           <small class="text-muted"></small>
         </form>
@@ -52,7 +61,49 @@ export default {
     Login,
     Signup,
   },
+  data() {
+    return {
+      formData: {
+        surveyCode: "",
+        email: "",
+      },
+      errors: {
+        surveyCode: "",
+        email: "",
+        validation: "",
+      },
+    };
+  },
+  methods: {
+    validateAccess() {
+      this.errors.surveyCode = "";
+      this.errors.email = "";
+
+      // console.log(this.formData);
+      axios.get("/sanctum/csrf-cookie").then((response) => {
+        axios
+          .post("api/validateAccess", this.formData)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error.response.data.errors);
+            const errors = error.response.data.errors;
+
+            if (typeof errors.surveyCode !== "undefined")
+              this.errors.surveyCode = errors.surveyCode[0];
+
+            if (typeof errors.email !== "undefined")
+              this.errors.email = errors.email[0];
+          });
+      });
+    },
+  },
 };
 </script>
 
-<style></style>
+<style scoped>
+p {
+  font-size: 13px;
+}
+</style>

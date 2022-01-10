@@ -37,7 +37,7 @@
               name="email"
               v-model="formData.email"
             />
-            <p class="text-danger mt-2">{{ this.emailError }}</p>
+            <p class="text-danger mt-2">{{ errors.email }}</p>
           </div>
 
           <div class="mb-3">
@@ -48,11 +48,11 @@
               name="password"
               v-model="formData.password"
             />
-            <p class="text-danger mt-2">{{ this.passError }}</p>
+            <p class="text-danger mt-2">{{ errors.pass }}</p>
           </div>
         </div>
         <div class="modal-footer justify-content-between">
-          <p class="text-start text-danger">{{ this.credError }}</p>
+          <p class="text-start text-danger">{{ errors.cred }}</p>
           <button @click="login" class="btn btn-primary">Login</button>
         </div>
       </div>
@@ -73,14 +73,18 @@ export default {
         password: "",
         device_name: "browser",
       },
-      errors: {},
-      emailError: "",
-      passError: "",
-      credError: "",
+      errors: {
+        email: "",
+        pass: "",
+        cred: "",
+      },
     };
   },
   methods: {
     login() {
+      this.errors.email = "";
+      this.errors.pass = "";
+      this.errors.cred = "";
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
           .post("api/login", this.formData)
@@ -95,18 +99,17 @@ export default {
             });
             $("#login").modal("hide");
           })
-          .catch((errors) => {
-            this.errors = errors.response.data.errors;
-            if (typeof this.errors.email === "undefined") this.emailError = "";
-            else this.emailError = this.errors.email[0];
+          .catch((error) => {
+            const errors = error.response.data.errors;
 
-            if (typeof this.errors.password === "undefined")
-              this.passError = "";
-            else this.passError = this.errors.password[0];
+            if (typeof errors.email !== "undefined")
+              this.errors.email = errors.email[0];
 
-            if (typeof this.errors.credError === "undefined")
-              this.credError = "";
-            else this.credError = this.errors.credError[0];
+            if (typeof errors.password !== "undefined")
+              this.errors.pass = errors.password[0];
+
+            if (typeof errors.credError !== "undefined")
+              this.errors.cred = errors.credError[0];
           });
       });
     },

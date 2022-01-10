@@ -37,7 +37,7 @@
                 v-model="formData.name"
                 required
               />
-              <p class="text-danger mt-2">{{ this.nameError }}</p>
+              <p class="text-danger mt-2">{{ errors.name }}</p>
             </div>
 
             <div class="mb-3">
@@ -49,7 +49,7 @@
                 v-model="formData.email"
                 required
               />
-              <p class="text-danger mt-2">{{ this.emailError }}</p>
+              <p class="text-danger mt-2">{{ errors.email }}</p>
             </div>
 
             <div class="mb-3">
@@ -61,7 +61,7 @@
                 v-model="formData.password"
                 required
               />
-              <p class="text-danger mt-2">{{ this.pass1Error }}</p>
+              <p class="text-danger mt-2">{{ errors.pass1 }}</p>
             </div>
 
             <div class="mb-3">
@@ -75,7 +75,7 @@
                 v-model="formData.password_confirmation"
                 required
               />
-              <p class="text-danger mt-2">{{ this.pass2Error }}</p>
+              <p class="text-danger mt-2">{{ errors.pass2 }}</p>
             </div>
           </form>
         </div>
@@ -101,17 +101,23 @@ export default {
         password: "",
         password_confirmation: "",
       },
-      errors: {},
-      nameError: "",
-      emailError: "",
-      pass1Error: "",
-      pass2Error: "",
+      errors: {
+        name: "",
+        email: "",
+        pass1: "",
+        pass2: "",
+      },
     };
   },
   methods: {
     signup() {
+      this.errors.name = "";
+      this.errors.email = "";
+      this.errors.pass1 = "";
+      this.errors.pass2 = "";
+
       axios
-        .post("api/register", this.formData)
+        .post("api/signup", this.formData)
         .then((response) => {
           console.log(response.data);
           this.formData.name =
@@ -126,19 +132,21 @@ export default {
             queue: true,
           });
         })
-        .catch((errors) => {
-          this.errors = errors.response.data.errors;
-          if (typeof this.errors.name === "undefined") this.nameError = "";
-          else this.nameError = this.errors.name[0];
+        .catch((error) => {
+          // console.log(error.response.data.errors);
+          const errors = error.response.data.errors;
 
-          if (typeof this.errors.email === "undefined") this.emailError = "";
-          else this.emailError = this.errors.email[0];
+          if (typeof errors.name !== "undefined")
+            this.errors.name = errors.name[0];
 
-          if (typeof this.errors.password === "undefined") this.pass1Error = "";
-          else this.pass1Error = this.errors.password[0];
+          if (typeof errors.email !== "undefined")
+            this.errors.email = errors.email[0];
 
-          if (typeof this.errors.password === "undefined") this.pass2Error = "";
-          else this.pass2Error = this.errors.password[0];
+          if (typeof errors.password !== "undefined")
+            this.errors.pass1 = errors.password[0];
+
+          if (typeof errors.password_confirmation !== "undefined")
+            this.errors.pass2 = errors.password_confirmation[0];
         });
     },
   },
