@@ -65,10 +65,12 @@ router.beforeEach((to, from, next) => {
                     params: { pathname: name },
                 });
             } else if (localStorage.getItem("tokenType") == "customer") {
-                const name = localStorage.getItem("pathname");
+                const name1 = localStorage.getItem("pathname");
+                const name2 = localStorage.getItem("surveyName");
+
                 next({
                     name: "customer",
-                    params: { pathname: name },
+                    params: { pathname: name1, surveyname: name2},
                 });
             }
         } else {

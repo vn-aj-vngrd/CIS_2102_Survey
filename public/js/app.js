@@ -26189,12 +26189,13 @@ router.beforeEach(function (to, from, next) {
           }
         });
       } else if (localStorage.getItem("tokenType") == "customer") {
-        var _name = localStorage.getItem("pathname");
-
+        var name1 = localStorage.getItem("pathname");
+        var name2 = localStorage.getItem("surveyName");
         next({
           name: "customer",
           params: {
-            pathname: _name
+            pathname: name1,
+            surveyname: name2
           }
         });
       }

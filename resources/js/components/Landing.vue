@@ -94,7 +94,7 @@ export default {
 
             const name1 = localStorage.getItem("pathname");
             const name2 = localStorage.getItem("surveyName");
-
+  
             this.$router.push({
               name: "customer",
               params: { pathname: name1, surveyname: name2 },

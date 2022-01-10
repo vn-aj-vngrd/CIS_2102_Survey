@@ -37,8 +37,8 @@ class ResponseController extends Controller
                     'email' => ['The email has already been used.'],
                 ]);
             } else {
-                $survey = Survey::select('surveyID', 'name')->where('code', $request->surveyCode)->first();
-                $company = User::select('name')->where('userID', $survey->surveyID)->first();
+                $survey = Survey::select('surveyID', 'name', 'createdBy')->where('code', $request->surveyCode)->first();
+                $company = User::select('name')->where('userID', $survey->createdBy)->first();
 
                 $respondent = new Response_set;
                 $respondent->emailAddress = $request->email;
@@ -67,7 +67,7 @@ class ResponseController extends Controller
             $response->rating = $request->ratings[$i];
             $response->save();
         }
-        $request->user()->currentAccessToken()->delete();
+       
         return response()->json("Survey Successfully Submitted");
     }
 }
