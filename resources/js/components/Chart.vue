@@ -87,7 +87,6 @@ export default {
             }
             this.initializeChart(data);
           } else if (this.present === "single") {
-            // console.log("counter = " + this.counter);
             this.ratings = res.customerCount;
 
             // much faster but not fail-safe

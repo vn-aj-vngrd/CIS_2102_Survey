@@ -23324,7 +23324,6 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.initializeChart(data);
         } else if (_this.present === "single") {
-          // console.log("counter = " + this.counter);
           _this.ratings = res.customerCount; // much faster but not fail-safe
           // let trav = res.questionCount;
           // console.log("trav = " + trav);
