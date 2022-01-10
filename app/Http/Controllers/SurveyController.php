@@ -32,7 +32,7 @@ class SurveyController extends Controller
         $survey->name = $request->name;
         $survey->save();
 
-        $data = Survey::orderBy('surveyID', 'desc')->first();
+        $data = Survey::select('surveyID')->orderBy('surveyID', 'desc')->first();
 
         foreach ($request->questions as $val) {
             $question = new Question;

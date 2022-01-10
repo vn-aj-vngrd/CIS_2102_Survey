@@ -91,7 +91,7 @@ export default {
 
             // much faster but not fail-safe
             let trav = res.questionCount;
-            console.log("trav = " + trav);
+
             for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
               data[res.data[i].rating - 1]++;
             }

@@ -23327,7 +23327,6 @@ __webpack_require__.r(__webpack_exports__);
           _this.ratings = res.customerCount; // much faster but not fail-safe
 
           var trav = res.questionCount;
-          console.log("trav = " + trav);
 
           for (var _i = _this.counter, j = 0; j < res.customerCount; _i += trav, j++) {
             data[res.data[_i].rating - 1]++;
@@ -23567,7 +23566,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         surveyCode: "",
-        email: ""
+        email: "",
+        device_name: "browser"
       },
       errors: {
         surveyCode: "",
@@ -23584,10 +23584,18 @@ __webpack_require__.r(__webpack_exports__);
       this.errors.email = ""; // console.log(this.formData);
 
       axios.get("/sanctum/csrf-cookie").then(function (response) {
-        axios.post("api/validateAccess", _this.formData).then(function (response) {
-          console.log(response);
+        axios.post("api/registerRespondent", _this.formData).then(function (response) {
+          // console.log(response);
+          localStorage.setItem("survey-token", response.data.token);
+          localStorage.setItem("survey-id", response.data.id);
+
+          _this.$router.push({
+            name: "customer"
+          });
+
+          $("#landing").modal("hide");
         })["catch"](function (error) {
-          console.log(error.response.data.errors);
+          // console.log(error.response.data.errors);
           var errors = error.response.data.errors;
           if (typeof errors.surveyCode !== "undefined") _this.errors.surveyCode = errors.surveyCode[0];
           if (typeof errors.email !== "undefined") _this.errors.email = errors.email[0];
@@ -23800,7 +23808,7 @@ __webpack_require__.r(__webpack_exports__);
       this.errors.pass1 = "";
       this.errors.pass2 = "";
       axios.post("api/signup", this.formData).then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
         _this.formData.name = _this.formData.email = _this.formData.password = _this.formData.password_confirmation = "";
         _this.errors = {};
         $("#signup").modal("hide");
@@ -24160,19 +24168,6 @@ var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
 });
 
 var _hoisted_14 = [_hoisted_13];
-var _hoisted_15 = {
-  "class": "container empty"
-};
-
-var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "mt-4 text-center text-danger"
-  }, " Cannot find what you're looking for. ", -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_17 = [_hoisted_16];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Delete = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Delete");
 
@@ -24229,9 +24224,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, _hoisted_14, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.surveys.length == 0]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, _hoisted_17, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $options.filteredList.length == 0]])])]);
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.surveys.length == 0]])])]);
 }
 
 /***/ }),
@@ -24871,7 +24864,7 @@ var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
     "class": "col-lg-7 text-center text-lg-start"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "display-4 fw-bold lh-1 mb-3"
-  }, " Customer Satisfaction Survey "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  }, " Survey "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "col-lg-10 fs-4"
   }, " Hello, Dear Customer, we are now running a survey to determine how we can improve our service to you. ")], -1
   /* HOISTED */
@@ -26031,7 +26024,7 @@ var routes = [{
   name: "customer",
   component: _pages_CustomerPage_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
   meta: {
-    guest: true
+    surveyAccess: true
   }
 }, {
   path: "/company/:pathname",
@@ -26060,6 +26053,10 @@ function loggedIn() {
   return localStorage.getItem("token");
 }
 
+function takingSurvey() {
+  return localStorage.getItem("survey-token");
+}
+
 router.beforeEach(function (to, from, next) {
   var modalBackground = document.querySelector(".modal-backdrop");
 
@@ -26070,9 +26067,19 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.requiresAuth;
   })) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
     if (!loggedIn()) {
+      next({
+        path: "/"
+      });
+    } else {
+      next();
+    }
+  }
+
+  if (to.matched.some(function (record) {
+    return record.meta.surveyAccess;
+  })) {
+    if (!takingSurvey()) {
       next({
         path: "/"
       });
@@ -26090,11 +26097,15 @@ router.beforeEach(function (to, from, next) {
           pathname: name
         }
       });
+    } else if (takingSurvey()) {
+      next({
+        name: "customer"
+      });
     } else {
       next();
     }
   } else {
-    next(); // make sure to always call next()!
+    next();
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);

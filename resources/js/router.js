@@ -6,7 +6,6 @@ import CompanyPage from "./pages/CompanyPage.vue";
 import SurveyPage from "./pages/SurveyPage.vue";
 import PageNotFound from "./pages/PageNotFound.vue";
 
-
 const routes = [
     {
         path: "/",
@@ -18,7 +17,7 @@ const routes = [
         path: "/customer",
         name: "customer",
         component: CustomerPage,
-        meta: { guest: true },
+        meta: { surveyAccess: true },
     },
     {
         path: "/company/:pathname",
@@ -44,15 +43,26 @@ function loggedIn() {
     return localStorage.getItem("token");
 }
 
+function takingSurvey() {
+    return localStorage.getItem("survey-token");
+}
+
 router.beforeEach((to, from, next) => {
     let modalBackground = document.querySelector(".modal-backdrop");
     if (modalBackground) {
         modalBackground.remove();
     }
     if (to.matched.some((record) => record.meta.requiresAuth)) {
-        // this route requires auth, check if logged in
-        // if not, redirect to login page.
         if (!loggedIn()) {
+            next({
+                path: "/",
+            });
+        } else {
+            next();
+        }
+    }
+    if (to.matched.some((record) => record.meta.surveyAccess)) {
+        if (!takingSurvey()) {
             next({
                 path: "/",
             });
@@ -66,11 +76,15 @@ router.beforeEach((to, from, next) => {
                 name: "company",
                 params: { pathname: name },
             });
+        } else if (takingSurvey()) {
+            next({
+                name: "customer",
+            });
         } else {
             next();
         }
     } else {
-        next(); // make sure to always call next()!
+        next();
     }
 });
 

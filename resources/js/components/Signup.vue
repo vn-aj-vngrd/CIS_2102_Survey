@@ -119,7 +119,7 @@ export default {
       axios
         .post("api/signup", this.formData)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           this.formData.name =
             this.formData.email =
             this.formData.password =

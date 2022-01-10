@@ -3,11 +3,11 @@
     <div class="row align-items-center g-lg-5 py-5">
       <div class="col-lg-7 text-center text-lg-start">
         <h1 class="display-4 fw-bold lh-1 mb-3">
-          Customer Satisfaction Survey
+          Survey
         </h1>
         <p class="col-lg-10 fs-4">
           Hello, Dear Customer, we are now running a survey to determine how we
-          can improve our service to you.
+          can improve our service to you. 
         </p>
       </div>
 
@@ -66,6 +66,7 @@ export default {
       formData: {
         surveyCode: "",
         email: "",
+        device_name: "browser",
       },
       errors: {
         surveyCode: "",
@@ -82,12 +83,18 @@ export default {
       // console.log(this.formData);
       axios.get("/sanctum/csrf-cookie").then((response) => {
         axios
-          .post("api/validateAccess", this.formData)
+          .post("api/registerRespondent", this.formData)
           .then((response) => {
-            console.log(response);
+            // console.log(response);
+            localStorage.setItem("survey-token", response.data.token);
+            localStorage.setItem("survey-id", response.data.id);
+            this.$router.push({
+              name: "customer",
+            });
+            $("#landing").modal("hide");
           })
           .catch((error) => {
-            console.log(error.response.data.errors);
+            // console.log(error.response.data.errors);
             const errors = error.response.data.errors;
 
             if (typeof errors.surveyCode !== "undefined")

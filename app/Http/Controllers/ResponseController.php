@@ -11,33 +11,49 @@ use Illuminate\Support\Facades\DB;
 
 class ResponseController extends Controller
 {
-    public function index()
+    public function getQuestions()
     {
         //
     }
 
-    public function validateAccess(Request $request)
+    public function registerRespondent(Request $request)
     {
         $request->validate([
-            'surveyCode'   => ['required'],
-            'email'        => ['required', 'email'],
+            'surveyCode'    => ['required'],
+            'email'         => ['required', 'email'],
+            'device_name'   => 'required',
         ]);
 
-        // check if customer already did the survey
-
-        $codeCount = Survey::where('code', $request->surveyCode)->count();
-        if ($codeCount == 0) {
+        $validCode = Survey::where('code', $request->surveyCode)->count();
+        if ($validCode == 0) {
             throw ValidationException::withMessages([
-                'surveyCode' => ['The provided credentials are incorrect.'],
+                'surveyCode' => ['The provided survey code is invalid.'],
             ]);
+        } else {
+            $ValidEmail = DB::table('surveys')
+                ->join('response_sets', 'response_sets.surveyID', '=', 'surveys.surveyID')
+                ->where('surveys.code', '=', $request->surveyCode)
+                ->where('response_sets.emailAddress', '=', $request->email)
+                ->count();
+
+            if ($ValidEmail == 1) {
+                throw ValidationException::withMessages([
+                    'email' => ['The email has already been used.'],
+                ]);
+            } else {
+                $survey = Survey::select('surveyID')->where('code', $request->surveyCode)->first();
+                $respondent = new Response_set;
+                $respondent->emailAddress = $request->email;
+                $respondent->surveyID = $survey->surveyID;
+                $respondent->save();
+
+                $ret = array(
+                    "token" => $respondent->createToken($request->device_name)->plainTextToken,
+                    "id" => $respondent->responseSetID,
+                );
+            }
         }
-        $count = DB::table('surveys')
-            ->join('response_sets', 'response_sets.surveyID', '=', 'surveys.surveyID')
-            ->where('surveys.code', '=', $request->surveyCode)
-            ->where('response_sets.emailAddress', '=', $request->email)
-            ->get();
 
-
-        return response()->json($codeCount);
+        return response()->json($ret);
     }
 }
