@@ -44,13 +44,13 @@
         </div>
       </div>
 
-      <div class="container empty" v-if="surveys.length == 0">
+      <div class="container empty" v-show="surveys.length == 0">
         <div class="mt-4 text-center text-danger">
           You have no created survey at the moment.
         </div>
       </div>
 
-      <div class="container empty" v-if="filteredList.length == 0">
+      <div class="container empty" v-show="filteredList.length == 0">
         <div class="mt-4 text-center text-danger">
           Cannot find what you're looking for.
         </div>
