@@ -47,7 +47,7 @@
         class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
       >
         <li>
-          <a class="nav-link px-2 link-secondary">Company Name</a>
+          <a class="nav-link px-2 link-secondary">{{ this.name }}</a>
         </li>
       </ul>
 

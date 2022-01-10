@@ -92,6 +92,8 @@ export default {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("id", response.data.id);
             localStorage.setItem("pathname", response.data.name);
+            localStorage.setItem("tokenType", "company");
+
             const name = response.data.name;
             this.$router.push({
               name: "company",

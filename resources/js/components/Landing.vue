@@ -84,11 +84,17 @@ export default {
           .post("api/registerRespondent", this.formData)
           .then((response) => {
             // console.log(response);
-            localStorage.setItem("surveyToken", response.data.token);
+            localStorage.setItem("token", response.data.token);
             localStorage.setItem("responseSetID", response.data.responseSetID);
+            localStorage.setItem("pathname", response.data.name);
             localStorage.setItem("surveyID", response.data.surveyID);
+            localStorage.setItem("tokenType", "customer");
+
+
+            const name = localStorage.getItem("pathname");
             this.$router.push({
               name: "customer",
+              params: { pathname: name },
             });
             $("#landing").modal("hide");
           })

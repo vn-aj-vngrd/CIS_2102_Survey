@@ -14,10 +14,10 @@ const routes = [
         meta: { guest: true },
     },
     {
-        path: "/customer",
+        path: "/customer/:pathname",
         name: "customer",
         component: CustomerPage,
-        meta: { surveyAccess: true },
+        meta: { requiresAuth: true },
     },
     {
         path: "/company/:pathname",
@@ -43,49 +43,40 @@ function loggedIn() {
     return localStorage.getItem("token");
 }
 
-function takingSurvey() {
-    return localStorage.getItem("surveyToken");
-}
-
-// router.beforeEach((to, from, next) => {
-//     let modalBackground = document.querySelector(".modal-backdrop");
-//     if (modalBackground) {
-//         modalBackground.remove();
-//     }
-//     if (to.matched.some((record) => record.meta.requiresAuth)) {
-//         if (!loggedIn()) {
-//             next({
-//                 path: "/",
-//             });
-//         } else {
-//             next();
-//         }
-//     }
-//     if (to.matched.some((record) => record.meta.surveyAccess)) {
-//         if (!takingSurvey()) {
-//             next({
-//                 path: "/",
-//             });
-//         } else {
-//             next();
-//         }
-//     } else if (to.matched.some((record) => record.meta.guest)) {
-//         if (loggedIn()) {
-//             const name = localStorage.getItem("pathname");
-//             next({
-//                 name: "company",
-//                 params: { pathname: name },
-//             });
-//         } else if (takingSurvey()) {
-//             next({
-//                 name: "customer",
-//             });
-//         } else {
-//             next();
-//         }
-//     } else {
-//         next();
-//     }
-// });
+router.beforeEach((to, from, next) => {
+    let modalBackground = document.querySelector(".modal-backdrop");
+    if (modalBackground) {
+        modalBackground.remove();
+    }
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+        if (!loggedIn()) {
+            next({
+                path: "/",
+            });
+        } else {
+            next();
+        }
+    } else if (to.matched.some((record) => record.meta.guest)) {
+        if (loggedIn()) {
+            if (localStorage.getItem("tokenType") == "company") {
+                const name = localStorage.getItem("pathname");
+                next({
+                    name: "company",
+                    params: { pathname: name },
+                });
+            } else if (localStorage.getItem("tokenType") == "customer") {
+                const name = localStorage.getItem("pathname");
+                next({
+                    name: "customer",
+                    params: { pathname: name },
+                });
+            }
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
 
 export default router;

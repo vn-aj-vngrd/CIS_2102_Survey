@@ -23536,12 +23536,18 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/sanctum/csrf-cookie").then(function (response) {
         axios.post("api/registerRespondent", _this.formData).then(function (response) {
           // console.log(response);
-          localStorage.setItem("surveyToken", response.data.token);
+          localStorage.setItem("token", response.data.token);
           localStorage.setItem("responseSetID", response.data.responseSetID);
+          localStorage.setItem("pathname", response.data.name);
           localStorage.setItem("surveyID", response.data.surveyID);
+          localStorage.setItem("tokenType", "customer");
+          var name = localStorage.getItem("pathname");
 
           _this.$router.push({
-            name: "customer"
+            name: "customer",
+            params: {
+              pathname: name
+            }
           });
 
           $("#landing").modal("hide");
@@ -23600,6 +23606,7 @@ __webpack_require__.r(__webpack_exports__);
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("id", response.data.id);
           localStorage.setItem("pathname", response.data.name);
+          localStorage.setItem("tokenType", "company");
           var name = response.data.name;
 
           _this.$router.push({
@@ -24706,29 +24713,22 @@ var _hoisted_7 = [_hoisted_6];
 var _hoisted_8 = {
   "class": "nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
 };
-
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    "class": "nav-link px-2 link-secondary"
-  }, "Company Name")], -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_10 = [_hoisted_9];
-var _hoisted_11 = {
+var _hoisted_9 = {
+  "class": "nav-link px-2 link-secondary"
+};
+var _hoisted_10 = {
   "class": "nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
 };
-var _hoisted_12 = {
+var _hoisted_11 = {
   "class": "nav-link px-2 link-secondary"
+};
+var _hoisted_12 = {
+  "class": "col-md-3 text-end"
 };
 var _hoisted_13 = {
   "class": "col-md-3 text-end"
 };
 var _hoisted_14 = {
-  "class": "col-md-3 text-end"
-};
-var _hoisted_15 = {
   "class": "col-md-3 text-end"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -24754,23 +24754,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Start - Middle Heading "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_5, _hoisted_7, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'home']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_8, _hoisted_10, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'survey']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.name), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'home']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.name), 1
   /* TEXT */
   )])], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'company']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End - Middle Heading "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Start - Rightmost Heading "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Login, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'survey']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.name), 1
+  /* TEXT */
+  )])], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'company']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End - Middle Heading "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Start - Rightmost Heading "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Login, {
     myclass: "btn btn-primary me-2"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Signup, {
     myclass: "btn btn-success"
   })], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'home']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Finish, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'home']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Finish, {
     myclass: "btn btn-outline-primary"
   })], 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'survey']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Logout, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.htype == 'survey']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Logout, {
     myclass: "btn btn-danger"
   })], 512
   /* NEED_PATCH */
@@ -26077,11 +26079,11 @@ var routes = [{
     guest: true
   }
 }, {
-  path: "/customer",
+  path: "/customer/:pathname",
   name: "customer",
   component: _pages_CustomerPage_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
   meta: {
-    surveyAccess: true
+    requiresAuth: true
   }
 }, {
   path: "/company/:pathname",
@@ -26110,50 +26112,52 @@ function loggedIn() {
   return localStorage.getItem("token");
 }
 
-function takingSurvey() {
-  return localStorage.getItem("surveyToken");
-} // router.beforeEach((to, from, next) => {
-//     let modalBackground = document.querySelector(".modal-backdrop");
-//     if (modalBackground) {
-//         modalBackground.remove();
-//     }
-//     if (to.matched.some((record) => record.meta.requiresAuth)) {
-//         if (!loggedIn()) {
-//             next({
-//                 path: "/",
-//             });
-//         } else {
-//             next();
-//         }
-//     }
-//     if (to.matched.some((record) => record.meta.surveyAccess)) {
-//         if (!takingSurvey()) {
-//             next({
-//                 path: "/",
-//             });
-//         } else {
-//             next();
-//         }
-//     } else if (to.matched.some((record) => record.meta.guest)) {
-//         if (loggedIn()) {
-//             const name = localStorage.getItem("pathname");
-//             next({
-//                 name: "company",
-//                 params: { pathname: name },
-//             });
-//         } else if (takingSurvey()) {
-//             next({
-//                 name: "customer",
-//             });
-//         } else {
-//             next();
-//         }
-//     } else {
-//         next();
-//     }
-// });
+router.beforeEach(function (to, from, next) {
+  var modalBackground = document.querySelector(".modal-backdrop");
 
+  if (modalBackground) {
+    modalBackground.remove();
+  }
 
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  })) {
+    if (!loggedIn()) {
+      next({
+        path: "/"
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some(function (record) {
+    return record.meta.guest;
+  })) {
+    if (loggedIn()) {
+      if (localStorage.getItem("tokenType") == "company") {
+        var name = localStorage.getItem("pathname");
+        next({
+          name: "company",
+          params: {
+            pathname: name
+          }
+        });
+      } else if (localStorage.getItem("tokenType") == "customer") {
+        var _name = localStorage.getItem("pathname");
+
+        next({
+          name: "customer",
+          params: {
+            pathname: _name
+          }
+        });
+      }
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 /***/ }),

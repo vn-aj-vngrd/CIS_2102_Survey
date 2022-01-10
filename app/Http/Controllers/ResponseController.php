@@ -41,7 +41,7 @@ class ResponseController extends Controller
                     'email' => ['The email has already been used.'],
                 ]);
             } else {
-                $survey = Survey::select('surveyID')->where('code', $request->surveyCode)->first();
+                $survey = Survey::select('surveyID', 'name')->where('code', $request->surveyCode)->first();
                 $respondent = new Response_set;
                 $respondent->emailAddress = $request->email;
                 $respondent->surveyID = $survey->surveyID;
@@ -51,6 +51,7 @@ class ResponseController extends Controller
                     "token"         => $respondent->createToken($request->device_name)->plainTextToken,
                     "responseSetID" => $respondent->responseSetID,
                     "surveyID"      => $survey->surveyID,
+                    "name"          => $survey->name,
                 );
             }
         }
