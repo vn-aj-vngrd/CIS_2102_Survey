@@ -60,7 +60,14 @@ class ResponseController extends Controller
 
     public function submitSurvey(Request $request)
     {
-        
+        for ($i = 0; $i < count($request->questions); $i++) {
+            $response = new Response;
+            $response->responseSetID =  $request->responseSetID;
+            $response->questionID = $request->questions[$i];
+            $response->rating = $request->ratings[$i];
+            $response->save();
+        }
+        $request->user()->currentAccessToken()->delete();
         return response()->json("Survey Successfully Submitted");
     }
 }

@@ -157,6 +157,7 @@ export default {
       formData: {
         ratings: [],
         questions: [],
+        responseSetID: 0,
       },
       count: 0,
       questions: [],
@@ -188,11 +189,24 @@ export default {
       this.count++;
     },
     submitSurvey() {
-      console.log(this.formData);
+      // console.log(this.formData);
       axios
         .post("submitSurvey", this.formData)
         .then((response) => {
-          console.log(response);
+          // console.log(response);
+          localStorage.removeItem("token");
+          localStorage.removeItem("responseSetID");
+          localStorage.removeItem("pathname");
+          localStorage.removeItem("surveyName");
+          localStorage.removeItem("surveyID");
+          localStorage.removeItem("tokenType");
+
+          this.$router.push("/");
+          $("#finish").modal("hide");
+          this.$toast.success(`Survey Successfully Submitted`, {
+            position: "top",
+            queue: true,
+          });
         })
         .catch((errors) => {
           console.log(errors);
@@ -203,8 +217,8 @@ export default {
     // console.log(localStorage.getItem("surveyID"));
     // console.log(localStorage.getItem("responseSetID"));
     this.surveyName = localStorage.getItem("surveyName");
+    this.formData.responseSetID = localStorage.getItem("responseSetID");
     this.getQuestions();
-    // this.selected = "text-muted";
   },
 };
 </script>
@@ -212,7 +226,7 @@ export default {
 <style scoped>
 .modal.in .modal-dialog {
   -webkit-transform: none;
-  -ms-transform: none; 
+  -ms-transform: none;
   transform: none;
 }
 .title-container {
