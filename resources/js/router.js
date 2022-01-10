@@ -14,7 +14,7 @@ const routes = [
         meta: { guest: true },
     },
     {
-        path: "/customer/:pathname",
+        path: "/customer/:pathname/:surveyname",
         name: "customer",
         component: CustomerPage,
         meta: { requiresAuth: true },
@@ -43,40 +43,40 @@ function loggedIn() {
     return localStorage.getItem("token");
 }
 
-router.beforeEach((to, from, next) => {
-    let modalBackground = document.querySelector(".modal-backdrop");
-    if (modalBackground) {
-        modalBackground.remove();
-    }
-    if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (!loggedIn()) {
-            next({
-                path: "/",
-            });
-        } else {
-            next();
-        }
-    } else if (to.matched.some((record) => record.meta.guest)) {
-        if (loggedIn()) {
-            if (localStorage.getItem("tokenType") == "company") {
-                const name = localStorage.getItem("pathname");
-                next({
-                    name: "company",
-                    params: { pathname: name },
-                });
-            } else if (localStorage.getItem("tokenType") == "customer") {
-                const name = localStorage.getItem("pathname");
-                next({
-                    name: "customer",
-                    params: { pathname: name },
-                });
-            }
-        } else {
-            next();
-        }
-    } else {
-        next();
-    }
-});
+// router.beforeEach((to, from, next) => {
+//     let modalBackground = document.querySelector(".modal-backdrop");
+//     if (modalBackground) {
+//         modalBackground.remove();
+//     }
+//     if (to.matched.some((record) => record.meta.requiresAuth)) {
+//         if (!loggedIn()) {
+//             next({
+//                 path: "/",
+//             });
+//         } else {
+//             next();
+//         }
+//     } else if (to.matched.some((record) => record.meta.guest)) {
+//         if (loggedIn()) {
+//             if (localStorage.getItem("tokenType") == "company") {
+//                 const name = localStorage.getItem("pathname");
+//                 next({
+//                     name: "company",
+//                     params: { pathname: name },
+//                 });
+//             } else if (localStorage.getItem("tokenType") == "customer") {
+//                 const name = localStorage.getItem("pathname");
+//                 next({
+//                     name: "customer",
+//                     params: { pathname: name },
+//                 });
+//             }
+//         } else {
+//             next();
+//         }
+//     } else {
+//         next();
+//     }
+// });
 
 export default router;

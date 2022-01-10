@@ -87,14 +87,17 @@ export default {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("responseSetID", response.data.responseSetID);
             localStorage.setItem("pathname", response.data.name);
+            localStorage.setItem("surveyName", response.data.surveyName);
             localStorage.setItem("surveyID", response.data.surveyID);
             localStorage.setItem("tokenType", "customer");
 
 
-            const name = localStorage.getItem("pathname");
+            const name1 = localStorage.getItem("pathname");
+            const name2 = localStorage.getItem("surveyName");
+
             this.$router.push({
               name: "customer",
-              params: { pathname: name },
+              params: { pathname: name1, surveyname: name2 },
             });
             $("#landing").modal("hide");
           })

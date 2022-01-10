@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Response;
 use App\Models\Response_set;
 use App\Models\Survey;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +43,8 @@ class ResponseController extends Controller
                 ]);
             } else {
                 $survey = Survey::select('surveyID', 'name')->where('code', $request->surveyCode)->first();
+                $company = User::select('name')->where('userID', $survey->surveyID)->first();
+
                 $respondent = new Response_set;
                 $respondent->emailAddress = $request->email;
                 $respondent->surveyID = $survey->surveyID;
@@ -51,7 +54,8 @@ class ResponseController extends Controller
                     "token"         => $respondent->createToken($request->device_name)->plainTextToken,
                     "responseSetID" => $respondent->responseSetID,
                     "surveyID"      => $survey->surveyID,
-                    "name"          => $survey->name,
+                    "surveyName"    => $survey->name,
+                    "name"          => $company->name,
                 );
             }
         }

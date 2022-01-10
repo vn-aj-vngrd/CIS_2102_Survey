@@ -1,7 +1,8 @@
 <template>
-  <Carousel class="mycarousel shadow bg-body rounded border border-muted">
+  <Carousel class="shadow bg-body rounded border border-muted">
     <Slide v-for="(question, index) in questions" :key="index">
       <div class="carousel__item">
+        <div class="title-container">{{ surveyName }}</div>
         <span class="text-muted"> Question {{ index + 1 }} <b>| </b></span>
         <b>{{ question.text }}</b>
 
@@ -91,6 +92,7 @@ export default {
         responses: [],
       },
       questions: [],
+      surveyName: "",
     };
   },
   methods: {
@@ -99,7 +101,7 @@ export default {
         .get("getQuestions/" + localStorage.getItem("surveyID"))
         .then((response) => {
           this.questions = response.data;
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch((errors) => {
           console.log(errors);
@@ -107,21 +109,22 @@ export default {
     },
   },
   created() {
-    console.log(localStorage.getItem("surveyID"));
-    console.log(localStorage.getItem("responseSetID"));
+    // console.log(localStorage.getItem("surveyID"));
+    // console.log(localStorage.getItem("responseSetID"));
+    this.surveyName = localStorage.getItem("surveyName");
     this.getQuestions();
   },
 };
 </script>
 
 <style scoped>
-.mycarousel {
-  margin-top: 150px;
+.title-container {
+  margin-bottom: 11rem;
 }
 
 .carousel__item {
   min-height: 300px;
-  margin-top: 11rem;
+  margin-top: 1.5rem;
   width: 90%;
   background-color: white;
   color: black;
@@ -139,6 +142,7 @@ export default {
 
 .emoji-container {
   margin-top: 9rem;
+  margin-bottom: 1.5rem;
   padding-top: 10px;
   max-width: 100%;
 }
