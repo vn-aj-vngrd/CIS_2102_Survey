@@ -23335,7 +23335,6 @@ __webpack_require__.r(__webpack_exports__);
           for (var _i = 0; _i < res.data.length; _i++) {
             if (res.data[_i].questionID == _this.counter + 1) {
               data[res.data[_i].rating - 1]++;
-              console.log(res.data[_i].questionID);
             }
           }
 

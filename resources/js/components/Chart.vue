@@ -100,7 +100,6 @@ export default {
             for (let i = 0; i < res.data.length; i++) {
               if (res.data[i].questionID == this.counter + 1) {
                 data[res.data[i].rating - 1]++;
-                console.log(res.data[i].questionID);
               }
             }
             this.initializeChart(data);
