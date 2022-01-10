@@ -51,7 +51,7 @@ export default {
             "#E46651",
             "#DD1B16",
           ],
-          data: [data[0], data[1], data[2], data[3], data[4]],
+          data: [data[4], data[3], data[2], data[1], data[0]],
         },
       ];
       chartRef.value.update(750);
@@ -89,10 +89,20 @@ export default {
           } else if (this.present === "single") {
             // console.log("counter = " + this.counter);
             this.ratings = res.customerCount;
-            let trav = res.questionCount;
+
+            // much faster but not fail-safe
+            // let trav = res.questionCount;
             // console.log("trav = " + trav);
-            for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
-              data[res.data[i].rating - 1]++;
+            // for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
+            //   data[res.data[i].rating - 1]++;
+            // }
+
+            // accurate when some data is not found and fail-safe
+            for (let i = 0; i < res.data.length; i++) {
+              if (res.data[i].questionID == this.counter + 1) {
+                data[res.data[i].rating - 1]++;
+                console.log(res.data[i].questionID);
+              }
             }
             this.initializeChart(data);
           }

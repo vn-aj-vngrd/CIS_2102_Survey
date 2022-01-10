@@ -23288,7 +23288,7 @@ __webpack_require__.r(__webpack_exports__);
     var initializeChart = function initializeChart(data) {
       pieChart.data.datasets = [{
         backgroundColor: ["#008000", "#41B883", "#00D8FF", "#E46651", "#DD1B16"],
-        data: [data[0], data[1], data[2], data[3], data[4]]
+        data: [data[4], data[3], data[2], data[1], data[0]]
       }];
       chartRef.value.update(750);
     };
@@ -23325,11 +23325,19 @@ __webpack_require__.r(__webpack_exports__);
           _this.initializeChart(data);
         } else if (_this.present === "single") {
           // console.log("counter = " + this.counter);
-          _this.ratings = res.customerCount;
-          var trav = res.questionCount; // console.log("trav = " + trav);
+          _this.ratings = res.customerCount; // much faster but not fail-safe
+          // let trav = res.questionCount;
+          // console.log("trav = " + trav);
+          // for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
+          //   data[res.data[i].rating - 1]++;
+          // }
+          // accurate when some data is not found and fail-safe
 
-          for (var _i = _this.counter, j = 0; j < res.customerCount; _i += trav, j++) {
-            data[res.data[_i].rating - 1]++;
+          for (var _i = 0; _i < res.data.length; _i++) {
+            if (res.data[_i].questionID == _this.counter + 1) {
+              data[res.data[_i].rating - 1]++;
+              console.log(res.data[_i].questionID);
+            }
           }
 
           _this.initializeChart(data);
@@ -24112,6 +24120,20 @@ var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
 });
 
 var _hoisted_14 = [_hoisted_13];
+var _hoisted_15 = {
+  key: 1,
+  "class": "container empty"
+};
+
+var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "mt-4 text-center text-danger"
+  }, " Cannot find what you're looking for. ", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_17 = [_hoisted_16];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Delete = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Delete");
 
@@ -24126,7 +24148,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Search Title..."
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.surveys, function (survey) {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.search]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.filteredList, function (survey) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "col-auto mt-4",
       key: survey
@@ -24166,7 +24188,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["to"])])])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  )), $data.surveys.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, _hoisted_14)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
+  )), $data.surveys.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, _hoisted_14)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.filteredList.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, _hoisted_17)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
 }
 
 /***/ }),
