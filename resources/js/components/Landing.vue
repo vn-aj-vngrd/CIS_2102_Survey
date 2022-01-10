@@ -38,6 +38,7 @@
             Get Started
           </button>
           <hr class="my-4" />
+          <small class="text-muted">By clicking get started, you agree to the terms of use.</small>
           <small class="text-muted"></small>
         </form>
       </div>
@@ -94,7 +95,7 @@ export default {
 
             const name1 = localStorage.getItem("pathname");
             const name2 = localStorage.getItem("surveyName");
-  
+
             this.$router.push({
               name: "customer",
               params: { pathname: name1, surveyname: name2 },

@@ -84,6 +84,9 @@
       Finish Survey
     </button>
   </div>
+  <small class="d-flex justify-content-center text-muted text-center mt-4"
+    >To activate the button, please answer all the survey questions.</small
+  >
 
   <div
     class="modal fade text-start"
@@ -186,7 +189,7 @@ export default {
       // console.log(index);
 
       this.formData.ratings[index] = rating;
-      this.count++;
+      if (index == this.count) this.count++;
     },
     submitSurvey() {
       // console.log(this.formData);

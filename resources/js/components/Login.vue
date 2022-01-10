@@ -95,11 +95,15 @@ export default {
             localStorage.setItem("tokenType", "company");
 
             const name = response.data.name;
+            $("#login").modal("hide");
+            this.$toast.success(`Welcome Back to Survey`, {
+              position: "top",
+              queue: true,
+            });
             this.$router.push({
               name: "company",
               params: { pathname: name },
             });
-            $("#login").modal("hide");
           })
           .catch((error) => {
             const errors = error.response.data.errors;
