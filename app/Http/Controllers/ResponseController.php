@@ -54,7 +54,6 @@ class ResponseController extends Controller
                 );
             }
         }
-
         return response()->json($ret);
     }
 
@@ -67,7 +66,6 @@ class ResponseController extends Controller
             $response->rating = $request->ratings[$i];
             $response->save();
         }
-       
         return response()->json("Survey Successfully Submitted");
     }
 }

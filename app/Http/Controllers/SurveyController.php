@@ -15,6 +15,7 @@ class SurveyController extends Controller
     public function index()
     {
         $surveys = Survey::orderBy('surveyID', 'desc')->get();
+        
         return response()->json($surveys);
     }
 
@@ -64,18 +65,21 @@ class SurveyController extends Controller
     {
         $survey = Survey::findOrFail($id);
         $survey->delete();
+
         return response()->json("Survey Successfully Deleted.");
     }
 
     public function getQuestions($id)
     {
         $questions = Question::where('surveyID', $id)->orderBy('questionID', 'asc')->get();
+
         return response()->json($questions);
     }
 
     public function getSurveyInfo($id)
     {
         $survey = Survey::where('surveyID', $id)->get();
+
         return response()->json($survey);
     }
 
@@ -97,6 +101,7 @@ class SurveyController extends Controller
             "questionCount" => $questionCount,
             "customerCount" => $customerCount,
         );
+
         return response()->json($ret);
     }
 }
