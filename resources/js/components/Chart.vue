@@ -42,30 +42,34 @@ export default {
       },
       options: {
         plugins: {
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              footer: (ttItem) => {
+                let sum = 0;
+                let dataArr = ttItem[0].dataset.data;
+                dataArr.map((data) => {
+                  sum += Number(data);
+                });
+
+                let percentage =
+                  ((ttItem[0].parsed * 100) / sum).toFixed(2) + "%";
+                return `Percentage of data: ${percentage}`;
+              },
+            },
+          },
           datalabels: {
-            formatter: (value, ctx) => {
+            formatter: (value, dnct1) => {
               let sum = 0;
-              let dataArr = ctx.chart.data.datasets[0].data;
+              let dataArr = dnct1.chart.data.datasets[0].data;
               dataArr.map((data) => {
-                sum += data;
+                sum += Number(data);
               });
+
               let percentage = ((value * 100) / sum).toFixed(2) + "%";
               return percentage;
             },
-            color: "#fff",
-          },
-
-          tooltip: {
-            callbacks: {
-              label: (ttItem) =>
-                `${ttItem.label}: ${
-                  (ttItem.parsed * 100) /
-                  ttItem.dataset.data
-                    .reduce((a, b) => Number(a) + Number(b), 0)
-                    .toFixed(2)
-                }%`,
-              //label: (ttItem) => `${ttItem.label}: ${ttItem.parsed}%`
-            },
+            color: "#ff3",
           },
         },
       },

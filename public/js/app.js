@@ -23236,27 +23236,31 @@ __webpack_require__.r(__webpack_exports__);
       },
       options: {
         plugins: {
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              footer: function footer(ttItem) {
+                var sum = 0;
+                var dataArr = ttItem[0].dataset.data;
+                dataArr.map(function (data) {
+                  sum += Number(data);
+                });
+                var percentage = (ttItem[0].parsed * 100 / sum).toFixed(2) + "%";
+                return "Percentage of data: ".concat(percentage);
+              }
+            }
+          },
           datalabels: {
-            formatter: function formatter(value, ctx) {
+            formatter: function formatter(value, dnct1) {
               var sum = 0;
-              var dataArr = ctx.chart.data.datasets[0].data;
+              var dataArr = dnct1.chart.data.datasets[0].data;
               dataArr.map(function (data) {
-                sum += data;
+                sum += Number(data);
               });
               var percentage = (value * 100 / sum).toFixed(2) + "%";
               return percentage;
             },
-            color: "#fff"
-          },
-          tooltip: {
-            callbacks: {
-              label: function label(ttItem) {
-                return "".concat(ttItem.label, ": ").concat(ttItem.parsed * 100 / ttItem.dataset.data.reduce(function (a, b) {
-                  return Number(a) + Number(b);
-                }, 0).toFixed(2), "%");
-              } //label: (ttItem) => `${ttItem.label}: ${ttItem.parsed}%`
-
-            }
+            color: "#ff3"
           }
         }
       }
