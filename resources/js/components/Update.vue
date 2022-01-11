@@ -29,7 +29,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body border-bottom">
           <div class="mb-3">
             <label for="survey-title" class="col-form-label"
               >Survey Title</label
@@ -41,7 +41,8 @@
               required
             />
           </div>
-
+        </div>
+        <div class="modal-body">
           <div
             class="mb-3"
             v-for="(question, index) in formData.questions"
