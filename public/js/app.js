@@ -23174,7 +23174,8 @@ __webpack_require__.r(__webpack_exports__);
     getSurveys: function getSurveys() {
       var _this = this;
 
-      axios.get("index").then(function (response) {
+      var id = parseInt(localStorage.getItem("id"));
+      axios.get("index/" + id).then(function (response) {
         _this.surveys = response.data; // console.log(response.data);
       })["catch"](function (errors) {
         console.log(errors);

@@ -70,8 +70,9 @@ export default {
   },
   methods: {
     getSurveys() {
+      const id = parseInt(localStorage.getItem("id"));
       axios
-        .get("index")
+        .get("index/" + id)
         .then((response) => {
           this.surveys = response.data;
           // console.log(response.data);
@@ -90,6 +91,7 @@ export default {
   },
   created() {
     this.getSurveys();
+  
   },
 };
 </script>

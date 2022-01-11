@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\DB;
 
 class SurveyController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $surveys = Survey::orderBy('surveyID', 'desc')->get();
+        $surveys = Survey::where('createdBy', $id)->orderBy('surveyID', 'desc')->get();
         
         return response()->json($surveys);
     }
