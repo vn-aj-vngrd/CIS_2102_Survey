@@ -23824,8 +23824,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("getRespondents/" + this.surveyID).then(function (response) {
-        _this.respondents = response.data;
-        console.log(response.data);
+        _this.respondents = response.data; // console.log(response.data);
       })["catch"](function (errors) {
         console.log(errors);
       });

@@ -74,7 +74,7 @@ export default {
         .get("getRespondents/" + this.surveyID)
         .then((response) => {
           this.respondents = response.data;
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch((errors) => {
           console.log(errors);
