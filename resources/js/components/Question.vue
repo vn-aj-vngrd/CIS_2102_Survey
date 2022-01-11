@@ -1,9 +1,9 @@
 <template>
-  <!-- {{ questions }}
+  {{ questions }}
   <br />
   {{ formData.ratings }}
   <br />
-  {{ formData.questions }} -->
+  {{ formData.questions }}
 
   <Carousel class="my-carousel shadow bg-body rounded border border-muted">
     <Slide
@@ -27,23 +27,9 @@
           "
         >
           <div class="col">
-            <span class="emoji emoji--hearteyes" @click="rate(5, index)"
-              ><p :class="formData.ratings[index] == 5 ? selected : ''">
-                Very Satisfied
-              </p></span
-            >
-          </div>
-          <div class="col">
-            <span class="emoji emoji--happy" @click="rate(4, index)"
-              ><p :class="formData.ratings[index] == 4 ? selected : ''">
-                Satisfied
-              </p></span
-            >
-          </div>
-          <div class="col">
-            <span class="emoji emoji--neutral" @click="rate(3, index)"
-              ><p :class="formData.ratings[index] == 3 ? selected : ''">
-                Neutral
+            <span class="emoji emoji--disappointed" @click="rate(1, index)"
+              ><p :class="formData.ratings[index] == 1 ? selected : ''">
+                Very Unsatisfied
               </p></span
             >
           </div>
@@ -55,9 +41,23 @@
             >
           </div>
           <div class="col">
-            <span class="emoji emoji--disappointed" @click="rate(1, index)"
-              ><p :class="formData.ratings[index] == 1 ? selected : ''">
-                Very Unsatisfied
+            <span class="emoji emoji--neutral" @click="rate(3, index)"
+              ><p :class="formData.ratings[index] == 3 ? selected : ''">
+                Neutral
+              </p></span
+            >
+          </div>
+          <div class="col">
+            <span class="emoji emoji--happy" @click="rate(4, index)"
+              ><p :class="formData.ratings[index] == 4 ? selected : ''">
+                Satisfied
+              </p></span
+            >
+          </div>
+          <div class="col">
+            <span class="emoji emoji--hearteyes" @click="rate(5, index)"
+              ><p :class="formData.ratings[index] == 5 ? selected : ''">
+                Very Satisfied
               </p></span
             >
           </div>
@@ -84,9 +84,9 @@
       Submit Survey
     </button>
   </div>
-  <small class="d-flex justify-content-center text-muted text-center mt-4"
-    >To submit the survey, please answer all the survey questions.</small
-  >
+  <p class="d-flex justify-content-center text-muted text-center mt-4">
+    To submit the survey, please answer all the survey questions.
+  </p>
 
   <div
     class="modal fade text-start"
@@ -310,5 +310,4 @@ p {
 .modal-body {
   font-size: 17px;
 }
-
 </style>

@@ -88,21 +88,12 @@ export default {
             this.initializeChart(data);
           } else if (this.present === "single") {
             this.ratings = res.customerCount;
-
-            // much faster but not fail-safe
             let trav = res.questionCount;
 
             for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
               data[res.data[i].rating - 1]++;
             }
-
-            // accurate when some data is not found and fail-safe
-            // for (let i = 0, trav = this.counter + 1; i < res.data.length; i++) {
-            //   if (i == trav) {
-            //     data[res.data[i].rating - 1]++;
-            //     trav += trav;
-            //   }
-            // }
+            
             this.initializeChart(data);
           }
         })

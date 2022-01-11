@@ -23275,20 +23275,12 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.initializeChart(data);
         } else if (_this.present === "single") {
-          _this.ratings = res.customerCount; // much faster but not fail-safe
-
+          _this.ratings = res.customerCount;
           var trav = res.questionCount;
 
           for (var _i = _this.counter, j = 0; j < res.customerCount; _i += trav, j++) {
             data[res.data[_i].rating - 1]++;
-          } // accurate when some data is not found and fail-safe
-          // for (let i = 0, trav = this.counter + 1; i < res.data.length; i++) {
-          //   if (i == trav) {
-          //     data[res.data[i].rating - 1]++;
-          //     trav += trav;
-          //   }
-          // }
-
+          }
 
           _this.initializeChart(data);
         }
@@ -25087,29 +25079,37 @@ var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-0fecee51"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
 
-var _hoisted_1 = {
+var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_3 = {
   "class": "carousel__item"
 };
-var _hoisted_2 = {
+var _hoisted_4 = {
   "class": "title-container fw-bold text-muted"
 };
-var _hoisted_3 = {
+var _hoisted_5 = {
   "class": "text-muted"
 };
 
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "| ", -1
   /* HOISTED */
   );
 });
 
-var _hoisted_5 = {
+var _hoisted_7 = {
   "class": "row emoji-container shadow bg-body rounded-pill border border-muted"
 };
-var _hoisted_6 = {
-  "class": "col"
-};
-var _hoisted_7 = ["onClick"];
 var _hoisted_8 = {
   "class": "col"
 };
@@ -25127,32 +25127,36 @@ var _hoisted_14 = {
 };
 var _hoisted_15 = ["onClick"];
 var _hoisted_16 = {
+  "class": "col"
+};
+var _hoisted_17 = ["onClick"];
+var _hoisted_18 = {
   "class": "d-flex justify-content-center mt-5"
 };
 
-var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", {
+var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "d-flex justify-content-center text-muted text-center mt-4"
-  }, "To submit the survey, please answer all the survey questions.", -1
+  }, " To submit the survey, please answer all the survey questions. ", -1
   /* HOISTED */
   );
 });
 
-var _hoisted_18 = {
+var _hoisted_20 = {
   "class": "modal fade text-start",
   id: "finish",
   tabindex: "-1",
   "aria-labelledby": "exampleModalLabel",
   "aria-hidden": "true"
 };
-var _hoisted_19 = {
+var _hoisted_21 = {
   "class": "modal-dialog"
 };
-var _hoisted_20 = {
+var _hoisted_22 = {
   "class": "modal-content"
 };
 
-var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "modal-header"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
@@ -25168,7 +25172,7 @@ var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "modal-body"
   }, " Are you sure you want to submit the survey? ", -1
@@ -25176,11 +25180,11 @@ var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_23 = {
+var _hoisted_25 = {
   "class": "modal-footer"
 };
 
-var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-danger",
@@ -25197,7 +25201,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Carousel");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{ questions }}\r\n  <br />\r\n  {{ formData.ratings }}\r\n  <br />\r\n  {{ formData.questions }} "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Carousel, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.questions) + " ", 1
+  /* TEXT */
+  ), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.formData.ratings) + " ", 1
+  /* TEXT */
+  ), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.formData.questions) + " ", 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Carousel, {
     "class": "my-carousel shadow bg-body rounded border border-muted"
   }, {
     addons: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -25210,57 +25220,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: index
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.surveyName), 1
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.surveyName), 1
             /* TEXT */
-            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Question " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index + 1) + " ", 1
+            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Question " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index + 1) + " ", 1
             /* TEXT */
-            ), _hoisted_4]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(question.text), 1
+            ), _hoisted_6]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(question.text), 1
             /* TEXT */
-            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-              "class": "emoji emoji--hearteyes",
-              onClick: function onClick($event) {
-                return $options.rate(5, index);
-              }
-            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.formData.ratings[index] == 5 ? $data.selected : '')
-            }, " Very Satisfied ", 2
-            /* CLASS */
-            )], 8
-            /* PROPS */
-            , _hoisted_7)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-              "class": "emoji emoji--happy",
-              onClick: function onClick($event) {
-                return $options.rate(4, index);
-              }
-            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.formData.ratings[index] == 4 ? $data.selected : '')
-            }, " Satisfied ", 2
-            /* CLASS */
-            )], 8
-            /* PROPS */
-            , _hoisted_9)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-              "class": "emoji emoji--neutral",
-              onClick: function onClick($event) {
-                return $options.rate(3, index);
-              }
-            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.formData.ratings[index] == 3 ? $data.selected : '')
-            }, " Neutral ", 2
-            /* CLASS */
-            )], 8
-            /* PROPS */
-            , _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-              "class": "emoji emoji--frowning",
-              onClick: function onClick($event) {
-                return $options.rate(2, index);
-              }
-            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.formData.ratings[index] == 2 ? $data.selected : '')
-            }, " Unsatisfied ", 2
-            /* CLASS */
-            )], 8
-            /* PROPS */
-            , _hoisted_13)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+            ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
               "class": "emoji emoji--disappointed",
               onClick: function onClick($event) {
                 return $options.rate(1, index);
@@ -25271,7 +25237,51 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             /* CLASS */
             )], 8
             /* PROPS */
-            , _hoisted_15)])])])];
+            , _hoisted_9)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+              "class": "emoji emoji--frowning",
+              onClick: function onClick($event) {
+                return $options.rate(2, index);
+              }
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.formData.ratings[index] == 2 ? $data.selected : '')
+            }, " Unsatisfied ", 2
+            /* CLASS */
+            )], 8
+            /* PROPS */
+            , _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+              "class": "emoji emoji--neutral",
+              onClick: function onClick($event) {
+                return $options.rate(3, index);
+              }
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.formData.ratings[index] == 3 ? $data.selected : '')
+            }, " Neutral ", 2
+            /* CLASS */
+            )], 8
+            /* PROPS */
+            , _hoisted_13)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+              "class": "emoji emoji--happy",
+              onClick: function onClick($event) {
+                return $options.rate(4, index);
+              }
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.formData.ratings[index] == 4 ? $data.selected : '')
+            }, " Satisfied ", 2
+            /* CLASS */
+            )], 8
+            /* PROPS */
+            , _hoisted_15)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+              "class": "emoji emoji--hearteyes",
+              onClick: function onClick($event) {
+                return $options.rate(5, index);
+              }
+            }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.formData.ratings[index] == 5 ? $data.selected : '')
+            }, " Very Satisfied ", 2
+            /* CLASS */
+            )], 8
+            /* PROPS */
+            , _hoisted_17)])])])];
           }),
           _: 2
           /* DYNAMIC */
@@ -25286,14 +25296,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.count < $data.formData.questions.length ? 'btn btn-success disabled' : 'btn btn-success'),
     "data-bs-toggle": "modal",
     "data-bs-target": "#finish"
   }, " Submit Survey ", 2
   /* CLASS */
-  )]), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  )]), _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.submitSurvey && $options.submitSurvey.apply($options, arguments);
     }),
@@ -44774,7 +44784,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal.in .modal-dialog[data-v-0fecee51] {\r\n  transform: none;\n}\n.title-container[data-v-0fecee51] {\r\n  margin-bottom: 9rem;\r\n  font-size: 16px;\n}\n.my-carousel[data-v-0fecee51] {\r\n  background: white;\n}\n.carousel__item[data-v-0fecee51] {\r\n  min-height: 300px;\r\n  margin-top: 2rem;\r\n  width: 90%;\r\n  background-color: white;\r\n  color: black;\r\n  font-size: 20px;\r\n  display: block;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.carousel__prev[data-v-0fecee51],\r\n.carousel__next[data-v-0fecee51] {\r\n  box-sizing: content-box;\r\n  border: 5px solid white;\n}\n.emoji-container[data-v-0fecee51] {\r\n  margin-top: 9rem;\r\n  margin-bottom: 2rem;\r\n  padding-top: 10px;\r\n  max-width: 100%;\n}\n.emoji[data-v-0fecee51] {\r\n  font-size: 1.3rem;\r\n  transform: scale(0.5);\r\n  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);\r\n  transition: text-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;\n}\np[data-v-0fecee51] {\r\n  font-size: 14px;\r\n  color: #777;\n}\n.emoji-selected[data-v-0fecee51] {\r\n  color: #0d6efd;\r\n  font-weight: bold;\n}\n.emoji[data-v-0fecee51]:hover {\r\n  transform: scale(1) translatey(-20px);\r\n  text-shadow: 0 20px 20px rgba(0, 0, 0, 0.3);\n}\n.emoji--hearteyes[data-v-0fecee51]:before {\r\n  content: \"😍\";\n}\n.emoji--happy[data-v-0fecee51]:before {\r\n  content: \"🙂\";\n}\n.emoji--neutral[data-v-0fecee51]:before {\r\n  content: \"😐\";\n}\n.emoji--frowning[data-v-0fecee51]:before {\r\n  content: \"🙁\";\n}\n.emoji--disappointed[data-v-0fecee51]:before {\r\n  content: \"😞\";\n}\n.modal-body[data-v-0fecee51] {\r\n  font-size: 17px;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal.in .modal-dialog[data-v-0fecee51] {\r\n  transform: none;\n}\n.title-container[data-v-0fecee51] {\r\n  margin-bottom: 9rem;\r\n  font-size: 16px;\n}\n.my-carousel[data-v-0fecee51] {\r\n  background: white;\n}\n.carousel__item[data-v-0fecee51] {\r\n  min-height: 300px;\r\n  margin-top: 2rem;\r\n  width: 90%;\r\n  background-color: white;\r\n  color: black;\r\n  font-size: 20px;\r\n  display: block;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.carousel__prev[data-v-0fecee51],\r\n.carousel__next[data-v-0fecee51] {\r\n  box-sizing: content-box;\r\n  border: 5px solid white;\n}\n.emoji-container[data-v-0fecee51] {\r\n  margin-top: 9rem;\r\n  margin-bottom: 2rem;\r\n  padding-top: 10px;\r\n  max-width: 100%;\n}\n.emoji[data-v-0fecee51] {\r\n  font-size: 1.3rem;\r\n  transform: scale(0.5);\r\n  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);\r\n  transition: text-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;\n}\np[data-v-0fecee51] {\r\n  font-size: 14px;\r\n  color: #777;\n}\n.emoji-selected[data-v-0fecee51] {\r\n  color: #0d6efd;\r\n  font-weight: bold;\n}\n.emoji[data-v-0fecee51]:hover {\r\n  transform: scale(1) translatey(-20px);\r\n  text-shadow: 0 20px 20px rgba(0, 0, 0, 0.3);\n}\n.emoji--hearteyes[data-v-0fecee51]:before {\r\n  content: \"😍\";\n}\n.emoji--happy[data-v-0fecee51]:before {\r\n  content: \"🙂\";\n}\n.emoji--neutral[data-v-0fecee51]:before {\r\n  content: \"😐\";\n}\n.emoji--frowning[data-v-0fecee51]:before {\r\n  content: \"🙁\";\n}\n.emoji--disappointed[data-v-0fecee51]:before {\r\n  content: \"😞\";\n}\n.modal-body[data-v-0fecee51] {\r\n  font-size: 17px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
