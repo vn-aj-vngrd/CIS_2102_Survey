@@ -2,7 +2,8 @@
   <h6 class="text-center mt-2 text-muted">Legend</h6>
   <Vue3ChartJs v-bind="{ ...pieChart }" ref="chartRef" />
   <h6 class="text-center mt-3 text-muted">
-    Total Respondents: {{ this.respondents }} | Total Ratings: {{ this.ratings }}
+    Total Respondents: {{ this.respondents }} | Total Ratings:
+    {{ this.ratings }}
   </h6>
 </template>
 
@@ -38,6 +39,35 @@ export default {
             data: [0, 0, 0, 0, 0],
           },
         ],
+      },
+      options: {
+        plugins: {
+          datalabels: {
+            formatter: (value, ctx) => {
+              let sum = 0;
+              let dataArr = ctx.chart.data.datasets[0].data;
+              dataArr.map((data) => {
+                sum += data;
+              });
+              let percentage = ((value * 100) / sum).toFixed(2) + "%";
+              return percentage;
+            },
+            color: "#fff",
+          },
+
+          tooltip: {
+            callbacks: {
+              label: (ttItem) =>
+                `${ttItem.label}: ${
+                  (ttItem.parsed * 100) /
+                  ttItem.dataset.data
+                    .reduce((a, b) => Number(a) + Number(b), 0)
+                    .toFixed(2)
+                }%`,
+              //label: (ttItem) => `${ttItem.label}: ${ttItem.parsed}%`
+            },
+          },
+        },
       },
     };
 
@@ -90,10 +120,14 @@ export default {
             this.ratings = res.customerCount;
             let trav = res.questionCount;
 
-            for (let i = this.counter, j = 0; j < res.customerCount; i += trav, j++) {
+            for (
+              let i = this.counter, j = 0;
+              j < res.customerCount;
+              i += trav, j++
+            ) {
               data[res.data[i].rating - 1]++;
             }
-            
+
             this.initializeChart(data);
           }
         })

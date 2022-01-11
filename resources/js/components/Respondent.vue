@@ -3,14 +3,14 @@
     type="button"
     :class="myclass"
     data-bs-toggle="modal"
-    data-bs-target="#response"
+    data-bs-target="#respondent"
   >
-    Responses
+    Respondents
   </button>
 
   <div
     class="modal fade text-start"
-    id="response"
+    id="respondent"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
     aria-hidden="true"
@@ -19,7 +19,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
-            <b>Responses</b>
+            <b>Respondents</b>
           </h5>
           <button
             type="button"
@@ -31,25 +31,18 @@
         <div class="modal-body">
           <div
             class="mb-3"
-            v-for="(question, index) in questions"
-            :key="question"
+            v-for="(respondent, index) in respondents"
+            :key="respondent"
           >
             <label for="question" class="col-form-label"
-              >Question {{ index + 1 }}</label
+              >Respondent {{ index + 1 }}</label
             >
             <input
               type="text"
               class="form-control"
-              v-model="question.text"
+              v-model="respondent.emailAddress"
               disabled
-              required
             />
-            <input
-              type="hidden"
-              class="form-control"
-              v-model="question.questionID"
-            />
-            <Chart :surveyID="surveyID" present="single" :counter="index" />
           </div>
         </div>
         <div class="modal-footer">
@@ -63,29 +56,25 @@
 </template>
 
 <script>
-import Chart from "./Chart.vue";
 
 export default {
-  name: "Response",
-  components: {
-    Chart,
-  },
+  name: "Respondent",
   props: {
     myclass: String,
     surveyID: Number,
   },
   data() {
     return {
-      questions: [],
+        respondents: [],
     };
   },
   methods: {
-    getQuestions() {
+    getRespondents() {
       axios
-        .get("getQuestions/" + this.surveyID)
+        .get("getRespondents/" + this.surveyID)
         .then((response) => {
-          this.questions = response.data;
-          // console.log(response.data);
+          this.respondents = response.data;
+          console.log(response.data);
         })
         .catch((errors) => {
           console.log(errors);
@@ -93,13 +82,8 @@ export default {
     },
   },
   created() {
-    this.getQuestions();
+    this.getRespondents();
   },
 };
 </script>
 
-<style scoped>
-.modal-dialog {
-  max-width: 40rem;
-}
-</style>

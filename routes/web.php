@@ -23,6 +23,7 @@ use App\Http\Controllers\ResponseController;
 Route::post('create', [SurveyController::class, 'create']);
 Route::get('index/{id}', [SurveyController::class, 'index']);
 Route::get('getQuestions/{id}', [SurveyController::class, 'getQuestions']);
+Route::get('getRespondents/{id}', [SurveyController::class, 'getRespondents']);
 Route::get('getSurveyInfo/{id}', [SurveyController::class, 'getSurveyInfo']);
 Route::get('getData/{id}', [SurveyController::class, 'getData']);
 Route::post('delete/{id}', [SurveyController::class, 'delete']);

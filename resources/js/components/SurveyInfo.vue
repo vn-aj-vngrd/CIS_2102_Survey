@@ -34,6 +34,10 @@
             myclass="btn btn-outline-success btn-sm px-4 me-md-2"
             :surveyID="parseInt($route.query.surveyID)"
           />
+          <Respondent
+            myclass="btn btn-outline-secondary btn-sm px-4 me-md-2"
+            :surveyID="parseInt($route.query.surveyID)"
+          />
           <Update
             myclass="btn btn-outline-primary btn-sm px-4 me-md-2"
             :surveyID="parseInt($route.query.surveyID)"
@@ -59,6 +63,7 @@
 <script>
 import Chart from "./Chart.vue";
 import Response from "./Response.vue";
+import Respondent from "./Respondent.vue";
 import Update from "./Update.vue";
 import Delete from "./Delete.vue";
 
@@ -67,6 +72,7 @@ export default {
   components: {
     Chart,
     Response,
+    Respondent,
     Delete,
     Update,
   },

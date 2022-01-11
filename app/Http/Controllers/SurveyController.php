@@ -15,7 +15,7 @@ class SurveyController extends Controller
     public function index($id)
     {
         $surveys = Survey::where('createdBy', $id)->orderBy('surveyID', 'desc')->get();
-        
+
         return response()->json($surveys);
     }
 
@@ -103,5 +103,12 @@ class SurveyController extends Controller
         );
 
         return response()->json($ret);
+    }
+
+    public function getRespondents($id)
+    {
+        $respondent = Response_set::select('emailAddress')->where('surveyID', $id)->get();
+
+        return response()->json($respondent);
     }
 }
