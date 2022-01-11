@@ -24805,26 +24805,20 @@ var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
 });
 
 var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "d-flex justify-content-center align-items-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", {
     "class": "text-muted"
-  }, "By clicking get started, you agree to the terms of use.", -1
+  }, "By clicking get started, you agree to the terms of use.")], -1
   /* HOISTED */
   );
 });
 
-var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", {
-    "class": "text-muted"
-  }, null, -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_16 = {
+var _hoisted_15 = {
   "class": "h6 text-muted text-center mb-4"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Wanna gather reviews for your company? ");
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Wanna gather reviews for your company? ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Login = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Login");
@@ -24860,7 +24854,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.validateAccess && $options.validateAccess.apply($options, arguments);
     }),
     "class": "w-100 btn btn-lg btn-primary"
-  }, " Get Started "), _hoisted_13, _hoisted_14, _hoisted_15])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Login, {
+  }, " Get Started "), _hoisted_13, _hoisted_14])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Login, {
     myclass: "btn btn-outline-primary ms-2 me-2"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Signup, {
     myclass: "btn btn-outline-success"
@@ -44779,7 +44773,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal.in .modal-dialog[data-v-0fecee51] {\r\n  transform: none;\n}\n.title-container[data-v-0fecee51] {\r\n  margin-bottom: 9rem;\r\n  font-size: 16px;\n}\n.my-carousel[data-v-0fecee51] {\r\n  background: white;\n}\n.carousel__item[data-v-0fecee51] {\r\n  min-height: 300px;\r\n  margin-top: 2rem;\r\n  width: 90%;\r\n  background-color: white;\r\n  color: black;\r\n  font-size: 20px;\r\n  display: block;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.carousel__prev[data-v-0fecee51],\r\n.carousel__next[data-v-0fecee51] {\r\n  box-sizing: content-box;\r\n  border: 5px solid white;\n}\n.emoji-container[data-v-0fecee51] {\r\n  margin-top: 9rem;\r\n  margin-bottom: 2rem;\r\n  padding-top: 10px;\r\n  max-width: 100%;\n}\n.emoji[data-v-0fecee51] {\r\n  font-size: 1.3rem;\r\n  transform: scale(0.5);\r\n  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);\r\n  transition: text-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;\n}\np[data-v-0fecee51] {\r\n  font-size: 14px;\r\n  color: #777;\n}\n.emoji-selected[data-v-0fecee51] {\r\n  color: #0d6efd;\r\n  font-weight: bold;\n}\n.emoji[data-v-0fecee51]:hover {\r\n  transform: scale(1) translatey(-20px);\r\n  text-shadow: 0 20px 20px rgba(0, 0, 0, 0.3);\n}\n.emoji--hearteyes[data-v-0fecee51]:before {\r\n  content: \"😍\";\n}\n.emoji--happy[data-v-0fecee51]:before {\r\n  content: \"🙂\";\n}\n.emoji--neutral[data-v-0fecee51]:before {\r\n  content: \"😐\";\n}\n.emoji--frowning[data-v-0fecee51]:before {\r\n  content: \"🙁\";\n}\n.emoji--disappointed[data-v-0fecee51]:before {\r\n  content: \"😞\";\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal.in .modal-dialog[data-v-0fecee51] {\r\n  transform: none;\n}\n.title-container[data-v-0fecee51] {\r\n  margin-bottom: 9rem;\r\n  font-size: 16px;\n}\n.my-carousel[data-v-0fecee51] {\r\n  background: white;\n}\n.carousel__item[data-v-0fecee51] {\r\n  min-height: 300px;\r\n  margin-top: 2rem;\r\n  width: 90%;\r\n  background-color: white;\r\n  color: black;\r\n  font-size: 20px;\r\n  display: block;\r\n  justify-content: center;\r\n  align-items: center;\n}\n.carousel__prev[data-v-0fecee51],\r\n.carousel__next[data-v-0fecee51] {\r\n  box-sizing: content-box;\r\n  border: 5px solid white;\n}\n.emoji-container[data-v-0fecee51] {\r\n  margin-top: 9rem;\r\n  margin-bottom: 2rem;\r\n  padding-top: 10px;\r\n  max-width: 100%;\n}\n.emoji[data-v-0fecee51] {\r\n  font-size: 1.3rem;\r\n  transform: scale(0.5);\r\n  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);\r\n  transition: text-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;\n}\np[data-v-0fecee51] {\r\n  font-size: 14px;\r\n  color: #777;\n}\n.emoji-selected[data-v-0fecee51] {\r\n  color: #0d6efd;\r\n  font-weight: bold;\n}\n.emoji[data-v-0fecee51]:hover {\r\n  transform: scale(1) translatey(-20px);\r\n  text-shadow: 0 20px 20px rgba(0, 0, 0, 0.3);\n}\n.emoji--hearteyes[data-v-0fecee51]:before {\r\n  content: \"😍\";\n}\n.emoji--happy[data-v-0fecee51]:before {\r\n  content: \"🙂\";\n}\n.emoji--neutral[data-v-0fecee51]:before {\r\n  content: \"😐\";\n}\n.emoji--frowning[data-v-0fecee51]:before {\r\n  content: \"🙁\";\n}\n.emoji--disappointed[data-v-0fecee51]:before {\r\n  content: \"😞\";\n}\n.modal-body[data-v-0fecee51] {\r\n  font-size: 17px;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -306,4 +306,9 @@ p {
 .emoji--disappointed:before {
   content: "😞";
 }
+
+.modal-body {
+  font-size: 17px;
+}
+
 </style>

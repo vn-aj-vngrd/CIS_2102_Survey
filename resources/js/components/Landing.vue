@@ -38,8 +38,11 @@
             Get Started
           </button>
           <hr class="my-4" />
-          <small class="text-muted">By clicking get started, you agree to the terms of use.</small>
-          <small class="text-muted"></small>
+          <div class="d-flex justify-content-center align-items-center">
+            <small class="text-muted"
+              >By clicking get started, you agree to the terms of use.</small
+            >
+          </div>
         </form>
       </div>
     </div>
@@ -91,7 +94,6 @@ export default {
             localStorage.setItem("surveyName", response.data.surveyName);
             localStorage.setItem("surveyID", response.data.surveyID);
             localStorage.setItem("tokenType", "customer");
-
 
             const name1 = localStorage.getItem("pathname");
             const name2 = localStorage.getItem("surveyName");
