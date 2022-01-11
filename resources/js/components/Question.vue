@@ -81,11 +81,11 @@
       data-bs-toggle="modal"
       data-bs-target="#finish"
     >
-      Finish Survey
+      Submit Survey
     </button>
   </div>
   <small class="d-flex justify-content-center text-muted text-center mt-4"
-    >To activate the button, please answer all the survey questions.</small
+    >To submit the survey, please answer all the survey questions.</small
   >
 
   <div

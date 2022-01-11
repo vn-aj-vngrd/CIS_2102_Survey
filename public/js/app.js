@@ -25138,7 +25138,7 @@ var _hoisted_16 = {
 var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", {
     "class": "d-flex justify-content-center text-muted text-center mt-4"
-  }, "To activate the button, please answer all the survey questions.", -1
+  }, "To submit the survey, please answer all the survey questions.", -1
   /* HOISTED */
   );
 });
@@ -25296,7 +25296,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($data.count < $data.formData.questions.length ? 'btn btn-success disabled' : 'btn btn-success'),
     "data-bs-toggle": "modal",
     "data-bs-target": "#finish"
-  }, " Finish Survey ", 2
+  }, " Submit Survey ", 2
   /* CLASS */
   )]), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
