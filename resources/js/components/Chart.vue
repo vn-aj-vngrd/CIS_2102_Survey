@@ -10,6 +10,7 @@
 <script>
 import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
 import { ref } from "vue";
+import ChartJSPluginDatalabels from "chartjs-plugin-datalabels";
 
 export default {
   name: "Chart",

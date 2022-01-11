@@ -916,7 +916,7 @@ function getClippingParents(element) {
 
 
   return clippingParents.filter(function (clippingParent) {
-    return (0,_instanceOf_js__WEBPACK_IMPORTED_MODULE_4__.isElement)(clippingParent) && (0,_contains_js__WEBPACK_IMPORTED_MODULE_11__["default"])(clippingParent, clipperElement) && (0,_getNodeName_js__WEBPACK_IMPORTED_MODULE_12__["default"])(clippingParent) !== 'body' && (canEscapeClipping ? (0,_getComputedStyle_js__WEBPACK_IMPORTED_MODULE_9__["default"])(clippingParent).position !== 'static' : true);
+    return (0,_instanceOf_js__WEBPACK_IMPORTED_MODULE_4__.isElement)(clippingParent) && (0,_contains_js__WEBPACK_IMPORTED_MODULE_11__["default"])(clippingParent, clipperElement) && (0,_getNodeName_js__WEBPACK_IMPORTED_MODULE_12__["default"])(clippingParent) !== 'body';
   });
 } // Gets the maximum area that the element is visible in due to any number of
 // clipping parents
@@ -2057,13 +2057,21 @@ function mapToStyles(_ref2) {
       adaptive = _ref2.adaptive,
       roundOffsets = _ref2.roundOffsets,
       isFixed = _ref2.isFixed;
+  var _offsets$x = offsets.x,
+      x = _offsets$x === void 0 ? 0 : _offsets$x,
+      _offsets$y = offsets.y,
+      y = _offsets$y === void 0 ? 0 : _offsets$y;
 
-  var _ref3 = roundOffsets === true ? roundOffsetsByDPR(offsets) : typeof roundOffsets === 'function' ? roundOffsets(offsets) : offsets,
-      _ref3$x = _ref3.x,
-      x = _ref3$x === void 0 ? 0 : _ref3$x,
-      _ref3$y = _ref3.y,
-      y = _ref3$y === void 0 ? 0 : _ref3$y;
+  var _ref3 = typeof roundOffsets === 'function' ? roundOffsets({
+    x: x,
+    y: y
+  }) : {
+    x: x,
+    y: y
+  };
 
+  x = _ref3.x;
+  y = _ref3.y;
   var hasX = offsets.hasOwnProperty('x');
   var hasY = offsets.hasOwnProperty('y');
   var sideX = _enums_js__WEBPACK_IMPORTED_MODULE_1__.left;
@@ -2108,6 +2116,17 @@ function mapToStyles(_ref2) {
     position: position
   }, adaptive && unsetSides);
 
+  var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
+    x: x,
+    y: y
+  }) : {
+    x: x,
+    y: y
+  };
+
+  x = _ref4.x;
+  y = _ref4.y;
+
   if (gpuAcceleration) {
     var _Object$assign;
 
@@ -2117,9 +2136,9 @@ function mapToStyles(_ref2) {
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : '', _Object$assign2[sideX] = hasX ? x + "px" : '', _Object$assign2.transform = '', _Object$assign2));
 }
 
-function computeStyles(_ref4) {
-  var state = _ref4.state,
-      options = _ref4.options;
+function computeStyles(_ref5) {
+  var state = _ref5.state,
+      options = _ref5.options;
   var _options$gpuAccelerat = options.gpuAcceleration,
       gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat,
       _options$adaptive = options.adaptive,
@@ -3736,7 +3755,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "hasScopeRef": () => (/* binding */ hasScopeRef),
 /* harmony export */   "helperNameMap": () => (/* binding */ helperNameMap),
 /* harmony export */   "injectProp": () => (/* binding */ injectProp),
-/* harmony export */   "isBindKey": () => (/* binding */ isBindKey),
 /* harmony export */   "isBuiltInType": () => (/* binding */ isBuiltInType),
 /* harmony export */   "isCoreComponent": () => (/* binding */ isCoreComponent),
 /* harmony export */   "isFunctionType": () => (/* binding */ isFunctionType),
@@ -3747,6 +3765,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isReferencedIdentifier": () => (/* binding */ isReferencedIdentifier),
 /* harmony export */   "isSimpleIdentifier": () => (/* binding */ isSimpleIdentifier),
 /* harmony export */   "isSlotOutlet": () => (/* binding */ isSlotOutlet),
+/* harmony export */   "isStaticArgOf": () => (/* binding */ isStaticArgOf),
 /* harmony export */   "isStaticExp": () => (/* binding */ isStaticExp),
 /* harmony export */   "isStaticProperty": () => (/* binding */ isStaticProperty),
 /* harmony export */   "isStaticPropertyKey": () => (/* binding */ isStaticPropertyKey),
@@ -4292,12 +4311,12 @@ function findProp(node, name, dynamicOnly = false, allowEmpty = false) {
         }
         else if (p.name === 'bind' &&
             (p.exp || allowEmpty) &&
-            isBindKey(p.arg, name)) {
+            isStaticArgOf(p.arg, name)) {
             return p;
         }
     }
 }
-function isBindKey(arg, name) {
+function isStaticArgOf(arg, name) {
     return !!(arg && isStaticExp(arg) && arg.content === name);
 }
 function hasDynamicKeyVBind(node) {
@@ -4530,11 +4549,6 @@ const deprecationData = {
             `with <template> tags or use a computed property that filters v-for ` +
             `data source.`,
         link: `https://v3.vuejs.org/guide/migration/v-if-v-for.html`
-    },
-    ["COMPILER_V_FOR_REF" /* COMPILER_V_FOR_REF */]: {
-        message: `Ref usage on v-for no longer creates array ref values in Vue 3. ` +
-            `Consider using function refs or refactor to avoid ref usage altogether.`,
-        link: `https://v3.vuejs.org/guide/migration/array-refs.html`
     },
     ["COMPILER_NATIVE_TEMPLATE" /* COMPILER_NATIVE_TEMPLATE */]: {
         message: `<template> with no special directives will render as a native template ` +
@@ -5055,7 +5069,7 @@ function isComponent(tag, props, context) {
             else if (
             // :is on plain element - only treat as component in compat mode
             p.name === 'bind' &&
-                isBindKey(p.arg, 'is') &&
+                isStaticArgOf(p.arg, 'is') &&
                 true &&
                 checkCompatEnabled("COMPILER_IS_ON_ELEMENT" /* COMPILER_IS_ON_ELEMENT */, context, p.loc)) {
                 return true;
@@ -5513,6 +5527,11 @@ function getConstantType(node, context) {
             if (codegenNode.type !== 13 /* VNODE_CALL */) {
                 return 0 /* NOT_CONSTANT */;
             }
+            if (codegenNode.isBlock &&
+                node.tag !== 'svg' &&
+                node.tag !== 'foreignObject') {
+                return 0 /* NOT_CONSTANT */;
+            }
             const flag = getPatchFlag(codegenNode);
             if (!flag) {
                 let returnType = 3 /* CAN_STRINGIFY */;
@@ -5650,7 +5669,7 @@ function getGeneratedPropsConstantType(node, context) {
             else if (value.type === 14 /* JS_CALL_EXPRESSION */) {
                 // some helper calls can be hoisted,
                 // such as the `normalizeProps` generated by the compiler for pre-normalize class,
-                // in this case we need to respect the ConstantType of the helper's argments
+                // in this case we need to respect the ConstantType of the helper's arguments
                 valueType = getConstantTypeOfHelperCall(value, context);
             }
             else {
@@ -7442,10 +7461,7 @@ const transformElement = (node, context) => {
                 // updates inside get proper isSVG flag at runtime. (#639, #643)
                 // This is technically web-specific, but splitting the logic out of core
                 // leads to too much unnecessary complexity.
-                (tag === 'svg' ||
-                    tag === 'foreignObject' ||
-                    // #938: elements with dynamic keys should be forced into blocks
-                    findProp(node, 'key', true)));
+                (tag === 'svg' || tag === 'foreignObject'));
         // props
         if (props.length > 0) {
             const propsBuildResult = buildProps(node, context);
@@ -7457,6 +7473,9 @@ const transformElement = (node, context) => {
                 directives && directives.length
                     ? createArrayExpression(directives.map(dir => buildDirectiveArgs(dir, context)))
                     : undefined;
+            if (propsBuildResult.shouldUseBlock) {
+                shouldUseBlock = true;
+            }
         }
         // children
         if (node.children.length > 0) {
@@ -7586,11 +7605,13 @@ function resolveComponentType(node, context, ssr = false) {
     return toValidAssetId(tag, `component`);
 }
 function buildProps(node, context, props = node.props, ssr = false) {
-    const { tag, loc: elementLoc } = node;
+    const { tag, loc: elementLoc, children } = node;
     const isComponent = node.tagType === 1 /* COMPONENT */;
     let properties = [];
     const mergeArgs = [];
     const runtimeDirectives = [];
+    const hasChildren = children.length > 0;
+    let shouldUseBlock = false;
     // patchFlag analysis
     let patchFlag = 0;
     let hasRef = false;
@@ -7653,9 +7674,12 @@ function buildProps(node, context, props = node.props, ssr = false) {
         const prop = props[i];
         if (prop.type === 6 /* ATTRIBUTE */) {
             const { loc, name, value } = prop;
-            let valueNode = createSimpleExpression(value ? value.content : '', true, value ? value.loc : loc);
+            let isStatic = true;
             if (name === 'ref') {
                 hasRef = true;
+                if (context.scopes.vFor > 0) {
+                    properties.push(createObjectProperty(createSimpleExpression('ref_for', true), createSimpleExpression('true')));
+                }
             }
             // skip is on <component>, or is="vue:xxx"
             if (name === 'is' &&
@@ -7664,7 +7688,7 @@ function buildProps(node, context, props = node.props, ssr = false) {
                     (isCompatEnabled("COMPILER_IS_ON_ELEMENT" /* COMPILER_IS_ON_ELEMENT */, context)))) {
                 continue;
             }
-            properties.push(createObjectProperty(createSimpleExpression(name, true, getInnerRange(loc, 0, name.length)), valueNode));
+            properties.push(createObjectProperty(createSimpleExpression(name, true, getInnerRange(loc, 0, name.length)), createSimpleExpression(value ? value.content : '', isStatic, value ? value.loc : loc)));
         }
         else {
             // directives
@@ -7685,7 +7709,7 @@ function buildProps(node, context, props = node.props, ssr = false) {
             // skip v-is and :is on <component>
             if (name === 'is' ||
                 (isVBind &&
-                    isBindKey(arg, 'is') &&
+                    isStaticArgOf(arg, 'is') &&
                     (isComponentTag(tag) ||
                         (isCompatEnabled("COMPILER_IS_ON_ELEMENT" /* COMPILER_IS_ON_ELEMENT */, context))))) {
                 continue;
@@ -7693,6 +7717,17 @@ function buildProps(node, context, props = node.props, ssr = false) {
             // skip v-on in SSR compilation
             if (isVOn && ssr) {
                 continue;
+            }
+            if (
+            // #938: elements with dynamic keys should be forced into blocks
+            (isVBind && isStaticArgOf(arg, 'key')) ||
+                // inline before-update hooks need to force block so that it is invoked
+                // before children
+                (isVOn && hasChildren && isStaticArgOf(arg, 'vue:before-update'))) {
+                shouldUseBlock = true;
+            }
+            if (isVBind && isStaticArgOf(arg, 'ref') && context.scopes.vFor > 0) {
+                properties.push(createObjectProperty(createSimpleExpression('ref_for', true), createSimpleExpression('true')));
             }
             // special case for v-bind and v-on with no argument
             if (!arg && (isVBind || isVOn)) {
@@ -7767,13 +7802,12 @@ function buildProps(node, context, props = node.props, ssr = false) {
             else {
                 // no built-in transform, this is a user custom directive.
                 runtimeDirectives.push(prop);
+                // custom dirs may use beforeUpdate so they need to force blocks
+                // to ensure before-update gets called before children update
+                if (hasChildren) {
+                    shouldUseBlock = true;
+                }
             }
-        }
-        if (prop.type === 6 /* ATTRIBUTE */ &&
-            prop.name === 'ref' &&
-            context.scopes.vFor > 0 &&
-            checkCompatEnabled("COMPILER_V_FOR_REF" /* COMPILER_V_FOR_REF */, context, prop.loc)) {
-            properties.push(createObjectProperty(createSimpleExpression('refInFor', true), createSimpleExpression('true', false)));
         }
     }
     let propsExpression = undefined;
@@ -7811,7 +7845,8 @@ function buildProps(node, context, props = node.props, ssr = false) {
             patchFlag |= 32 /* HYDRATE_EVENTS */;
         }
     }
-    if ((patchFlag === 0 || patchFlag === 32 /* HYDRATE_EVENTS */) &&
+    if (!shouldUseBlock &&
+        (patchFlag === 0 || patchFlag === 32 /* HYDRATE_EVENTS */) &&
         (hasRef || hasVnodeHook || runtimeDirectives.length > 0)) {
         patchFlag |= 512 /* NEED_PATCH */;
     }
@@ -7878,7 +7913,8 @@ function buildProps(node, context, props = node.props, ssr = false) {
         props: propsExpression,
         directives: runtimeDirectives,
         patchFlag,
-        dynamicPropNames
+        dynamicPropNames,
+        shouldUseBlock
     };
 }
 // Dedupe props in an object literal.
@@ -8033,7 +8069,7 @@ function processSlotOutlet(node, context) {
             }
         }
         else {
-            if (p.name === 'bind' && isBindKey(p.arg, 'name')) {
+            if (p.name === 'bind' && isStaticArgOf(p.arg, 'name')) {
                 if (p.exp)
                     slotName = p.exp;
             }
@@ -8067,7 +8103,11 @@ const transformOn = (dir, node, context, augmentor) => {
     let eventName;
     if (arg.type === 4 /* SIMPLE_EXPRESSION */) {
         if (arg.isStatic) {
-            const rawName = arg.content;
+            let rawName = arg.content;
+            // TODO deprecate @vnodeXXX usage
+            if (rawName.startsWith('vue:')) {
+                rawName = `vnode-${rawName.slice(4)}`;
+            }
             // for all event listeners, auto convert it to camelCase. See issue #2249
             eventName = createSimpleExpression((0,_vue_shared__WEBPACK_IMPORTED_MODULE_0__.toHandlerKey)((0,_vue_shared__WEBPACK_IMPORTED_MODULE_0__.camelize)(rawName)), true, arg.loc);
         }
@@ -8709,7 +8749,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "hasScopeRef": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.hasScopeRef),
 /* harmony export */   "helperNameMap": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.helperNameMap),
 /* harmony export */   "injectProp": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.injectProp),
-/* harmony export */   "isBindKey": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isBindKey),
 /* harmony export */   "isBuiltInType": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isBuiltInType),
 /* harmony export */   "isCoreComponent": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isCoreComponent),
 /* harmony export */   "isFunctionType": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isFunctionType),
@@ -8720,6 +8759,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "isReferencedIdentifier": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isReferencedIdentifier),
 /* harmony export */   "isSimpleIdentifier": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isSimpleIdentifier),
 /* harmony export */   "isSlotOutlet": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isSlotOutlet),
+/* harmony export */   "isStaticArgOf": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isStaticArgOf),
 /* harmony export */   "isStaticExp": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isStaticExp),
 /* harmony export */   "isStaticProperty": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isStaticProperty),
 /* harmony export */   "isStaticPropertyKey": () => (/* reexport safe */ _vue_compiler_core__WEBPACK_IMPORTED_MODULE_0__.isStaticPropertyKey),
@@ -9235,114 +9275,6 @@ function parse(template, options = {}) {
 
 /***/ }),
 
-/***/ "./node_modules/@vue/devtools-api/lib/esm/api/api.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/@vue/devtools-api/lib/esm/api/api.js ***!
-  \***********************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@vue/devtools-api/lib/esm/api/app.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/@vue/devtools-api/lib/esm/api/app.js ***!
-  \***********************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@vue/devtools-api/lib/esm/api/component.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@vue/devtools-api/lib/esm/api/component.js ***!
-  \*****************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@vue/devtools-api/lib/esm/api/context.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@vue/devtools-api/lib/esm/api/context.js ***!
-  \***************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@vue/devtools-api/lib/esm/api/hooks.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/@vue/devtools-api/lib/esm/api/hooks.js ***!
-  \*************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@vue/devtools-api/lib/esm/api/index.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/@vue/devtools-api/lib/esm/api/index.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./node_modules/@vue/devtools-api/lib/esm/api/api.js");
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_api__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _api__WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _api__WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app */ "./node_modules/@vue/devtools-api/lib/esm/api/app.js");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_app__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _app__WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _app__WEBPACK_IMPORTED_MODULE_1__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./component */ "./node_modules/@vue/devtools-api/lib/esm/api/component.js");
-/* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_component__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _component__WEBPACK_IMPORTED_MODULE_2__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _component__WEBPACK_IMPORTED_MODULE_2__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./context */ "./node_modules/@vue/devtools-api/lib/esm/api/context.js");
-/* harmony import */ var _context__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_context__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _context__WEBPACK_IMPORTED_MODULE_3__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _context__WEBPACK_IMPORTED_MODULE_3__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./hooks */ "./node_modules/@vue/devtools-api/lib/esm/api/hooks.js");
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_hooks__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _hooks__WEBPACK_IMPORTED_MODULE_4__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _hooks__WEBPACK_IMPORTED_MODULE_4__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./util */ "./node_modules/@vue/devtools-api/lib/esm/api/util.js");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_util__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _util__WEBPACK_IMPORTED_MODULE_5__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _util__WEBPACK_IMPORTED_MODULE_5__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-
-
-
-
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/@vue/devtools-api/lib/esm/api/util.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@vue/devtools-api/lib/esm/api/util.js ***!
-  \************************************************************/
-/***/ (() => {
-
-
-
-/***/ }),
-
 /***/ "./node_modules/@vue/devtools-api/lib/esm/const.js":
 /*!*********************************************************!*\
   !*** ./node_modules/@vue/devtools-api/lib/esm/const.js ***!
@@ -9401,32 +9333,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "setupDevtoolsPlugin": () => (/* binding */ setupDevtoolsPlugin)
 /* harmony export */ });
-/* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./env */ "./node_modules/@vue/devtools-api/lib/esm/env.js");
-/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./const */ "./node_modules/@vue/devtools-api/lib/esm/const.js");
-/* harmony import */ var _proxy__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./proxy */ "./node_modules/@vue/devtools-api/lib/esm/proxy.js");
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./node_modules/@vue/devtools-api/lib/esm/api/index.js");
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _api__WEBPACK_IMPORTED_MODULE_0__) if(["default","setupDevtoolsPlugin"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _api__WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
-/* harmony import */ var _plugin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./plugin */ "./node_modules/@vue/devtools-api/lib/esm/plugin.js");
-/* harmony import */ var _plugin__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_plugin__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
-/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _plugin__WEBPACK_IMPORTED_MODULE_1__) if(["default","setupDevtoolsPlugin"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _plugin__WEBPACK_IMPORTED_MODULE_1__[__WEBPACK_IMPORT_KEY__]
-/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+/* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./env */ "./node_modules/@vue/devtools-api/lib/esm/env.js");
+/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./const */ "./node_modules/@vue/devtools-api/lib/esm/const.js");
+/* harmony import */ var _proxy__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./proxy */ "./node_modules/@vue/devtools-api/lib/esm/proxy.js");
 
 
 
 
 
 function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
-    const target = (0,_env__WEBPACK_IMPORTED_MODULE_2__.getTarget)();
-    const hook = (0,_env__WEBPACK_IMPORTED_MODULE_2__.getDevtoolsGlobalHook)();
-    const enableProxy = _env__WEBPACK_IMPORTED_MODULE_2__.isProxyAvailable && pluginDescriptor.enableEarlyProxy;
+    const target = (0,_env__WEBPACK_IMPORTED_MODULE_0__.getTarget)();
+    const hook = (0,_env__WEBPACK_IMPORTED_MODULE_0__.getDevtoolsGlobalHook)();
+    const enableProxy = _env__WEBPACK_IMPORTED_MODULE_0__.isProxyAvailable && pluginDescriptor.enableEarlyProxy;
     if (hook && (target.__VUE_DEVTOOLS_PLUGIN_API_AVAILABLE__ || !enableProxy)) {
-        hook.emit(_const__WEBPACK_IMPORTED_MODULE_3__.HOOK_SETUP, pluginDescriptor, setupFn);
+        hook.emit(_const__WEBPACK_IMPORTED_MODULE_1__.HOOK_SETUP, pluginDescriptor, setupFn);
     }
     else {
-        const proxy = enableProxy ? new _proxy__WEBPACK_IMPORTED_MODULE_4__.ApiProxy(pluginDescriptor, hook) : null;
+        const proxy = enableProxy ? new _proxy__WEBPACK_IMPORTED_MODULE_2__.ApiProxy(pluginDescriptor, hook) : null;
         const list = target.__VUE_DEVTOOLS_PLUGINS__ = target.__VUE_DEVTOOLS_PLUGINS__ || [];
         list.push({
             pluginDescriptor,
@@ -9437,16 +9360,6 @@ function setupDevtoolsPlugin(pluginDescriptor, setupFn) {
             setupFn(proxy.proxiedTarget);
     }
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/@vue/devtools-api/lib/esm/plugin.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@vue/devtools-api/lib/esm/plugin.js ***!
-  \**********************************************************/
-/***/ (() => {
-
 
 
 /***/ }),
@@ -9479,7 +9392,7 @@ class ApiProxy {
             }
         }
         const localSettingsSaveId = `__vue-devtools-plugin-settings__${plugin.id}`;
-        let currentSettings = { ...defaultSettings };
+        let currentSettings = Object.assign({}, defaultSettings);
         try {
             const raw = localStorage.getItem(localSettingsSaveId);
             const data = JSON.parse(raw);
@@ -9502,11 +9415,13 @@ class ApiProxy {
                 currentSettings = value;
             },
         };
-        hook.on(_const__WEBPACK_IMPORTED_MODULE_0__.HOOK_PLUGIN_SETTINGS_SET, (pluginId, value) => {
-            if (pluginId === this.plugin.id) {
-                this.fallbacks.setSettings(value);
-            }
-        });
+        if (hook) {
+            hook.on(_const__WEBPACK_IMPORTED_MODULE_0__.HOOK_PLUGIN_SETTINGS_SET, (pluginId, value) => {
+                if (pluginId === this.plugin.id) {
+                    this.fallbacks.setSettings(value);
+                }
+            });
+        }
         this.proxiedOn = new Proxy({}, {
             get: (_target, prop) => {
                 if (this.target) {
@@ -10652,21 +10567,25 @@ function toRefs(object) {
     return ret;
 }
 class ObjectRefImpl {
-    constructor(_object, _key) {
+    constructor(_object, _key, _defaultValue) {
         this._object = _object;
         this._key = _key;
+        this._defaultValue = _defaultValue;
         this.__v_isRef = true;
     }
     get value() {
-        return this._object[this._key];
+        const val = this._object[this._key];
+        return val === undefined ? this._defaultValue : val;
     }
     set value(newVal) {
         this._object[this._key] = newVal;
     }
 }
-function toRef(object, key) {
+function toRef(object, key, defaultValue) {
     const val = object[key];
-    return isRef(val) ? val : new ObjectRefImpl(object, key);
+    return isRef(val)
+        ? val
+        : new ObjectRefImpl(object, key, defaultValue);
 }
 
 class ComputedRefImpl {
@@ -14155,6 +14074,102 @@ function createAppAPI(render, hydrate) {
     };
 }
 
+/**
+ * Function for handling a template ref
+ */
+function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
+    if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isArray)(rawRef)) {
+        rawRef.forEach((r, i) => setRef(r, oldRawRef && ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isArray)(oldRawRef) ? oldRawRef[i] : oldRawRef), parentSuspense, vnode, isUnmount));
+        return;
+    }
+    if (isAsyncWrapper(vnode) && !isUnmount) {
+        // when mounting async components, nothing needs to be done,
+        // because the template ref is forwarded to inner component
+        return;
+    }
+    const refValue = vnode.shapeFlag & 4 /* STATEFUL_COMPONENT */
+        ? getExposeProxy(vnode.component) || vnode.component.proxy
+        : vnode.el;
+    const value = isUnmount ? null : refValue;
+    const { i: owner, r: ref } = rawRef;
+    if (( true) && !owner) {
+        warn(`Missing ref owner context. ref cannot be used on hoisted vnodes. ` +
+            `A vnode with ref must be created inside the render function.`);
+        return;
+    }
+    const oldRef = oldRawRef && oldRawRef.r;
+    const refs = owner.refs === _vue_shared__WEBPACK_IMPORTED_MODULE_1__.EMPTY_OBJ ? (owner.refs = {}) : owner.refs;
+    const setupState = owner.setupState;
+    // dynamic ref changed. unset old ref
+    if (oldRef != null && oldRef !== ref) {
+        if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isString)(oldRef)) {
+            refs[oldRef] = null;
+            if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.hasOwn)(setupState, oldRef)) {
+                setupState[oldRef] = null;
+            }
+        }
+        else if ((0,_vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.isRef)(oldRef)) {
+            oldRef.value = null;
+        }
+    }
+    if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isFunction)(ref)) {
+        callWithErrorHandling(ref, owner, 12 /* FUNCTION_REF */, [value, refs]);
+    }
+    else {
+        const _isString = (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isString)(ref);
+        const _isRef = (0,_vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.isRef)(ref);
+        if (_isString || _isRef) {
+            const doSet = () => {
+                if (rawRef.f) {
+                    const existing = _isString ? refs[ref] : ref.value;
+                    if (isUnmount) {
+                        (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isArray)(existing) && (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.remove)(existing, refValue);
+                    }
+                    else {
+                        if (!(0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isArray)(existing)) {
+                            if (_isString) {
+                                refs[ref] = [refValue];
+                            }
+                            else {
+                                ref.value = [refValue];
+                                if (rawRef.k)
+                                    refs[rawRef.k] = ref.value;
+                            }
+                        }
+                        else if (!existing.includes(refValue)) {
+                            existing.push(refValue);
+                        }
+                    }
+                }
+                else if (_isString) {
+                    refs[ref] = value;
+                    if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.hasOwn)(setupState, ref)) {
+                        setupState[ref] = value;
+                    }
+                }
+                else if ((0,_vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.isRef)(ref)) {
+                    ref.value = value;
+                    if (rawRef.k)
+                        refs[rawRef.k] = value;
+                }
+                else if ((true)) {
+                    warn('Invalid template ref type:', ref, `(${typeof ref})`);
+                }
+            };
+            if (value) {
+                doSet.id = -1;
+                queuePostRenderEffect(doSet, parentSuspense);
+            }
+            else {
+                doSet();
+            }
+        }
+        else if ((true)) {
+            warn('Invalid template ref type:', ref, `(${typeof ref})`);
+        }
+    }
+}
+
 let hasMismatch = false;
 const isSVGContainer = (container) => /svg/.test(container.namespaceURI) && container.tagName !== 'foreignObject';
 const isComment = (node) => node.nodeType === 8 /* COMMENT */;
@@ -14537,7 +14552,7 @@ function initFeatureFlags() {
             `which expects these compile-time feature flags to be globally injected ` +
             `via the bundler config in order to get better tree-shaking in the ` +
             `production bundle.\n\n` +
-            `For more details, see http://link.vuejs.org/feature-flags.`);
+            `For more details, see https://link.vuejs.org/feature-flags.`);
     }
 }
 
@@ -14818,12 +14833,15 @@ function baseCreateRenderer(options, createHydrationFns) {
         const oldProps = n1.props || _vue_shared__WEBPACK_IMPORTED_MODULE_1__.EMPTY_OBJ;
         const newProps = n2.props || _vue_shared__WEBPACK_IMPORTED_MODULE_1__.EMPTY_OBJ;
         let vnodeHook;
+        // disable recurse in beforeUpdate hooks
+        parentComponent && toggleRecurse(parentComponent, false);
         if ((vnodeHook = newProps.onVnodeBeforeUpdate)) {
             invokeVNodeHook(vnodeHook, parentComponent, n2, n1);
         }
         if (dirs) {
             invokeDirectiveHook(n2, n1, parentComponent, 'beforeUpdate');
         }
+        parentComponent && toggleRecurse(parentComponent, true);
         if (( true) && isHmrUpdating) {
             // HMR updated, force full diff
             patchFlag = 0;
@@ -15103,7 +15121,7 @@ function baseCreateRenderer(options, createHydrationFns) {
                 const { el, props } = initialVNode;
                 const { bm, m, parent } = instance;
                 const isAsyncWrapperVNode = isAsyncWrapper(initialVNode);
-                effect.allowRecurse = false;
+                toggleRecurse(instance, false);
                 // beforeMount hook
                 if (bm) {
                     (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.invokeArrayFns)(bm);
@@ -15113,7 +15131,7 @@ function baseCreateRenderer(options, createHydrationFns) {
                     (vnodeHook = props && props.onVnodeBeforeMount)) {
                     invokeVNodeHook(vnodeHook, parent, initialVNode);
                 }
-                effect.allowRecurse = true;
+                toggleRecurse(instance, true);
                 if (el && hydrateNode) {
                     // vnode has adopted host node - perform hydration instead of mount.
                     const hydrateSubTree = () => {
@@ -15195,7 +15213,7 @@ function baseCreateRenderer(options, createHydrationFns) {
                     pushWarningContext(next || instance.vnode);
                 }
                 // Disallow component effect recursion during pre-lifecycle hooks.
-                effect.allowRecurse = false;
+                toggleRecurse(instance, false);
                 if (next) {
                     next.el = vnode.el;
                     updateComponentPreRender(instance, next, optimized);
@@ -15211,7 +15229,7 @@ function baseCreateRenderer(options, createHydrationFns) {
                 if ((vnodeHook = next.props && next.props.onVnodeBeforeUpdate)) {
                     invokeVNodeHook(vnodeHook, parent, next, vnode);
                 }
-                effect.allowRecurse = true;
+                toggleRecurse(instance, true);
                 // render
                 if ((true)) {
                     startMeasure(instance, `render`);
@@ -15257,13 +15275,13 @@ function baseCreateRenderer(options, createHydrationFns) {
             }
         };
         // create reactive effect for rendering
-        const effect = new _vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.ReactiveEffect(componentUpdateFn, () => queueJob(instance.update), instance.scope // track it in component's effect scope
-        );
+        const effect = (instance.effect = new _vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.ReactiveEffect(componentUpdateFn, () => queueJob(instance.update), instance.scope // track it in component's effect scope
+        ));
         const update = (instance.update = effect.run.bind(effect));
         update.id = instance.uid;
         // allowRecurse
         // #1801, #2043 component render effects should allow recursive updates
-        effect.allowRecurse = update.allowRecurse = true;
+        toggleRecurse(instance, true);
         if ((true)) {
             effect.onTrack = instance.rtc
                 ? e => (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.invokeArrayFns)(instance.rtc, e)
@@ -15787,85 +15805,8 @@ function baseCreateRenderer(options, createHydrationFns) {
         createApp: createAppAPI(render, hydrate)
     };
 }
-function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
-    if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isArray)(rawRef)) {
-        rawRef.forEach((r, i) => setRef(r, oldRawRef && ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isArray)(oldRawRef) ? oldRawRef[i] : oldRawRef), parentSuspense, vnode, isUnmount));
-        return;
-    }
-    if (isAsyncWrapper(vnode) && !isUnmount) {
-        // when mounting async components, nothing needs to be done,
-        // because the template ref is forwarded to inner component
-        return;
-    }
-    const refValue = vnode.shapeFlag & 4 /* STATEFUL_COMPONENT */
-        ? getExposeProxy(vnode.component) || vnode.component.proxy
-        : vnode.el;
-    const value = isUnmount ? null : refValue;
-    const { i: owner, r: ref } = rawRef;
-    if (( true) && !owner) {
-        warn(`Missing ref owner context. ref cannot be used on hoisted vnodes. ` +
-            `A vnode with ref must be created inside the render function.`);
-        return;
-    }
-    const oldRef = oldRawRef && oldRawRef.r;
-    const refs = owner.refs === _vue_shared__WEBPACK_IMPORTED_MODULE_1__.EMPTY_OBJ ? (owner.refs = {}) : owner.refs;
-    const setupState = owner.setupState;
-    // dynamic ref changed. unset old ref
-    if (oldRef != null && oldRef !== ref) {
-        if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isString)(oldRef)) {
-            refs[oldRef] = null;
-            if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.hasOwn)(setupState, oldRef)) {
-                setupState[oldRef] = null;
-            }
-        }
-        else if ((0,_vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.isRef)(oldRef)) {
-            oldRef.value = null;
-        }
-    }
-    if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isString)(ref)) {
-        const doSet = () => {
-            {
-                refs[ref] = value;
-            }
-            if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.hasOwn)(setupState, ref)) {
-                setupState[ref] = value;
-            }
-        };
-        // #1789: for non-null values, set them after render
-        // null values means this is unmount and it should not overwrite another
-        // ref with the same key
-        if (value) {
-            doSet.id = -1;
-            queuePostRenderEffect(doSet, parentSuspense);
-        }
-        else {
-            doSet();
-        }
-    }
-    else if ((0,_vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.isRef)(ref)) {
-        const doSet = () => {
-            ref.value = value;
-        };
-        if (value) {
-            doSet.id = -1;
-            queuePostRenderEffect(doSet, parentSuspense);
-        }
-        else {
-            doSet();
-        }
-    }
-    else if ((0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isFunction)(ref)) {
-        callWithErrorHandling(ref, owner, 12 /* FUNCTION_REF */, [value, refs]);
-    }
-    else if ((true)) {
-        warn('Invalid template ref type:', value, `(${typeof value})`);
-    }
-}
-function invokeVNodeHook(hook, instance, vnode, prevVNode = null) {
-    callWithAsyncErrorHandling(hook, instance, 7 /* VNODE_HOOK */, [
-        vnode,
-        prevVNode
-    ]);
+function toggleRecurse({ effect, update }, allowed) {
+    effect.allowRecurse = update.allowRecurse = allowed;
 }
 /**
  * #1156
@@ -16329,10 +16270,10 @@ const createVNodeWithArgsTransform = (...args) => {
 };
 const InternalObjectKey = `__vInternal`;
 const normalizeKey = ({ key }) => key != null ? key : null;
-const normalizeRef = ({ ref }) => {
+const normalizeRef = ({ ref, ref_key, ref_for }) => {
     return (ref != null
         ? (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isString)(ref) || (0,_vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.isRef)(ref) || (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isFunction)(ref)
-            ? { i: currentRenderingInstance, r: ref }
+            ? { i: currentRenderingInstance, r: ref, k: ref_key, f: !!ref_for }
             : ref
         : null);
 };
@@ -16674,6 +16615,12 @@ function mergeProps(...args) {
         }
     }
     return ret;
+}
+function invokeVNodeHook(hook, instance, vnode, prevVNode = null) {
+    callWithAsyncErrorHandling(hook, instance, 7 /* VNODE_HOOK */, [
+        vnode,
+        prevVNode
+    ]);
 }
 
 /**
@@ -17089,6 +17036,7 @@ function createComponentInstance(vnode, parent, suspense) {
         root: null,
         next: null,
         subTree: null,
+        effect: null,
         update: null,
         scope: new _vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.EffectScope(true /* detached */),
         render: null,
@@ -18561,7 +18509,7 @@ function isMemoSame(cached, memo) {
 }
 
 // Core API ------------------------------------------------------------------
-const version = "3.2.24";
+const version = "3.2.26";
 const _ssrUtils = {
     createComponentInstance,
     setupComponent,
@@ -20608,7 +20556,7 @@ const isBooleanAttr = /*#__PURE__*/ makeMap(specialBooleanAttrs +
     `checked,muted,multiple,selected`);
 /**
  * Boolean attributes should be included if the value is truthy or ''.
- * e.g. <select multiple> compiles to { multiple: '' }
+ * e.g. `<select multiple>` compiles to `{ multiple: '' }`
  */
 function includeBooleanAttr(value) {
     return !!value || value === '';
@@ -20997,7 +20945,7 @@ const isIntegerKey = (key) => isString(key) &&
     '' + parseInt(key, 10) === key;
 const isReservedProp = /*#__PURE__*/ makeMap(
 // the leading comma is intentional so empty string "" is also included
-',key,ref,' +
+',key,ref,ref_for,ref_key,' +
     'onVnodeBeforeMount,onVnodeMounted,' +
     'onVnodeBeforeUpdate,onVnodeUpdated,' +
     'onVnodeBeforeUnmount,onVnodeUnmounted');
@@ -23211,6 +23159,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _j_t_mcc_vue3_chartjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @j-t-mcc/vue3-chartjs */ "./node_modules/@j-t-mcc/vue3-chartjs/dist/vue3-chartjs.es.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var chartjs_plugin_datalabels__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chartjs-plugin-datalabels */ "./node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.esm.js");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -25515,8 +25465,11 @@ var _hoisted_6 = {
 };
 var _hoisted_7 = ["onUpdate:modelValue"];
 var _hoisted_8 = ["onUpdate:modelValue"];
+var _hoisted_9 = {
+  "class": "container mt-3"
+};
 
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "modal-footer"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -25562,16 +25515,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, null, 8
     /* PROPS */
-    , _hoisted_8), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.questionID]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart, {
+    , _hoisted_8), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, question.questionID]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chart, {
       surveyID: $props.surveyID,
       present: "single",
       counter: index
     }, null, 8
     /* PROPS */
-    , ["surveyID", "counter"])]);
+    , ["surveyID", "counter"])])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), _hoisted_9])])])], 64
+  ))]), _hoisted_10])])])], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -44728,6 +44681,1644 @@ function styleChanged(style, prevStyle) {
 
 /***/ }),
 
+/***/ "./node_modules/chart.js/dist/helpers.esm.js":
+/*!***************************************************!*\
+  !*** ./node_modules/chart.js/dist/helpers.esm.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "HALF_PI": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.H),
+/* harmony export */   "INFINITY": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aX),
+/* harmony export */   "PI": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.P),
+/* harmony export */   "PITAU": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aW),
+/* harmony export */   "QUARTER_PI": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aZ),
+/* harmony export */   "RAD_PER_DEG": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aY),
+/* harmony export */   "TAU": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.T),
+/* harmony export */   "TWO_THIRDS_PI": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a_),
+/* harmony export */   "_addGrace": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.Q),
+/* harmony export */   "_alignPixel": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.V),
+/* harmony export */   "_alignStartEnd": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a0),
+/* harmony export */   "_angleBetween": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.p),
+/* harmony export */   "_angleDiff": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a$),
+/* harmony export */   "_arrayUnique": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__._),
+/* harmony export */   "_attachContext": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a6),
+/* harmony export */   "_bezierCurveTo": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aq),
+/* harmony export */   "_bezierInterpolation": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.an),
+/* harmony export */   "_boundSegment": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.av),
+/* harmony export */   "_boundSegments": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.al),
+/* harmony export */   "_capitalize": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a3),
+/* harmony export */   "_computeSegments": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ak),
+/* harmony export */   "_createResolver": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a7),
+/* harmony export */   "_decimalPlaces": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aH),
+/* harmony export */   "_deprecated": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aP),
+/* harmony export */   "_descriptors": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a8),
+/* harmony export */   "_elementsEqual": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.af),
+/* harmony export */   "_factorize": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.M),
+/* harmony export */   "_filterBetween": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aJ),
+/* harmony export */   "_getParentNode": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.F),
+/* harmony export */   "_int16Range": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.U),
+/* harmony export */   "_isBetween": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ah),
+/* harmony export */   "_isClickEvent": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ag),
+/* harmony export */   "_isDomSupported": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.K),
+/* harmony export */   "_isPointInArea": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.z),
+/* harmony export */   "_limitValue": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.w),
+/* harmony export */   "_longestText": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aI),
+/* harmony export */   "_lookup": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aK),
+/* harmony export */   "_lookupByKey": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.x),
+/* harmony export */   "_measureText": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.S),
+/* harmony export */   "_merger": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aN),
+/* harmony export */   "_mergerIf": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aO),
+/* harmony export */   "_normalizeAngle": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aw),
+/* harmony export */   "_pointInLine": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ao),
+/* harmony export */   "_readValueToProps": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ai),
+/* harmony export */   "_rlookupByKey": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.A),
+/* harmony export */   "_setMinAndMaxByKey": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aD),
+/* harmony export */   "_steppedInterpolation": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.am),
+/* harmony export */   "_steppedLineTo": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ap),
+/* harmony export */   "_textX": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.az),
+/* harmony export */   "_toLeftRightCenter": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.$),
+/* harmony export */   "_updateBezierControlPoints": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aj),
+/* harmony export */   "addRoundedRectPath": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.as),
+/* harmony export */   "almostEquals": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aG),
+/* harmony export */   "almostWhole": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aF),
+/* harmony export */   "callback": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.O),
+/* harmony export */   "clearCanvas": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ad),
+/* harmony export */   "clipArea": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.W),
+/* harmony export */   "clone": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aM),
+/* harmony export */   "color": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.c),
+/* harmony export */   "createContext": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.h),
+/* harmony export */   "debounce": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ab),
+/* harmony export */   "defined": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.j),
+/* harmony export */   "distanceBetweenPoints": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aC),
+/* harmony export */   "drawPoint": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ar),
+/* harmony export */   "each": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.D),
+/* harmony export */   "easingEffects": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.e),
+/* harmony export */   "finiteOrDefault": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.N),
+/* harmony export */   "fontString": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aU),
+/* harmony export */   "formatNumber": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.o),
+/* harmony export */   "getAngleFromPoint": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.B),
+/* harmony export */   "getHoverColor": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aL),
+/* harmony export */   "getMaximumSize": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.E),
+/* harmony export */   "getRelativePosition": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.y),
+/* harmony export */   "getRtlAdapter": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ax),
+/* harmony export */   "getStyle": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aT),
+/* harmony export */   "isArray": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.b),
+/* harmony export */   "isFinite": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.g),
+/* harmony export */   "isFunction": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a5),
+/* harmony export */   "isNullOrUndef": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.k),
+/* harmony export */   "isNumber": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.q),
+/* harmony export */   "isObject": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.i),
+/* harmony export */   "listenArrayEvents": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.l),
+/* harmony export */   "log10": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.L),
+/* harmony export */   "merge": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a2),
+/* harmony export */   "mergeIf": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a9),
+/* harmony export */   "niceNum": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aE),
+/* harmony export */   "noop": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aB),
+/* harmony export */   "overrideTextDirection": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ay),
+/* harmony export */   "readUsedSize": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.G),
+/* harmony export */   "renderText": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.X),
+/* harmony export */   "requestAnimFrame": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.r),
+/* harmony export */   "resolve": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.a),
+/* harmony export */   "resolveObjectKey": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.f),
+/* harmony export */   "restoreTextDirection": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aA),
+/* harmony export */   "retinaScale": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ac),
+/* harmony export */   "setsEqual": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.ae),
+/* harmony export */   "sign": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.s),
+/* harmony export */   "splineCurve": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aR),
+/* harmony export */   "splineCurveMonotone": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aS),
+/* harmony export */   "supportsEventListenerOptions": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.J),
+/* harmony export */   "throttled": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.I),
+/* harmony export */   "toDegrees": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.R),
+/* harmony export */   "toDimension": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.n),
+/* harmony export */   "toFont": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.Z),
+/* harmony export */   "toFontString": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aQ),
+/* harmony export */   "toLineHeight": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aV),
+/* harmony export */   "toPadding": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.C),
+/* harmony export */   "toPercentage": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.m),
+/* harmony export */   "toRadians": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.t),
+/* harmony export */   "toTRBL": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.at),
+/* harmony export */   "toTRBLCorners": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.au),
+/* harmony export */   "uid": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.aa),
+/* harmony export */   "unclipArea": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.Y),
+/* harmony export */   "unlistenArrayEvents": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.u),
+/* harmony export */   "valueOrDefault": () => (/* reexport safe */ _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__.v)
+/* harmony export */ });
+/* harmony import */ var _chunks_helpers_segment_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./chunks/helpers.segment.js */ "./node_modules/chart.js/dist/chunks/helpers.segment.js");
+/*!
+ * Chart.js v3.7.0
+ * https://www.chartjs.org
+ * (c) 2021 Chart.js Contributors
+ * Released under the MIT License
+ */
+
+
+
+/***/ }),
+
+/***/ "./node_modules/chart.js/helpers/helpers.esm.js":
+/*!******************************************************!*\
+  !*** ./node_modules/chart.js/helpers/helpers.esm.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "HALF_PI": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.HALF_PI),
+/* harmony export */   "INFINITY": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.INFINITY),
+/* harmony export */   "PI": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.PI),
+/* harmony export */   "PITAU": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.PITAU),
+/* harmony export */   "QUARTER_PI": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.QUARTER_PI),
+/* harmony export */   "RAD_PER_DEG": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.RAD_PER_DEG),
+/* harmony export */   "TAU": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.TAU),
+/* harmony export */   "TWO_THIRDS_PI": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.TWO_THIRDS_PI),
+/* harmony export */   "_addGrace": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._addGrace),
+/* harmony export */   "_alignPixel": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._alignPixel),
+/* harmony export */   "_alignStartEnd": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._alignStartEnd),
+/* harmony export */   "_angleBetween": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._angleBetween),
+/* harmony export */   "_angleDiff": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._angleDiff),
+/* harmony export */   "_arrayUnique": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._arrayUnique),
+/* harmony export */   "_attachContext": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._attachContext),
+/* harmony export */   "_bezierCurveTo": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._bezierCurveTo),
+/* harmony export */   "_bezierInterpolation": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._bezierInterpolation),
+/* harmony export */   "_boundSegment": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._boundSegment),
+/* harmony export */   "_boundSegments": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._boundSegments),
+/* harmony export */   "_capitalize": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._capitalize),
+/* harmony export */   "_computeSegments": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._computeSegments),
+/* harmony export */   "_createResolver": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._createResolver),
+/* harmony export */   "_decimalPlaces": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._decimalPlaces),
+/* harmony export */   "_deprecated": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._deprecated),
+/* harmony export */   "_descriptors": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._descriptors),
+/* harmony export */   "_elementsEqual": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._elementsEqual),
+/* harmony export */   "_factorize": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._factorize),
+/* harmony export */   "_filterBetween": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._filterBetween),
+/* harmony export */   "_getParentNode": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._getParentNode),
+/* harmony export */   "_int16Range": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._int16Range),
+/* harmony export */   "_isBetween": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._isBetween),
+/* harmony export */   "_isClickEvent": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._isClickEvent),
+/* harmony export */   "_isDomSupported": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._isDomSupported),
+/* harmony export */   "_isPointInArea": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._isPointInArea),
+/* harmony export */   "_limitValue": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._limitValue),
+/* harmony export */   "_longestText": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._longestText),
+/* harmony export */   "_lookup": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._lookup),
+/* harmony export */   "_lookupByKey": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._lookupByKey),
+/* harmony export */   "_measureText": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._measureText),
+/* harmony export */   "_merger": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._merger),
+/* harmony export */   "_mergerIf": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._mergerIf),
+/* harmony export */   "_normalizeAngle": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._normalizeAngle),
+/* harmony export */   "_pointInLine": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._pointInLine),
+/* harmony export */   "_readValueToProps": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._readValueToProps),
+/* harmony export */   "_rlookupByKey": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._rlookupByKey),
+/* harmony export */   "_setMinAndMaxByKey": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._setMinAndMaxByKey),
+/* harmony export */   "_steppedInterpolation": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._steppedInterpolation),
+/* harmony export */   "_steppedLineTo": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._steppedLineTo),
+/* harmony export */   "_textX": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._textX),
+/* harmony export */   "_toLeftRightCenter": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._toLeftRightCenter),
+/* harmony export */   "_updateBezierControlPoints": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__._updateBezierControlPoints),
+/* harmony export */   "addRoundedRectPath": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.addRoundedRectPath),
+/* harmony export */   "almostEquals": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.almostEquals),
+/* harmony export */   "almostWhole": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.almostWhole),
+/* harmony export */   "callback": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.callback),
+/* harmony export */   "clearCanvas": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.clearCanvas),
+/* harmony export */   "clipArea": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.clipArea),
+/* harmony export */   "clone": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.clone),
+/* harmony export */   "color": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.color),
+/* harmony export */   "createContext": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.createContext),
+/* harmony export */   "debounce": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.debounce),
+/* harmony export */   "defined": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.defined),
+/* harmony export */   "distanceBetweenPoints": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.distanceBetweenPoints),
+/* harmony export */   "drawPoint": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.drawPoint),
+/* harmony export */   "each": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.each),
+/* harmony export */   "easingEffects": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.easingEffects),
+/* harmony export */   "finiteOrDefault": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.finiteOrDefault),
+/* harmony export */   "fontString": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.fontString),
+/* harmony export */   "formatNumber": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.formatNumber),
+/* harmony export */   "getAngleFromPoint": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.getAngleFromPoint),
+/* harmony export */   "getHoverColor": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.getHoverColor),
+/* harmony export */   "getMaximumSize": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.getMaximumSize),
+/* harmony export */   "getRelativePosition": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.getRelativePosition),
+/* harmony export */   "getRtlAdapter": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.getRtlAdapter),
+/* harmony export */   "getStyle": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.getStyle),
+/* harmony export */   "isArray": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.isArray),
+/* harmony export */   "isFinite": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.isFinite),
+/* harmony export */   "isFunction": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.isFunction),
+/* harmony export */   "isNullOrUndef": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.isNullOrUndef),
+/* harmony export */   "isNumber": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.isNumber),
+/* harmony export */   "isObject": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.isObject),
+/* harmony export */   "listenArrayEvents": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.listenArrayEvents),
+/* harmony export */   "log10": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.log10),
+/* harmony export */   "merge": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.merge),
+/* harmony export */   "mergeIf": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.mergeIf),
+/* harmony export */   "niceNum": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.niceNum),
+/* harmony export */   "noop": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.noop),
+/* harmony export */   "overrideTextDirection": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.overrideTextDirection),
+/* harmony export */   "readUsedSize": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.readUsedSize),
+/* harmony export */   "renderText": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.renderText),
+/* harmony export */   "requestAnimFrame": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.requestAnimFrame),
+/* harmony export */   "resolve": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.resolve),
+/* harmony export */   "resolveObjectKey": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.resolveObjectKey),
+/* harmony export */   "restoreTextDirection": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.restoreTextDirection),
+/* harmony export */   "retinaScale": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.retinaScale),
+/* harmony export */   "setsEqual": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.setsEqual),
+/* harmony export */   "sign": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.sign),
+/* harmony export */   "splineCurve": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.splineCurve),
+/* harmony export */   "splineCurveMonotone": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.splineCurveMonotone),
+/* harmony export */   "supportsEventListenerOptions": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.supportsEventListenerOptions),
+/* harmony export */   "throttled": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.throttled),
+/* harmony export */   "toDegrees": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toDegrees),
+/* harmony export */   "toDimension": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toDimension),
+/* harmony export */   "toFont": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toFont),
+/* harmony export */   "toFontString": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toFontString),
+/* harmony export */   "toLineHeight": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toLineHeight),
+/* harmony export */   "toPadding": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toPadding),
+/* harmony export */   "toPercentage": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toPercentage),
+/* harmony export */   "toRadians": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toRadians),
+/* harmony export */   "toTRBL": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toTRBL),
+/* harmony export */   "toTRBLCorners": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.toTRBLCorners),
+/* harmony export */   "uid": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.uid),
+/* harmony export */   "unclipArea": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.unclipArea),
+/* harmony export */   "unlistenArrayEvents": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.unlistenArrayEvents),
+/* harmony export */   "valueOrDefault": () => (/* reexport safe */ _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__.valueOrDefault)
+/* harmony export */ });
+/* harmony import */ var _dist_helpers_esm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../dist/helpers.esm */ "./node_modules/chart.js/dist/helpers.esm.js");
+
+
+
+/***/ }),
+
+/***/ "./node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.esm.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.esm.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js/helpers */ "./node_modules/chart.js/helpers/helpers.esm.js");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
+/*!
+ * chartjs-plugin-datalabels v2.0.0
+ * https://chartjs-plugin-datalabels.netlify.app
+ * (c) 2017-2021 chartjs-plugin-datalabels contributors
+ * Released under the MIT license
+ */
+
+
+
+var devicePixelRatio = (function() {
+  if (typeof window !== 'undefined') {
+    if (window.devicePixelRatio) {
+      return window.devicePixelRatio;
+    }
+
+    // devicePixelRatio is undefined on IE10
+    // https://stackoverflow.com/a/20204180/8837887
+    // https://github.com/chartjs/chartjs-plugin-datalabels/issues/85
+    var screen = window.screen;
+    if (screen) {
+      return (screen.deviceXDPI || 1) / (screen.logicalXDPI || 1);
+    }
+  }
+
+  return 1;
+}());
+
+var utils = {
+  // @todo move this in Chart.helpers.toTextLines
+  toTextLines: function(inputs) {
+    var lines = [];
+    var input;
+
+    inputs = [].concat(inputs);
+    while (inputs.length) {
+      input = inputs.pop();
+      if (typeof input === 'string') {
+        lines.unshift.apply(lines, input.split('\n'));
+      } else if (Array.isArray(input)) {
+        inputs.push.apply(inputs, input);
+      } else if (!(0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.isNullOrUndef)(inputs)) {
+        lines.unshift('' + input);
+      }
+    }
+
+    return lines;
+  },
+
+  // @todo move this in Chart.helpers.canvas.textSize
+  // @todo cache calls of measureText if font doesn't change?!
+  textSize: function(ctx, lines, font) {
+    var items = [].concat(lines);
+    var ilen = items.length;
+    var prev = ctx.font;
+    var width = 0;
+    var i;
+
+    ctx.font = font.string;
+
+    for (i = 0; i < ilen; ++i) {
+      width = Math.max(ctx.measureText(items[i]).width, width);
+    }
+
+    ctx.font = prev;
+
+    return {
+      height: ilen * font.lineHeight,
+      width: width
+    };
+  },
+
+  /**
+   * Returns value bounded by min and max. This is equivalent to max(min, min(value, max)).
+   * @todo move this method in Chart.helpers.bound
+   * https://doc.qt.io/qt-5/qtglobal.html#qBound
+   */
+  bound: function(min, value, max) {
+    return Math.max(min, Math.min(value, max));
+  },
+
+  /**
+   * Returns an array of pair [value, state] where state is:
+   * * -1: value is only in a0 (removed)
+   * *  1: value is only in a1 (added)
+   */
+  arrayDiff: function(a0, a1) {
+    var prev = a0.slice();
+    var updates = [];
+    var i, j, ilen, v;
+
+    for (i = 0, ilen = a1.length; i < ilen; ++i) {
+      v = a1[i];
+      j = prev.indexOf(v);
+
+      if (j === -1) {
+        updates.push([v, 1]);
+      } else {
+        prev.splice(j, 1);
+      }
+    }
+
+    for (i = 0, ilen = prev.length; i < ilen; ++i) {
+      updates.push([prev[i], -1]);
+    }
+
+    return updates;
+  },
+
+  /**
+   * https://github.com/chartjs/chartjs-plugin-datalabels/issues/70
+   */
+  rasterize: function(v) {
+    return Math.round(v * devicePixelRatio) / devicePixelRatio;
+  }
+};
+
+function orient(point, origin) {
+  var x0 = origin.x;
+  var y0 = origin.y;
+
+  if (x0 === null) {
+    return {x: 0, y: -1};
+  }
+  if (y0 === null) {
+    return {x: 1, y: 0};
+  }
+
+  var dx = point.x - x0;
+  var dy = point.y - y0;
+  var ln = Math.sqrt(dx * dx + dy * dy);
+
+  return {
+    x: ln ? dx / ln : 0,
+    y: ln ? dy / ln : -1
+  };
+}
+
+function aligned(x, y, vx, vy, align) {
+  switch (align) {
+  case 'center':
+    vx = vy = 0;
+    break;
+  case 'bottom':
+    vx = 0;
+    vy = 1;
+    break;
+  case 'right':
+    vx = 1;
+    vy = 0;
+    break;
+  case 'left':
+    vx = -1;
+    vy = 0;
+    break;
+  case 'top':
+    vx = 0;
+    vy = -1;
+    break;
+  case 'start':
+    vx = -vx;
+    vy = -vy;
+    break;
+  case 'end':
+    // keep natural orientation
+    break;
+  default:
+    // clockwise rotation (in degree)
+    align *= (Math.PI / 180);
+    vx = Math.cos(align);
+    vy = Math.sin(align);
+    break;
+  }
+
+  return {
+    x: x,
+    y: y,
+    vx: vx,
+    vy: vy
+  };
+}
+
+// Line clipping (Cohen–Sutherland algorithm)
+// https://en.wikipedia.org/wiki/Cohen–Sutherland_algorithm
+
+var R_INSIDE = 0;
+var R_LEFT = 1;
+var R_RIGHT = 2;
+var R_BOTTOM = 4;
+var R_TOP = 8;
+
+function region(x, y, rect) {
+  var res = R_INSIDE;
+
+  if (x < rect.left) {
+    res |= R_LEFT;
+  } else if (x > rect.right) {
+    res |= R_RIGHT;
+  }
+  if (y < rect.top) {
+    res |= R_TOP;
+  } else if (y > rect.bottom) {
+    res |= R_BOTTOM;
+  }
+
+  return res;
+}
+
+function clipped(segment, area) {
+  var x0 = segment.x0;
+  var y0 = segment.y0;
+  var x1 = segment.x1;
+  var y1 = segment.y1;
+  var r0 = region(x0, y0, area);
+  var r1 = region(x1, y1, area);
+  var r, x, y;
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    if (!(r0 | r1) || (r0 & r1)) {
+      // both points inside or on the same side: no clipping
+      break;
+    }
+
+    // at least one point is outside
+    r = r0 || r1;
+
+    if (r & R_TOP) {
+      x = x0 + (x1 - x0) * (area.top - y0) / (y1 - y0);
+      y = area.top;
+    } else if (r & R_BOTTOM) {
+      x = x0 + (x1 - x0) * (area.bottom - y0) / (y1 - y0);
+      y = area.bottom;
+    } else if (r & R_RIGHT) {
+      y = y0 + (y1 - y0) * (area.right - x0) / (x1 - x0);
+      x = area.right;
+    } else if (r & R_LEFT) {
+      y = y0 + (y1 - y0) * (area.left - x0) / (x1 - x0);
+      x = area.left;
+    }
+
+    if (r === r0) {
+      x0 = x;
+      y0 = y;
+      r0 = region(x0, y0, area);
+    } else {
+      x1 = x;
+      y1 = y;
+      r1 = region(x1, y1, area);
+    }
+  }
+
+  return {
+    x0: x0,
+    x1: x1,
+    y0: y0,
+    y1: y1
+  };
+}
+
+function compute$1(range, config) {
+  var anchor = config.anchor;
+  var segment = range;
+  var x, y;
+
+  if (config.clamp) {
+    segment = clipped(segment, config.area);
+  }
+
+  if (anchor === 'start') {
+    x = segment.x0;
+    y = segment.y0;
+  } else if (anchor === 'end') {
+    x = segment.x1;
+    y = segment.y1;
+  } else {
+    x = (segment.x0 + segment.x1) / 2;
+    y = (segment.y0 + segment.y1) / 2;
+  }
+
+  return aligned(x, y, range.vx, range.vy, config.align);
+}
+
+var positioners = {
+  arc: function(el, config) {
+    var angle = (el.startAngle + el.endAngle) / 2;
+    var vx = Math.cos(angle);
+    var vy = Math.sin(angle);
+    var r0 = el.innerRadius;
+    var r1 = el.outerRadius;
+
+    return compute$1({
+      x0: el.x + vx * r0,
+      y0: el.y + vy * r0,
+      x1: el.x + vx * r1,
+      y1: el.y + vy * r1,
+      vx: vx,
+      vy: vy
+    }, config);
+  },
+
+  point: function(el, config) {
+    var v = orient(el, config.origin);
+    var rx = v.x * el.options.radius;
+    var ry = v.y * el.options.radius;
+
+    return compute$1({
+      x0: el.x - rx,
+      y0: el.y - ry,
+      x1: el.x + rx,
+      y1: el.y + ry,
+      vx: v.x,
+      vy: v.y
+    }, config);
+  },
+
+  bar: function(el, config) {
+    var v = orient(el, config.origin);
+    var x = el.x;
+    var y = el.y;
+    var sx = 0;
+    var sy = 0;
+
+    if (el.horizontal) {
+      x = Math.min(el.x, el.base);
+      sx = Math.abs(el.base - el.x);
+    } else {
+      y = Math.min(el.y, el.base);
+      sy = Math.abs(el.base - el.y);
+    }
+
+    return compute$1({
+      x0: x,
+      y0: y + sy,
+      x1: x + sx,
+      y1: y,
+      vx: v.x,
+      vy: v.y
+    }, config);
+  },
+
+  fallback: function(el, config) {
+    var v = orient(el, config.origin);
+
+    return compute$1({
+      x0: el.x,
+      y0: el.y,
+      x1: el.x,
+      y1: el.y,
+      vx: v.x,
+      vy: v.y
+    }, config);
+  }
+};
+
+var rasterize = utils.rasterize;
+
+function boundingRects(model) {
+  var borderWidth = model.borderWidth || 0;
+  var padding = model.padding;
+  var th = model.size.height;
+  var tw = model.size.width;
+  var tx = -tw / 2;
+  var ty = -th / 2;
+
+  return {
+    frame: {
+      x: tx - padding.left - borderWidth,
+      y: ty - padding.top - borderWidth,
+      w: tw + padding.width + borderWidth * 2,
+      h: th + padding.height + borderWidth * 2
+    },
+    text: {
+      x: tx,
+      y: ty,
+      w: tw,
+      h: th
+    }
+  };
+}
+
+function getScaleOrigin(el, context) {
+  var scale = context.chart.getDatasetMeta(context.datasetIndex).vScale;
+
+  if (!scale) {
+    return null;
+  }
+
+  if (scale.xCenter !== undefined && scale.yCenter !== undefined) {
+    return {x: scale.xCenter, y: scale.yCenter};
+  }
+
+  var pixel = scale.getBasePixel();
+  return el.horizontal ?
+    {x: pixel, y: null} :
+    {x: null, y: pixel};
+}
+
+function getPositioner(el) {
+  if (el instanceof chart_js__WEBPACK_IMPORTED_MODULE_1__.ArcElement) {
+    return positioners.arc;
+  }
+  if (el instanceof chart_js__WEBPACK_IMPORTED_MODULE_1__.PointElement) {
+    return positioners.point;
+  }
+  if (el instanceof chart_js__WEBPACK_IMPORTED_MODULE_1__.BarElement) {
+    return positioners.bar;
+  }
+  return positioners.fallback;
+}
+
+function drawRoundedRect(ctx, x, y, w, h, radius) {
+  var HALF_PI = Math.PI / 2;
+
+  if (radius) {
+    var r = Math.min(radius, h / 2, w / 2);
+    var left = x + r;
+    var top = y + r;
+    var right = x + w - r;
+    var bottom = y + h - r;
+
+    ctx.moveTo(x, top);
+    if (left < right && top < bottom) {
+      ctx.arc(left, top, r, -Math.PI, -HALF_PI);
+      ctx.arc(right, top, r, -HALF_PI, 0);
+      ctx.arc(right, bottom, r, 0, HALF_PI);
+      ctx.arc(left, bottom, r, HALF_PI, Math.PI);
+    } else if (left < right) {
+      ctx.moveTo(left, y);
+      ctx.arc(right, top, r, -HALF_PI, HALF_PI);
+      ctx.arc(left, top, r, HALF_PI, Math.PI + HALF_PI);
+    } else if (top < bottom) {
+      ctx.arc(left, top, r, -Math.PI, 0);
+      ctx.arc(left, bottom, r, 0, Math.PI);
+    } else {
+      ctx.arc(left, top, r, -Math.PI, Math.PI);
+    }
+    ctx.closePath();
+    ctx.moveTo(x, y);
+  } else {
+    ctx.rect(x, y, w, h);
+  }
+}
+
+function drawFrame(ctx, rect, model) {
+  var bgColor = model.backgroundColor;
+  var borderColor = model.borderColor;
+  var borderWidth = model.borderWidth;
+
+  if (!bgColor && (!borderColor || !borderWidth)) {
+    return;
+  }
+
+  ctx.beginPath();
+
+  drawRoundedRect(
+    ctx,
+    rasterize(rect.x) + borderWidth / 2,
+    rasterize(rect.y) + borderWidth / 2,
+    rasterize(rect.w) - borderWidth,
+    rasterize(rect.h) - borderWidth,
+    model.borderRadius);
+
+  ctx.closePath();
+
+  if (bgColor) {
+    ctx.fillStyle = bgColor;
+    ctx.fill();
+  }
+
+  if (borderColor && borderWidth) {
+    ctx.strokeStyle = borderColor;
+    ctx.lineWidth = borderWidth;
+    ctx.lineJoin = 'miter';
+    ctx.stroke();
+  }
+}
+
+function textGeometry(rect, align, font) {
+  var h = font.lineHeight;
+  var w = rect.w;
+  var x = rect.x;
+  var y = rect.y + h / 2;
+
+  if (align === 'center') {
+    x += w / 2;
+  } else if (align === 'end' || align === 'right') {
+    x += w;
+  }
+
+  return {
+    h: h,
+    w: w,
+    x: x,
+    y: y
+  };
+}
+
+function drawTextLine(ctx, text, cfg) {
+  var shadow = ctx.shadowBlur;
+  var stroked = cfg.stroked;
+  var x = rasterize(cfg.x);
+  var y = rasterize(cfg.y);
+  var w = rasterize(cfg.w);
+
+  if (stroked) {
+    ctx.strokeText(text, x, y, w);
+  }
+
+  if (cfg.filled) {
+    if (shadow && stroked) {
+      // Prevent drawing shadow on both the text stroke and fill, so
+      // if the text is stroked, remove the shadow for the text fill.
+      ctx.shadowBlur = 0;
+    }
+
+    ctx.fillText(text, x, y, w);
+
+    if (shadow && stroked) {
+      ctx.shadowBlur = shadow;
+    }
+  }
+}
+
+function drawText(ctx, lines, rect, model) {
+  var align = model.textAlign;
+  var color = model.color;
+  var filled = !!color;
+  var font = model.font;
+  var ilen = lines.length;
+  var strokeColor = model.textStrokeColor;
+  var strokeWidth = model.textStrokeWidth;
+  var stroked = strokeColor && strokeWidth;
+  var i;
+
+  if (!ilen || (!filled && !stroked)) {
+    return;
+  }
+
+  // Adjust coordinates based on text alignment and line height
+  rect = textGeometry(rect, align, font);
+
+  ctx.font = font.string;
+  ctx.textAlign = align;
+  ctx.textBaseline = 'middle';
+  ctx.shadowBlur = model.textShadowBlur;
+  ctx.shadowColor = model.textShadowColor;
+
+  if (filled) {
+    ctx.fillStyle = color;
+  }
+  if (stroked) {
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = strokeWidth;
+    ctx.strokeStyle = strokeColor;
+  }
+
+  for (i = 0, ilen = lines.length; i < ilen; ++i) {
+    drawTextLine(ctx, lines[i], {
+      stroked: stroked,
+      filled: filled,
+      w: rect.w,
+      x: rect.x,
+      y: rect.y + rect.h * i
+    });
+  }
+}
+
+var Label = function(config, ctx, el, index) {
+  var me = this;
+
+  me._config = config;
+  me._index = index;
+  me._model = null;
+  me._rects = null;
+  me._ctx = ctx;
+  me._el = el;
+};
+
+(0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.merge)(Label.prototype, {
+  /**
+   * @private
+   */
+  _modelize: function(display, lines, config, context) {
+    var me = this;
+    var index = me._index;
+    var font = (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.toFont)((0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.font, {}], context, index));
+    var color = (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.color, chart_js__WEBPACK_IMPORTED_MODULE_1__.defaults.color], context, index);
+
+    return {
+      align: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.align, 'center'], context, index),
+      anchor: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.anchor, 'center'], context, index),
+      area: context.chart.chartArea,
+      backgroundColor: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.backgroundColor, null], context, index),
+      borderColor: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.borderColor, null], context, index),
+      borderRadius: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.borderRadius, 0], context, index),
+      borderWidth: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.borderWidth, 0], context, index),
+      clamp: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.clamp, false], context, index),
+      clip: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.clip, false], context, index),
+      color: color,
+      display: display,
+      font: font,
+      lines: lines,
+      offset: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.offset, 0], context, index),
+      opacity: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.opacity, 1], context, index),
+      origin: getScaleOrigin(me._el, context),
+      padding: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.toPadding)((0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.padding, 0], context, index)),
+      positioner: getPositioner(me._el),
+      rotation: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.rotation, 0], context, index) * (Math.PI / 180),
+      size: utils.textSize(me._ctx, lines, font),
+      textAlign: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.textAlign, 'start'], context, index),
+      textShadowBlur: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.textShadowBlur, 0], context, index),
+      textShadowColor: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.textShadowColor, color], context, index),
+      textStrokeColor: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.textStrokeColor, color], context, index),
+      textStrokeWidth: (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.textStrokeWidth, 0], context, index)
+    };
+  },
+
+  update: function(context) {
+    var me = this;
+    var model = null;
+    var rects = null;
+    var index = me._index;
+    var config = me._config;
+    var value, label, lines;
+
+    // We first resolve the display option (separately) to avoid computing
+    // other options in case the label is hidden (i.e. display: false).
+    var display = (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.resolve)([config.display, true], context, index);
+
+    if (display) {
+      value = context.dataset.data[index];
+      label = (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.valueOrDefault)((0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.callback)(config.formatter, [value, context]), value);
+      lines = (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.isNullOrUndef)(label) ? [] : utils.toTextLines(label);
+
+      if (lines.length) {
+        model = me._modelize(display, lines, config, context);
+        rects = boundingRects(model);
+      }
+    }
+
+    me._model = model;
+    me._rects = rects;
+  },
+
+  geometry: function() {
+    return this._rects ? this._rects.frame : {};
+  },
+
+  rotation: function() {
+    return this._model ? this._model.rotation : 0;
+  },
+
+  visible: function() {
+    return this._model && this._model.opacity;
+  },
+
+  model: function() {
+    return this._model;
+  },
+
+  draw: function(chart, center) {
+    var me = this;
+    var ctx = chart.ctx;
+    var model = me._model;
+    var rects = me._rects;
+    var area;
+
+    if (!this.visible()) {
+      return;
+    }
+
+    ctx.save();
+
+    if (model.clip) {
+      area = model.area;
+      ctx.beginPath();
+      ctx.rect(
+        area.left,
+        area.top,
+        area.right - area.left,
+        area.bottom - area.top);
+      ctx.clip();
+    }
+
+    ctx.globalAlpha = utils.bound(0, model.opacity, 1);
+    ctx.translate(rasterize(center.x), rasterize(center.y));
+    ctx.rotate(model.rotation);
+
+    drawFrame(ctx, rects.frame, model);
+    drawText(ctx, model.lines, rects.text, model);
+
+    ctx.restore();
+  }
+});
+
+var MIN_INTEGER = Number.MIN_SAFE_INTEGER || -9007199254740991; // eslint-disable-line es/no-number-minsafeinteger
+var MAX_INTEGER = Number.MAX_SAFE_INTEGER || 9007199254740991;  // eslint-disable-line es/no-number-maxsafeinteger
+
+function rotated(point, center, angle) {
+  var cos = Math.cos(angle);
+  var sin = Math.sin(angle);
+  var cx = center.x;
+  var cy = center.y;
+
+  return {
+    x: cx + cos * (point.x - cx) - sin * (point.y - cy),
+    y: cy + sin * (point.x - cx) + cos * (point.y - cy)
+  };
+}
+
+function projected(points, axis) {
+  var min = MAX_INTEGER;
+  var max = MIN_INTEGER;
+  var origin = axis.origin;
+  var i, pt, vx, vy, dp;
+
+  for (i = 0; i < points.length; ++i) {
+    pt = points[i];
+    vx = pt.x - origin.x;
+    vy = pt.y - origin.y;
+    dp = axis.vx * vx + axis.vy * vy;
+    min = Math.min(min, dp);
+    max = Math.max(max, dp);
+  }
+
+  return {
+    min: min,
+    max: max
+  };
+}
+
+function toAxis(p0, p1) {
+  var vx = p1.x - p0.x;
+  var vy = p1.y - p0.y;
+  var ln = Math.sqrt(vx * vx + vy * vy);
+
+  return {
+    vx: (p1.x - p0.x) / ln,
+    vy: (p1.y - p0.y) / ln,
+    origin: p0,
+    ln: ln
+  };
+}
+
+var HitBox = function() {
+  this._rotation = 0;
+  this._rect = {
+    x: 0,
+    y: 0,
+    w: 0,
+    h: 0
+  };
+};
+
+(0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.merge)(HitBox.prototype, {
+  center: function() {
+    var r = this._rect;
+    return {
+      x: r.x + r.w / 2,
+      y: r.y + r.h / 2
+    };
+  },
+
+  update: function(center, rect, rotation) {
+    this._rotation = rotation;
+    this._rect = {
+      x: rect.x + center.x,
+      y: rect.y + center.y,
+      w: rect.w,
+      h: rect.h
+    };
+  },
+
+  contains: function(point) {
+    var me = this;
+    var margin = 1;
+    var rect = me._rect;
+
+    point = rotated(point, me.center(), -me._rotation);
+
+    return !(point.x < rect.x - margin
+      || point.y < rect.y - margin
+      || point.x > rect.x + rect.w + margin * 2
+      || point.y > rect.y + rect.h + margin * 2);
+  },
+
+  // Separating Axis Theorem
+  // https://gamedevelopment.tutsplus.com/tutorials/collision-detection-using-the-separating-axis-theorem--gamedev-169
+  intersects: function(other) {
+    var r0 = this._points();
+    var r1 = other._points();
+    var axes = [
+      toAxis(r0[0], r0[1]),
+      toAxis(r0[0], r0[3])
+    ];
+    var i, pr0, pr1;
+
+    if (this._rotation !== other._rotation) {
+      // Only separate with r1 axis if the rotation is different,
+      // else it's enough to separate r0 and r1 with r0 axis only!
+      axes.push(
+        toAxis(r1[0], r1[1]),
+        toAxis(r1[0], r1[3])
+      );
+    }
+
+    for (i = 0; i < axes.length; ++i) {
+      pr0 = projected(r0, axes[i]);
+      pr1 = projected(r1, axes[i]);
+
+      if (pr0.max < pr1.min || pr1.max < pr0.min) {
+        return false;
+      }
+    }
+
+    return true;
+  },
+
+  /**
+   * @private
+   */
+  _points: function() {
+    var me = this;
+    var rect = me._rect;
+    var angle = me._rotation;
+    var center = me.center();
+
+    return [
+      rotated({x: rect.x, y: rect.y}, center, angle),
+      rotated({x: rect.x + rect.w, y: rect.y}, center, angle),
+      rotated({x: rect.x + rect.w, y: rect.y + rect.h}, center, angle),
+      rotated({x: rect.x, y: rect.y + rect.h}, center, angle)
+    ];
+  }
+});
+
+function coordinates(el, model, geometry) {
+  var point = model.positioner(el, model);
+  var vx = point.vx;
+  var vy = point.vy;
+
+  if (!vx && !vy) {
+    // if aligned center, we don't want to offset the center point
+    return {x: point.x, y: point.y};
+  }
+
+  var w = geometry.w;
+  var h = geometry.h;
+
+  // take in account the label rotation
+  var rotation = model.rotation;
+  var dx = Math.abs(w / 2 * Math.cos(rotation)) + Math.abs(h / 2 * Math.sin(rotation));
+  var dy = Math.abs(w / 2 * Math.sin(rotation)) + Math.abs(h / 2 * Math.cos(rotation));
+
+  // scale the unit vector (vx, vy) to get at least dx or dy equal to
+  // w or h respectively (else we would calculate the distance to the
+  // ellipse inscribed in the bounding rect)
+  var vs = 1 / Math.max(Math.abs(vx), Math.abs(vy));
+  dx *= vx * vs;
+  dy *= vy * vs;
+
+  // finally, include the explicit offset
+  dx += model.offset * vx;
+  dy += model.offset * vy;
+
+  return {
+    x: point.x + dx,
+    y: point.y + dy
+  };
+}
+
+function collide(labels, collider) {
+  var i, j, s0, s1;
+
+  // IMPORTANT Iterate in the reverse order since items at the end of the
+  // list have an higher weight/priority and thus should be less impacted
+  // by the overlapping strategy.
+
+  for (i = labels.length - 1; i >= 0; --i) {
+    s0 = labels[i].$layout;
+
+    for (j = i - 1; j >= 0 && s0._visible; --j) {
+      s1 = labels[j].$layout;
+
+      if (s1._visible && s0._box.intersects(s1._box)) {
+        collider(s0, s1);
+      }
+    }
+  }
+
+  return labels;
+}
+
+function compute(labels) {
+  var i, ilen, label, state, geometry, center, proxy;
+
+  // Initialize labels for overlap detection
+  for (i = 0, ilen = labels.length; i < ilen; ++i) {
+    label = labels[i];
+    state = label.$layout;
+
+    if (state._visible) {
+      // Chart.js 3 removed el._model in favor of getProps(), making harder to
+      // abstract reading values in positioners. Also, using string arrays to
+      // read values (i.e. var {a,b,c} = el.getProps(["a","b","c"])) would make
+      // positioners inefficient in the normal case (i.e. not the final values)
+      // and the code a bit ugly, so let's use a Proxy instead.
+      proxy = new Proxy(label._el, {get: (el, p) => el.getProps([p], true)[p]});
+
+      geometry = label.geometry();
+      center = coordinates(proxy, label.model(), geometry);
+      state._box.update(center, geometry, label.rotation());
+    }
+  }
+
+  // Auto hide overlapping labels
+  return collide(labels, function(s0, s1) {
+    var h0 = s0._hidable;
+    var h1 = s1._hidable;
+
+    if ((h0 && h1) || h1) {
+      s1._visible = false;
+    } else if (h0) {
+      s0._visible = false;
+    }
+  });
+}
+
+var layout = {
+  prepare: function(datasets) {
+    var labels = [];
+    var i, j, ilen, jlen, label;
+
+    for (i = 0, ilen = datasets.length; i < ilen; ++i) {
+      for (j = 0, jlen = datasets[i].length; j < jlen; ++j) {
+        label = datasets[i][j];
+        labels.push(label);
+        label.$layout = {
+          _box: new HitBox(),
+          _hidable: false,
+          _visible: true,
+          _set: i,
+          _idx: j
+        };
+      }
+    }
+
+    // TODO New `z` option: labels with a higher z-index are drawn
+    // of top of the ones with a lower index. Lowest z-index labels
+    // are also discarded first when hiding overlapping labels.
+    labels.sort(function(a, b) {
+      var sa = a.$layout;
+      var sb = b.$layout;
+
+      return sa._idx === sb._idx
+        ? sb._set - sa._set
+        : sb._idx - sa._idx;
+    });
+
+    this.update(labels);
+
+    return labels;
+  },
+
+  update: function(labels) {
+    var dirty = false;
+    var i, ilen, label, model, state;
+
+    for (i = 0, ilen = labels.length; i < ilen; ++i) {
+      label = labels[i];
+      model = label.model();
+      state = label.$layout;
+      state._hidable = model && model.display === 'auto';
+      state._visible = label.visible();
+      dirty |= state._hidable;
+    }
+
+    if (dirty) {
+      compute(labels);
+    }
+  },
+
+  lookup: function(labels, point) {
+    var i, state;
+
+    // IMPORTANT Iterate in the reverse order since items at the end of
+    // the list have an higher z-index, thus should be picked first.
+
+    for (i = labels.length - 1; i >= 0; --i) {
+      state = labels[i].$layout;
+
+      if (state && state._visible && state._box.contains(point)) {
+        return labels[i];
+      }
+    }
+
+    return null;
+  },
+
+  draw: function(chart, labels) {
+    var i, ilen, label, state, geometry, center;
+
+    for (i = 0, ilen = labels.length; i < ilen; ++i) {
+      label = labels[i];
+      state = label.$layout;
+
+      if (state._visible) {
+        geometry = label.geometry();
+        center = coordinates(label._el, label.model(), geometry);
+        state._box.update(center, geometry, label.rotation());
+        label.draw(chart, center);
+      }
+    }
+  }
+};
+
+var formatter = function(value) {
+  if ((0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.isNullOrUndef)(value)) {
+    return null;
+  }
+
+  var label = value;
+  var keys, klen, k;
+  if ((0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.isObject)(value)) {
+    if (!(0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.isNullOrUndef)(value.label)) {
+      label = value.label;
+    } else if (!(0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.isNullOrUndef)(value.r)) {
+      label = value.r;
+    } else {
+      label = '';
+      keys = Object.keys(value);
+      for (k = 0, klen = keys.length; k < klen; ++k) {
+        label += (k !== 0 ? ', ' : '') + keys[k] + ': ' + value[keys[k]];
+      }
+    }
+  }
+
+  return '' + label;
+};
+
+/**
+ * IMPORTANT: make sure to also update tests and TypeScript definition
+ * files (`/test/specs/defaults.spec.js` and `/types/options.d.ts`)
+ */
+
+var defaults = {
+  align: 'center',
+  anchor: 'center',
+  backgroundColor: null,
+  borderColor: null,
+  borderRadius: 0,
+  borderWidth: 0,
+  clamp: false,
+  clip: false,
+  color: undefined,
+  display: true,
+  font: {
+    family: undefined,
+    lineHeight: 1.2,
+    size: undefined,
+    style: undefined,
+    weight: null
+  },
+  formatter: formatter,
+  labels: undefined,
+  listeners: {},
+  offset: 4,
+  opacity: 1,
+  padding: {
+    top: 4,
+    right: 4,
+    bottom: 4,
+    left: 4
+  },
+  rotation: 0,
+  textAlign: 'start',
+  textStrokeColor: undefined,
+  textStrokeWidth: 0,
+  textShadowBlur: 0,
+  textShadowColor: undefined
+};
+
+/**
+ * @see https://github.com/chartjs/Chart.js/issues/4176
+ */
+
+var EXPANDO_KEY = '$datalabels';
+var DEFAULT_KEY = '$default';
+
+function configure(dataset, options) {
+  var override = dataset.datalabels;
+  var listeners = {};
+  var configs = [];
+  var labels, keys;
+
+  if (override === false) {
+    return null;
+  }
+  if (override === true) {
+    override = {};
+  }
+
+  options = (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.merge)({}, [options, override]);
+  labels = options.labels || {};
+  keys = Object.keys(labels);
+  delete options.labels;
+
+  if (keys.length) {
+    keys.forEach(function(key) {
+      if (labels[key]) {
+        configs.push((0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.merge)({}, [
+          options,
+          labels[key],
+          {_key: key}
+        ]));
+      }
+    });
+  } else {
+    // Default label if no "named" label defined.
+    configs.push(options);
+  }
+
+  // listeners: {<event-type>: {<label-key>: <fn>}}
+  listeners = configs.reduce(function(target, config) {
+    (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.each)(config.listeners || {}, function(fn, event) {
+      target[event] = target[event] || {};
+      target[event][config._key || DEFAULT_KEY] = fn;
+    });
+
+    delete config.listeners;
+    return target;
+  }, {});
+
+  return {
+    labels: configs,
+    listeners: listeners
+  };
+}
+
+function dispatchEvent(chart, listeners, label) {
+  if (!listeners) {
+    return;
+  }
+
+  var context = label.$context;
+  var groups = label.$groups;
+  var callback$1;
+
+  if (!listeners[groups._set]) {
+    return;
+  }
+
+  callback$1 = listeners[groups._set][groups._key];
+  if (!callback$1) {
+    return;
+  }
+
+  if ((0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.callback)(callback$1, [context]) === true) {
+    // Users are allowed to tweak the given context by injecting values that can be
+    // used in scriptable options to display labels differently based on the current
+    // event (e.g. highlight an hovered label). That's why we update the label with
+    // the output context and schedule a new chart render by setting it dirty.
+    chart[EXPANDO_KEY]._dirty = true;
+    label.update(context);
+  }
+}
+
+function dispatchMoveEvents(chart, listeners, previous, label) {
+  var enter, leave;
+
+  if (!previous && !label) {
+    return;
+  }
+
+  if (!previous) {
+    enter = true;
+  } else if (!label) {
+    leave = true;
+  } else if (previous !== label) {
+    leave = enter = true;
+  }
+
+  if (leave) {
+    dispatchEvent(chart, listeners.leave, previous);
+  }
+  if (enter) {
+    dispatchEvent(chart, listeners.enter, label);
+  }
+}
+
+function handleMoveEvents(chart, event) {
+  var expando = chart[EXPANDO_KEY];
+  var listeners = expando._listeners;
+  var previous, label;
+
+  if (!listeners.enter && !listeners.leave) {
+    return;
+  }
+
+  if (event.type === 'mousemove') {
+    label = layout.lookup(expando._labels, event);
+  } else if (event.type !== 'mouseout') {
+    return;
+  }
+
+  previous = expando._hovered;
+  expando._hovered = label;
+  dispatchMoveEvents(chart, listeners, previous, label);
+}
+
+function handleClickEvents(chart, event) {
+  var expando = chart[EXPANDO_KEY];
+  var handlers = expando._listeners.click;
+  var label = handlers && layout.lookup(expando._labels, event);
+  if (label) {
+    dispatchEvent(chart, handlers, label);
+  }
+}
+
+var plugin = {
+  id: 'datalabels',
+
+  defaults: defaults,
+
+  beforeInit: function(chart) {
+    chart[EXPANDO_KEY] = {
+      _actives: []
+    };
+  },
+
+  beforeUpdate: function(chart) {
+    var expando = chart[EXPANDO_KEY];
+    expando._listened = false;
+    expando._listeners = {};     // {<event-type>: {<dataset-index>: {<label-key>: <fn>}}}
+    expando._datasets = [];      // per dataset labels: [Label[]]
+    expando._labels = [];        // layouted labels: Label[]
+  },
+
+  afterDatasetUpdate: function(chart, args, options) {
+    var datasetIndex = args.index;
+    var expando = chart[EXPANDO_KEY];
+    var labels = expando._datasets[datasetIndex] = [];
+    var visible = chart.isDatasetVisible(datasetIndex);
+    var dataset = chart.data.datasets[datasetIndex];
+    var config = configure(dataset, options);
+    var elements = args.meta.data || [];
+    var ctx = chart.ctx;
+    var i, j, ilen, jlen, cfg, key, el, label;
+
+    ctx.save();
+
+    for (i = 0, ilen = elements.length; i < ilen; ++i) {
+      el = elements[i];
+      el[EXPANDO_KEY] = [];
+
+      if (visible && el && chart.getDataVisibility(i) && !el.skip) {
+        for (j = 0, jlen = config.labels.length; j < jlen; ++j) {
+          cfg = config.labels[j];
+          key = cfg._key;
+
+          label = new Label(cfg, ctx, el, i);
+          label.$groups = {
+            _set: datasetIndex,
+            _key: key || DEFAULT_KEY
+          };
+          label.$context = {
+            active: false,
+            chart: chart,
+            dataIndex: i,
+            dataset: dataset,
+            datasetIndex: datasetIndex
+          };
+
+          label.update(label.$context);
+          el[EXPANDO_KEY].push(label);
+          labels.push(label);
+        }
+      }
+    }
+
+    ctx.restore();
+
+    // Store listeners at the chart level and per event type to optimize
+    // cases where no listeners are registered for a specific event.
+    (0,chart_js_helpers__WEBPACK_IMPORTED_MODULE_0__.merge)(expando._listeners, config.listeners, {
+      merger: function(event, target, source) {
+        target[event] = target[event] || {};
+        target[event][args.index] = source[event];
+        expando._listened = true;
+      }
+    });
+  },
+
+  afterUpdate: function(chart, options) {
+    chart[EXPANDO_KEY]._labels = layout.prepare(
+      chart[EXPANDO_KEY]._datasets,
+      options);
+  },
+
+  // Draw labels on top of all dataset elements
+  // https://github.com/chartjs/chartjs-plugin-datalabels/issues/29
+  // https://github.com/chartjs/chartjs-plugin-datalabels/issues/32
+  afterDatasetsDraw: function(chart) {
+    layout.draw(chart, chart[EXPANDO_KEY]._labels);
+  },
+
+  beforeEvent: function(chart, args) {
+    // If there is no listener registered for this chart, `listened` will be false,
+    // meaning we can immediately ignore the incoming event and avoid useless extra
+    // computation for users who don't implement label interactions.
+    if (chart[EXPANDO_KEY]._listened) {
+      var event = args.event;
+      switch (event.type) {
+      case 'mousemove':
+      case 'mouseout':
+        handleMoveEvents(chart, event);
+        break;
+      case 'click':
+        handleClickEvents(chart, event);
+        break;
+      }
+    }
+  },
+
+  afterEvent: function(chart) {
+    var expando = chart[EXPANDO_KEY];
+    var previous = expando._actives;
+    var actives = expando._actives = chart.getActiveElements();
+    var updates = utils.arrayDiff(previous, actives);
+    var i, ilen, j, jlen, update, label, labels;
+
+    for (i = 0, ilen = updates.length; i < ilen; ++i) {
+      update = updates[i];
+      if (update[1]) {
+        labels = update[0].element[EXPANDO_KEY] || [];
+        for (j = 0, jlen = labels.length; j < jlen; ++j) {
+          label = labels[j];
+          label.$context.active = (update[1] === 1);
+          label.update(label.$context);
+        }
+      }
+    }
+
+    if (expando._dirty || updates.length) {
+      layout.update(expando._labels);
+      chart.render();
+    }
+
+    delete expando._dirty;
+  }
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (plugin);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-21.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-21.use[2]!./node_modules/stylus-loader/index.js!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./node_modules/@meforma/vue-toaster/src/Toaster.vue?vue&type=style&index=0&id=04d22544&lang=stylus":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-21.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-21.use[2]!./node_modules/stylus-loader/index.js!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./node_modules/@meforma/vue-toaster/src/Toaster.vue?vue&type=style&index=0&id=04d22544&lang=stylus ***!
@@ -44769,7 +46360,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".carousel__icon {\n  width: var(--vc-icn-width);\n  height: var(--vc-icn-width);\n  fill: currentColor;\n}\n.carousel {\n  position: relative;\n  text-align: center;\n  box-sizing: border-box;\n}\n\n.carousel * {\n  box-sizing: border-box;\n}\n\n.carousel__track {\n  display: flex;\n  margin: 0;\n  padding: 0;\n  position: relative;\n}\n\n.carousel__viewport {\n  overflow: hidden;\n}\n:root {\n  /* Color */\n  --vc-clr-primary: #642afb;\n  --vc-clr-secondary: #8e98f3;\n  --vc-clr-white: #ffffff;\n\n  /* Icon */\n  --vc-icn-width: 1.2em;\n\n  /* Navigation */\n  --vc-nav-width: 30px;\n  --vc-nav-color: #ffffff;\n  --vc-nav-background-color: var(--vc-clr-primary);\n\n  /* Pagination */\n  --vc-pgn-width: 10px;\n  --vc-pgn-height: 5px;\n  --vc-pgn-margin: 5px;\n  --vc-pgn-border-radius: 0;\n  --vc-pgn-background-color: var(--vc-clr-secondary);\n  --vc-pgn-active-color: var(--vc-clr-primary);\n}\n.carousel__slide {\n  scroll-snap-stop: auto;\n  flex-shrink: 0;\n  margin: 0;\n  position: relative;\n\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.carousel__pagination {\n  display: flex;\n  justify-content: center;\n  list-style: none;\n}\n.carousel__pagination-button {\n  margin: var(--vc-pgn-margin);\n  width: var(--vc-pgn-width);\n  height: var(--vc-pgn-height);\n  border-radius: var(--vc-pgn-height);\n  border: 0;\n  cursor: pointer;\n  background-color: var(--vc-pgn-background-color);\n}\n\n.carousel__pagination-button--active {\n  background-color: var(--vc-pgn-active-color);\n}\n.carousel__prev,\n.carousel__next {\n  background-color: var(--vc-nav-background-color);\n  border-radius: var(--vc-nav-width);\n  width: var(--vc-nav-width);\n  height: var(--vc-nav-width);\n  text-align: center;\n  font-size: calc(var(--vc-nav-width) * 2 / 3);\n  padding: 0;\n  color: var(--vc-nav-color);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  position: absolute;\n  border: 0;\n  cursor: pointer;\n}\n\n.carousel__prev {\n  top: 50%;\n  left: 0;\n  transform: translate(-50%, -50%);\n}\n\n.carousel__next {\n  top: 50%;\n  right: 0;\n  transform: translate(50%, -50%);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".carousel__slide {\n  scroll-snap-stop: auto;\n  flex-shrink: 0;\n  margin: 0;\n  position: relative;\n\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.carousel {\n  position: relative;\n  text-align: center;\n  box-sizing: border-box;\n}\n\n.carousel * {\n  box-sizing: border-box;\n}\n\n.carousel__track {\n  display: flex;\n  margin: 0;\n  padding: 0;\n  position: relative;\n}\n\n.carousel__viewport {\n  overflow: hidden;\n}\n:root {\n  /* Color */\n  --vc-clr-primary: #642afb;\n  --vc-clr-secondary: #8e98f3;\n  --vc-clr-white: #ffffff;\n\n  /* Icon */\n  --vc-icn-width: 1.2em;\n\n  /* Navigation */\n  --vc-nav-width: 30px;\n  --vc-nav-color: #ffffff;\n  --vc-nav-background-color: var(--vc-clr-primary);\n\n  /* Pagination */\n  --vc-pgn-width: 10px;\n  --vc-pgn-height: 5px;\n  --vc-pgn-margin: 5px;\n  --vc-pgn-border-radius: 0;\n  --vc-pgn-background-color: var(--vc-clr-secondary);\n  --vc-pgn-active-color: var(--vc-clr-primary);\n}\n.carousel__prev,\n.carousel__next {\n  background-color: var(--vc-nav-background-color);\n  border-radius: var(--vc-nav-width);\n  width: var(--vc-nav-width);\n  height: var(--vc-nav-width);\n  text-align: center;\n  font-size: calc(var(--vc-nav-width) * 2 / 3);\n  padding: 0;\n  color: var(--vc-nav-color);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  position: absolute;\n  border: 0;\n  cursor: pointer;\n}\n\n.carousel__prev {\n  top: 50%;\n  left: 0;\n  transform: translate(-50%, -50%);\n}\n\n.carousel__next {\n  top: 50%;\n  right: 0;\n  transform: translate(50%, -50%);\n}\n.carousel__icon {\n  width: var(--vc-icn-width);\n  height: var(--vc-icn-width);\n  fill: currentColor;\n}\n.carousel__pagination {\n  display: flex;\n  justify-content: center;\n  list-style: none;\n}\n.carousel__pagination-button {\n  margin: var(--vc-pgn-margin);\n  width: var(--vc-pgn-width);\n  height: var(--vc-pgn-height);\n  border-radius: var(--vc-pgn-height);\n  border: 0;\n  cursor: pointer;\n  background-color: var(--vc-pgn-background-color);\n}\n\n.carousel__pagination-button--active {\n  background-color: var(--vc-pgn-active-color);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -89855,7 +91446,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /**
- * Vue 3 Carousel 0.1.32
+ * Vue 3 Carousel 0.1.35
  * (c) 2021
  * @license MIT
  */
@@ -89874,23 +91465,6 @@ const defaultConfigs = {
     touchDrag: true,
     breakpoints: undefined,
 };
-
-function counterFactory() {
-    return new Proxy({ value: 0, read: 0 }, {
-        get(obj, prop) {
-            if (!(prop in obj))
-                return 0;
-            if (prop === 'read') {
-                return obj[prop];
-            }
-            return obj[prop]++;
-        },
-        set(obj, prop, value) {
-            obj[prop] = Math.max(value, 0);
-            return true;
-        },
-    });
-}
 
 /**
  * return a debounced version of the function
@@ -89925,7 +91499,7 @@ function throttle(fn, limit) {
         }
     };
 }
-function getSlides(vNode) {
+function getSlidesVNodes(vNode) {
     var _a, _b, _c;
     // Return empty array if there's any node
     if (!vNode)
@@ -89976,6 +91550,24 @@ function getCurrentSlideIndex(config, val, max, min) {
         return val;
     }
     return Math.min(Math.max(val, min), max);
+}
+function getSlidesToScroll({ slidesBuffer, currentSlide, snapAlign, itemsToShow, wrapAround, slidesCount, }) {
+    let output = slidesBuffer.indexOf(currentSlide);
+    if (snapAlign === 'center' || snapAlign === 'center-odd') {
+        output -= (itemsToShow - 1) / 2;
+    }
+    else if (snapAlign === 'center-even') {
+        output -= (itemsToShow - 2) / 2;
+    }
+    else if (snapAlign === 'end') {
+        output -= itemsToShow - 1;
+    }
+    if (!wrapAround) {
+        const max = slidesCount - itemsToShow;
+        const min = 0;
+        output = Math.max(Math.min(output, max), min);
+    }
+    return output;
 }
 
 var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
@@ -90047,14 +91639,13 @@ var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
             type: Object,
         },
     },
-    setup(props, { slots, emit }) {
+    setup(props, { slots, emit, expose }) {
         var _a;
         const root = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
         const slides = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
         const slidesBuffer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
         const slideWidth = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
         const slidesCount = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(1);
-        const slidesCounter = counterFactory();
         const autoplayTimer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
         const transitionTimer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
         let breakpoints = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({});
@@ -90062,13 +91653,6 @@ var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
         let defaultConfig = Object.assign({}, defaultConfigs);
         // current config
         const config = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)(Object.assign({}, defaultConfigs));
-        // Update the carousel on props change
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(props, () => {
-            initDefaultConfigs();
-            updateBreakpointsConfigs();
-            updateSlidesData();
-            updateSlideWidth();
-        });
         // slides
         const currentSlideIndex = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)((_a = config.modelValue) !== null && _a !== void 0 ? _a : 0);
         const prevSlideIndex = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0);
@@ -90081,7 +91665,6 @@ var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)('currentSlide', currentSlideIndex);
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)('maxSlide', maxSlideIndex);
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)('minSlide', minSlideIndex);
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)('slidesCounter', slidesCounter);
         /**
          * Configs
          */
@@ -90092,6 +91675,7 @@ var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
             breakpoints = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(Object.assign({}, mergedConfigs.breakpoints));
             // remove extra values
             defaultConfig = Object.assign(Object.assign({}, mergedConfigs), { settings: undefined, breakpoints: undefined });
+            bindConfigs(defaultConfig);
         }
         function updateBreakpointsConfigs() {
             const breakpointsArray = Object.keys(breakpoints.value)
@@ -90106,8 +91690,10 @@ var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
                 }
                 return false;
             });
-            let key;
-            for (key in newConfig) {
+            bindConfigs(newConfig);
+        }
+        function bindConfigs(newConfig) {
+            for (let key in newConfig) {
                 // @ts-ignore
                 config[key] = newConfig[key];
             }
@@ -90208,9 +91794,9 @@ var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
             dragged.x = deltaX;
         }, 16);
         function handleDragStart(event) {
+            isTouch = event.type === 'touchstart';
             if (!isTouch)
                 event.preventDefault();
-            isTouch = event.type === 'touchstart';
             if ((!isTouch && event.button !== 0) || isSliding.value) {
                 return;
             }
@@ -90299,24 +91885,14 @@ var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
         /**
          * Track style
          */
-        const slidesToScroll = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
-            let output = slidesBuffer.value.indexOf(currentSlideIndex.value);
-            if (config.snapAlign === 'center' || config.snapAlign === 'center-odd') {
-                output -= (config.itemsToShow - 1) / 2;
-            }
-            else if (config.snapAlign === 'center-even') {
-                output -= (config.itemsToShow - 2) / 2;
-            }
-            else if (config.snapAlign === 'end') {
-                output -= config.itemsToShow - 1;
-            }
-            if (!config.wrapAround) {
-                const max = slidesCount.value - config.itemsToShow;
-                const min = 0;
-                output = Math.max(Math.min(output, max), min);
-            }
-            return output;
-        });
+        const slidesToScroll = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => getSlidesToScroll({
+            slidesBuffer: slidesBuffer.value,
+            itemsToShow: config.itemsToShow,
+            snapAlign: config.snapAlign,
+            wrapAround: Boolean(config.wrapAround),
+            currentSlide: currentSlideIndex.value,
+            slidesCount: slidesCount.value,
+        }));
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.provide)('slidesToScroll', slidesToScroll);
         const trackStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
             const xScroll = dragged.x - slidesToScroll.value * slideWidth.value;
@@ -90325,13 +91901,24 @@ var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
                 transition: `${isSliding.value ? config.transition : 0}ms`,
             };
         });
-        const slotsProps = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)({
-            slideWidth,
-            slidesCount,
-            currentSlide: currentSlideIndex,
-        });
-        const slotSlides = slots.default || slots.slides;
-        const slotAddons = slots.addons;
+        function initCarousel() {
+            initDefaultConfigs();
+        }
+        function restartCarousel() {
+            initDefaultConfigs();
+            updateBreakpointsConfigs();
+            updateSlidesData();
+            updateSlidesBuffer();
+            updateSlideWidth();
+        }
+        function updateCarousel() {
+            updateSlidesData();
+            updateSlidesBuffer();
+        }
+        // Update the carousel on props change
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(props, restartCarousel);
+        // Init carousel
+        initCarousel();
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.watchEffect)(() => {
             // Handel when slides added/removed
             const needToUpdate = slidesCount.value !== slides.value.length;
@@ -90340,18 +91927,38 @@ var Carousel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
                 slideTo(Number(props.modelValue), true);
             }
             if (needToUpdate) {
-                updateSlidesData();
-                updateSlidesBuffer();
-            }
-            if (slidesCounter.read) {
-                slidesCounter.value = slides.value.length - 1;
+                updateCarousel();
             }
         });
-        initDefaultConfigs();
-        updateBreakpointsConfigs();
-        updateSlidesBuffer();
+        const data = {
+            config,
+            slidesBuffer,
+            slidesCount,
+            slideWidth,
+            currentSlide: currentSlideIndex,
+            maxSlide: maxSlideIndex,
+            minSlide: minSlideIndex,
+            middleSlide: middleSlideIndex,
+        };
+        expose({
+            updateBreakpointsConfigs,
+            updateSlidesData,
+            updateSlideWidth,
+            updateSlidesBuffer,
+            initCarousel,
+            restartCarousel,
+            updateCarousel,
+            slideTo,
+            next,
+            prev,
+            nav,
+            data,
+        });
+        const slotSlides = slots.default || slots.slides;
+        const slotAddons = slots.addons;
+        const slotsProps = (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)(data);
         return () => {
-            const slidesElements = getSlides(slotSlides === null || slotSlides === void 0 ? void 0 : slotSlides(slotsProps));
+            const slidesElements = getSlidesVNodes(slotSlides === null || slotSlides === void 0 ? void 0 : slotSlides(slotsProps));
             const addonsElements = (slotAddons === null || slotAddons === void 0 ? void 0 : slotAddons(slotsProps)) || [];
             slides.value = slidesElements;
             // Bind slide order
@@ -90400,16 +92007,28 @@ Icon.props = { name: String, title: String };
 
 const Navigation = (props, { slots, attrs }) => {
     const { next: slotNext, prev: slotPrev } = slots;
+    const config = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('config', (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)(Object.assign({}, defaultConfigs)));
+    const maxSlide = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('maxSlide', (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(1));
+    const minSlide = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('minSlide', (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(1));
+    const currentSlide = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('currentSlide', (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(1));
     const nav = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('nav', {});
     const prevButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('button', {
         type: 'button',
-        class: ['carousel__prev', attrs === null || attrs === void 0 ? void 0 : attrs.class],
+        class: [
+            'carousel__prev',
+            (!config.wrapAround && currentSlide.value <= minSlide.value) && 'carousel__prev--in-active',
+            attrs === null || attrs === void 0 ? void 0 : attrs.class
+        ],
         'aria-label': `Navigate to previous slide`,
         onClick: nav.prev,
     }, (slotPrev === null || slotPrev === void 0 ? void 0 : slotPrev()) || (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)(Icon, { name: 'arrowLeft' }));
     const nextButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)('button', {
         type: 'button',
-        class: ['carousel__next', attrs === null || attrs === void 0 ? void 0 : attrs.class],
+        class: [
+            'carousel__next',
+            (!config.wrapAround && currentSlide.value >= maxSlide.value) && 'carousel__next--in-active',
+            attrs === null || attrs === void 0 ? void 0 : attrs.class
+        ],
         'aria-label': `Navigate to next slide`,
         onClick: nav.next,
     }, (slotNext === null || slotNext === void 0 ? void 0 : slotNext()) || (0,vue__WEBPACK_IMPORTED_MODULE_0__.h)(Icon, { name: 'arrowRight' }));
@@ -90427,17 +92046,15 @@ var Slide = (0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
     setup(props, { slots }) {
         const config = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('config', (0,vue__WEBPACK_IMPORTED_MODULE_0__.reactive)(Object.assign({}, defaultConfigs)));
         const slidesBuffer = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('slidesBuffer', (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]));
-        const slidesCounter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('slidesCounter');
         const currentSlide = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('currentSlide', (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0));
         const slidesToScroll = (0,vue__WEBPACK_IMPORTED_MODULE_0__.inject)('slidesToScroll', (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(0));
-        const slideOrder = slidesCounter.value;
-        const wrapOrder = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(slideOrder);
+        const wrapOrder = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(props.index);
         if (config.wrapAround) {
             updateOrder();
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.watchEffect)(updateOrder);
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(slidesBuffer, updateOrder);
         }
         function updateOrder() {
-            wrapOrder.value = slidesBuffer.value.indexOf(slideOrder);
+            wrapOrder.value = slidesBuffer.value.indexOf(props.index);
         }
         const slideStyle = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
             const items = config.itemsToShow;
