@@ -65,7 +65,6 @@ export default {
   },
   data() {
     return {
-      data: [0, 0, 0, 0, 0],
       respondents: 0,
       ratings: 0,
     };
@@ -75,6 +74,7 @@ export default {
       axios
         .get("getData/" + this.surveyID)
         .then((response) => {
+          // console.log(response.data)
           let data = [0, 0, 0, 0, 0];
           let res = response.data;
 

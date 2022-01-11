@@ -23252,7 +23252,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      data: [0, 0, 0, 0, 0],
       respondents: 0,
       ratings: 0
     };
@@ -23262,6 +23261,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("getData/" + this.surveyID).then(function (response) {
+        // console.log(response.data)
         var data = [0, 0, 0, 0, 0];
         var res = response.data;
         _this.respondents = res.customerCount;
