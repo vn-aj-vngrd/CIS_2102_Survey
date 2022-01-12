@@ -25377,8 +25377,11 @@ var _hoisted_6 = {
   "class": "col-form-label"
 };
 var _hoisted_7 = ["onUpdate:modelValue"];
+var _hoisted_8 = {
+  "class": "text-muted"
+};
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "modal-footer"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
@@ -25414,7 +25417,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_7), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, respondent.emailAddress]])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), _hoisted_8])])])], 64
+  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, " There is no respondent at the moment. ", 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.respondents.length == 0]])]), _hoisted_9])])])], 64
   /* STABLE_FRAGMENT */
   );
 }

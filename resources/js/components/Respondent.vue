@@ -44,6 +44,9 @@
               disabled
             />
           </div>
+          <div class="text-muted" v-show="respondents.length == 0">
+            There is no respondent at the moment.
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
