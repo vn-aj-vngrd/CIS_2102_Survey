@@ -23163,6 +23163,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+_j_t_mcc_vue3_chartjs__WEBPACK_IMPORTED_MODULE_0__["default"].registerGlobalPlugins([chartjs_plugin_datalabels__WEBPACK_IMPORTED_MODULE_2__["default"]]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Chart",
   props: {
@@ -23210,7 +23211,7 @@ __webpack_require__.r(__webpack_exports__);
               var percentage = (value * 100 / sum).toFixed(2) + "%";
               return percentage;
             },
-            color: "#ff3"
+            color: "white"
           }
         }
       }

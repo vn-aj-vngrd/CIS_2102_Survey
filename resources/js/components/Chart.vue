@@ -10,7 +10,8 @@
 <script>
 import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
 import { ref } from "vue";
-import ChartJSPluginDatalabels from "chartjs-plugin-datalabels";
+import ChartJsPluginDataLabels from "chartjs-plugin-datalabels";
+Vue3ChartJs.registerGlobalPlugins([ChartJsPluginDataLabels]);
 
 export default {
   name: "Chart",
@@ -70,7 +71,7 @@ export default {
               let percentage = ((value * 100) / sum).toFixed(2) + "%";
               return percentage;
             },
-            color: "#ff3",
+            color: "white",
           },
         },
       },
