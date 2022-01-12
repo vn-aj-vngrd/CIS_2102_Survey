@@ -1,10 +1,4 @@
 <template>
-  <!-- {{ questions }}
-  <br />
-  {{ formData.ratings }}
-  <br />
-  {{ formData.questions }} -->
-
   <Carousel class="my-carousel shadow bg-body rounded border border-muted">
     <Slide
       class="my-carousel"
