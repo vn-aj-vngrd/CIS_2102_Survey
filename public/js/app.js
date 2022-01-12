@@ -23933,7 +23933,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      survey: {}
+      survey: {},
+      questionCount: 0
     };
   },
   methods: {
@@ -23946,9 +23947,20 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (errors) {
         console.log(errors);
       });
+    },
+    getQuestions: function getQuestions() {
+      var _this2 = this;
+
+      var surveyID = parseInt(this.$route.query.surveyID);
+      axios.get("getQuestions/" + surveyID).then(function (response) {
+        _this2.questionCount = response.data.length; // console.log(this.questionCount);
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
     }
   },
   created: function created() {
+    this.getQuestions();
     this.getSurveyInfo();
   }
 });
@@ -25761,14 +25773,18 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_10 = {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_11 = {
   "class": "d-grid gap-2 d-md-flex justify-content-md-start mt-4"
 };
-var _hoisted_11 = {
+var _hoisted_12 = {
   "class": "container text-center pb-5"
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-muted pt-2"
 }, "Click button to go back to main page.", -1
 /* HOISTED */
@@ -25794,11 +25810,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Survey Code: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.survey.code) + " ", 1
   /* TEXT */
-  ), _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Created: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate($data.survey.created_at)) + " ", 1
+  ), _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Total Questions: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.questionCount) + " ", 1
   /* TEXT */
-  ), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Updated: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate($data.survey.updated_at)), 1
+  ), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Created: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate($data.survey.created_at)) + " ", 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Response, {
+  ), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Date Updated: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$filters.formatDate($data.survey.updated_at)), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Response, {
     myclass: "btn btn-outline-success btn-sm px-4 me-md-2",
     surveyID: parseInt(_ctx.$route.query.surveyID)
   }, null, 8
@@ -25820,12 +25838,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     routeNum: parseInt(-1)
   }, null, 8
   /* PROPS */
-  , ["surveyID", "modal", "routeNum"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  , ["surveyID", "modal", "routeNum"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.$router.go(-1);
     }),
     "class": "btn btn-secondary btn-sm"
-  }, " Go Back "), _hoisted_12])], 64
+  }, " Go Back "), _hoisted_13])], 64
   /* STABLE_FRAGMENT */
   );
 }

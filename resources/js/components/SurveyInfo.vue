@@ -22,6 +22,8 @@
         <h6 class="text-muted border-top pt-3 border-bottom pb-3">
           Survey Code: {{ survey.code }}
           <br />
+          Total Questions: {{ questionCount }}
+          <br />
           Date Created:
           {{ $filters.formatDate(survey.created_at) }}
           <br />
@@ -79,6 +81,7 @@ export default {
   data() {
     return {
       survey: {},
+      questionCount: 0,
     };
   },
   methods: {
@@ -94,8 +97,21 @@ export default {
           console.log(errors);
         });
     },
+    getQuestions() {
+      const surveyID = parseInt(this.$route.query.surveyID);
+      axios
+        .get("getQuestions/" + surveyID)
+        .then((response) => {
+          this.questionCount = response.data.length;
+          // console.log(this.questionCount);
+        })
+        .catch((errors) => {
+          console.log(errors);
+        });
+    },
   },
   created() {
+    this.getQuestions();
     this.getSurveyInfo();
   },
 };
