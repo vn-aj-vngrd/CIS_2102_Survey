@@ -24844,7 +24844,7 @@ var _hoisted_15 = {
   "class": "h6 text-muted text-center mb-4"
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Wanna gather reviews for your company? ");
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Wanna gather reviews for your organization? ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Login = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Login");
@@ -25615,7 +25615,7 @@ var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "name",
     "class": "col-form-label"
-  }, "Company Name", -1
+  }, "Company / Organization Name", -1
   /* HOISTED */
   );
 });

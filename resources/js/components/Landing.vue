@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class="h6 text-muted text-center mb-4">
-    Wanna gather reviews for your company?
+    Wanna gather reviews for your organization?
     <Login myclass="btn btn-outline-primary ms-2 me-2" />
     <Signup myclass="btn btn-outline-success" />
   </div>

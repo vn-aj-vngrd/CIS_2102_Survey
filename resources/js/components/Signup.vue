@@ -29,7 +29,7 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="name" class="col-form-label">Company Name</label>
+              <label for="name" class="col-form-label">Company / Organization Name</label>
               <input
                 type="text"
                 class="form-control"
