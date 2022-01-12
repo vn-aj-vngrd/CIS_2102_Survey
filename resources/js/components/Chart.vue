@@ -90,7 +90,7 @@ export default {
           data: [data[4], data[3], data[2], data[1], data[0]],
         },
       ];
-      chartRef.value.update(750);
+      chartRef.value.update(250)
     };
 
     return {

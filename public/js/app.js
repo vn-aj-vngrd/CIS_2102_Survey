@@ -23222,7 +23222,7 @@ _j_t_mcc_vue3_chartjs__WEBPACK_IMPORTED_MODULE_0__["default"].registerGlobalPlug
         backgroundColor: ["#008000", "#41B883", "#00D8FF", "#E46651", "#DD1B16"],
         data: [data[4], data[3], data[2], data[1], data[0]]
       }];
-      chartRef.value.update(750);
+      chartRef.value.update(250);
     };
 
     return {
