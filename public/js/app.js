@@ -23713,7 +23713,9 @@ __webpack_require__.r(__webpack_exports__);
       // console.log(rating);
       // console.log(index);
       this.formData.ratings[index] = rating;
-      if (index == this.count) this.count++;
+      this.count = this.formData.ratings.filter(function (val) {
+        return val > 0;
+      }).length;
     },
     submitSurvey: function submitSurvey() {
       var _this2 = this;
@@ -25152,30 +25154,33 @@ var _hoisted_15 = ["onClick"];
 var _hoisted_16 = {
   "class": "d-flex justify-content-center mt-5"
 };
+var _hoisted_17 = {
+  "class": "d-flex justify-content-center text-muted text-center mt-4"
+};
 
-var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-    "class": "d-flex justify-content-center text-muted text-center mt-4"
-  }, " To submit the survey, please answer all the survey questions. ", -1
+var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
   /* HOISTED */
   );
 });
 
-var _hoisted_18 = {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" To submit the survey, please answer all the survey questions. ");
+
+var _hoisted_20 = {
   "class": "modal fade text-start",
   id: "finish",
   tabindex: "-1",
   "aria-labelledby": "exampleModalLabel",
   "aria-hidden": "true"
 };
-var _hoisted_19 = {
+var _hoisted_21 = {
   "class": "modal-dialog"
 };
-var _hoisted_20 = {
+var _hoisted_22 = {
   "class": "modal-content"
 };
 
-var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "modal-header"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
@@ -25191,7 +25196,7 @@ var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "modal-body"
   }, " Are you sure you want to submit the survey? ", -1
@@ -25199,11 +25204,11 @@ var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_23 = {
+var _hoisted_25 = {
   "class": "modal-footer"
 };
 
-var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-danger",
@@ -25316,7 +25321,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "data-bs-target": "#finish"
   }, " Submit Survey ", 2
   /* CLASS */
-  )]), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Questions Remaining: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.formData.questions.length - $data.count) + " ", 1
+  /* TEXT */
+  ), _hoisted_18, _hoisted_19]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.submitSurvey && $options.submitSurvey.apply($options, arguments);
     }),

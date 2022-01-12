@@ -79,6 +79,7 @@
     </button>
   </div>
   <p class="d-flex justify-content-center text-muted text-center mt-4">
+    Questions Remaining: {{ formData.questions.length - count }} <br />
     To submit the survey, please answer all the survey questions.
   </p>
 
@@ -183,7 +184,7 @@ export default {
       // console.log(index);
 
       this.formData.ratings[index] = rating;
-      if (index == this.count) this.count++;
+      this.count = this.formData.ratings.filter(val => val > 0).length;
     },
     submitSurvey() {
       // console.log(this.formData);
