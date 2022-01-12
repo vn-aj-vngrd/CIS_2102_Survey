@@ -34,7 +34,7 @@ class ResponseController extends Controller
 
             if ($ValidEmail == 1) {
                 throw ValidationException::withMessages([
-                    'email' => ['The email has already been used.'],
+                    'email' => ['You have already responded using this email address.'],
                 ]);
             } else {
                 $survey = Survey::select('surveyID', 'name', 'createdBy')->where('code', $request->surveyCode)->first();
